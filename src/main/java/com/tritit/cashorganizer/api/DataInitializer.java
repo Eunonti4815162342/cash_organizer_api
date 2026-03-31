@@ -22,6 +22,7 @@ public class DataInitializer implements CommandLineRunner {
             
             // 1. Tabla Accounts
             jdbcTemplate.execute("ALTER TABLE cash_organizer.accounts ADD COLUMN IF NOT EXISTS active BOOLEAN DEFAULT TRUE;");
+            jdbcTemplate.execute("UPDATE cash_organizer.accounts SET active = TRUE WHERE active IS NULL;");
             
             // 2. Tabla Transactions
             jdbcTemplate.execute("ALTER TABLE cash_organizer.transactions ADD COLUMN IF NOT EXISTS account_id BIGINT;");

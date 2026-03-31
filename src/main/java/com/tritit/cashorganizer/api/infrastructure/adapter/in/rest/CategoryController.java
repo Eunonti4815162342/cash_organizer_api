@@ -17,10 +17,11 @@ public class CategoryController {
 
     private final CategoryRepository repository;
     private final SubcategoryRepository subcategoryRepository;
+    private final com.tritit.cashorganizer.api.application.CategoryService service;
 
     @GetMapping
     public List<Category> getAllCategories() {
-        return repository.findAll();
+        return repository.findAllSorted();
     }
 
     @GetMapping("/type/{type}")
@@ -35,9 +36,16 @@ public class CategoryController {
 
     @PostMapping("/{categoryId}/subcategories")
     public Subcategory createSubcategory(@PathVariable Long categoryId, @RequestBody Subcategory subcategory) {
-        return repository.findById(categoryId).map(category -> {
-            subcategory.setCategory(category);
-            return subcategoryRepository.save(subcategory);
-        }).orElseThrow(() -> new RuntimeException("Category not found"));
+        return service.createSubcategory(categoryId, subcategory);
+    }
+
+    @PutMapping("/{id}")
+    public Category updateCategory(@PathVariable Long id, @RequestBody Category category) {
+        return service.updateCategory(id, category);
+    }
+
+    @PutMapping("/subcategories/{id}")
+    public Subcategory updateSubcategory(@PathVariable Long id, @RequestBody Subcategory subcategory) {
+        return service.updateSubcategory(id, subcategory);
     }
 }

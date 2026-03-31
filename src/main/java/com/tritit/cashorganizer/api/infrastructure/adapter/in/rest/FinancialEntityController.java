@@ -13,26 +13,20 @@ import java.util.List;
 @RequiredArgsConstructor
 public class FinancialEntityController {
 
-    private final FinancialEntityRepository repository;
+    private final com.tritit.cashorganizer.api.application.FinancialEntityService service;
 
     @GetMapping
     public List<FinancialEntity> getAllEntities() {
-        return repository.findAll();
+        return service.getAllEntities();
     }
 
     @PostMapping
     public FinancialEntity createEntity(@RequestBody FinancialEntity entity) {
-        return repository.save(entity);
-    }
-
-    @PutMapping("/{id}")
-    public FinancialEntity updateEntity(@PathVariable Long id, @RequestBody FinancialEntity entity) {
-        entity.setId(id);
-        return repository.save(entity);
+        return service.createEntity(entity);
     }
 
     @DeleteMapping("/{id}")
     public void deleteEntity(@PathVariable Long id) {
-        repository.deleteById(id);
+        service.deleteEntity(id);
     }
 }

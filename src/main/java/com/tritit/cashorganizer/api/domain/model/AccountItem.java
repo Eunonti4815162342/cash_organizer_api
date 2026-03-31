@@ -1,5 +1,6 @@
 package com.tritit.cashorganizer.api.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
@@ -30,7 +31,7 @@ public class AccountItem {
 
     @ManyToOne
     @JoinColumn(name = "entity_id")
-    @com.fasterxml.jackson.annotation.JsonBackReference
+    @JsonIgnoreProperties("accounts")
     private FinancialEntity entity;
 
     private String description;

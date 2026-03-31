@@ -23,6 +23,7 @@ public class Category {
 
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
     @JsonManagedReference
+    @OrderBy("name ASC")
     private List<Subcategory> subcategories;
 
     public enum CategoryType {

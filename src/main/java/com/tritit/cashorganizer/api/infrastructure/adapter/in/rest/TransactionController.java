@@ -17,7 +17,17 @@ public class TransactionController {
     private final com.tritit.cashorganizer.api.application.TransactionService service;
 
     @GetMapping
-    public List<TransactionItem> getAllTransactions() {
+    public List<TransactionItem> getAllTransactions(
+            @RequestParam(required = false) String startDate,
+            @RequestParam(required = false) String endDate,
+            @RequestParam(required = false) Long accountId) {
+        
+        if (startDate != null && endDate != null) {
+            if (accountId != null) {
+                return repository.findAllByAccountAndDateRange(accountId, startDate, endDate);
+            }
+            return repository.findAllByDateRange(startDate, endDate);
+        }
         return repository.findAll();
     }
 
