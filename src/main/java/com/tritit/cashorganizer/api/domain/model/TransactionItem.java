@@ -22,11 +22,31 @@ public class TransactionItem {
     @Embedded
     private Amount amount;
 
+    @ManyToOne
+    @JoinColumn(name = "account_id")
+    private AccountItem account;
+
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
+
+    @ManyToOne
+    @JoinColumn(name = "to_account_id")
+    private AccountItem toAccount;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "transaction_type")
+    private TransactionType type;
+
     private String notes;
     private Integer statusFlags;
-    
+
     private Boolean isScheduled;
     private Boolean isHeader;
+
+    public enum TransactionType {
+        EXPENSE, INCOME, TRANSFER, ACCOUNT_CLOSE
+    }
 
     @ElementCollection
     @CollectionTable(name = "transaction_tags", schema = "cash_organizer", joinColumns = @JoinColumn(name = "transaction_id"))

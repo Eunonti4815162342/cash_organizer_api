@@ -14,6 +14,7 @@ import java.util.List;
 public class TransactionController {
 
     private final TransactionRepository repository;
+    private final com.tritit.cashorganizer.api.application.TransactionService service;
 
     @GetMapping
     public List<TransactionItem> getAllTransactions() {
@@ -22,6 +23,16 @@ public class TransactionController {
 
     @PostMapping
     public TransactionItem createTransaction(@RequestBody TransactionItem transactionItem) {
-        return repository.save(transactionItem);
+        return service.createTransaction(transactionItem);
+    }
+
+    @PutMapping("/{id}")
+    public TransactionItem updateTransaction(@PathVariable Long id, @RequestBody TransactionItem transactionItem) {
+        return service.updateTransaction(id, transactionItem);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteTransaction(@PathVariable Long id) {
+        service.deleteTransaction(id);
     }
 }

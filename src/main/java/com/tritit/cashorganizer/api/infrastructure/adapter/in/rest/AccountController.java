@@ -14,14 +14,25 @@ import java.util.List;
 public class AccountController {
 
     private final AccountRepository repository;
+    private final com.tritit.cashorganizer.api.application.AccountService service;
 
     @GetMapping
     public List<AccountItem> getAllAccounts() {
-        return repository.findAll();
+        return service.getAllActiveAccounts();
     }
 
     @PostMapping
     public AccountItem createAccount(@RequestBody AccountItem accountItem) {
         return repository.save(accountItem);
+    }
+
+    @PutMapping("/{id}")
+    public AccountItem updateAccount(@PathVariable Long id, @RequestBody AccountItem accountItem) {
+        return service.updateAccount(id, accountItem);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteAccount(@PathVariable Long id) {
+        service.deleteAccountLogically(id);
     }
 }
