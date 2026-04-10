@@ -2,8 +2,7 @@ package com.tritit.cashorganizer.api.infrastructure.adapter.in.rest;
 
 import com.tritit.cashorganizer.api.domain.model.Category;
 import com.tritit.cashorganizer.api.domain.model.Subcategory;
-import com.tritit.cashorganizer.api.infrastructure.adapter.out.persistence.CategoryRepository;
-import com.tritit.cashorganizer.api.infrastructure.adapter.out.persistence.SubcategoryRepository;
+import com.tritit.cashorganizer.api.application.CategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,23 +14,16 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CategoryController {
 
-    private final CategoryRepository repository;
-    private final SubcategoryRepository subcategoryRepository;
-    private final com.tritit.cashorganizer.api.application.CategoryService service;
+    private final CategoryService service;
 
     @GetMapping
     public List<Category> getAllCategories() {
-        return repository.findAllSorted();
-    }
-
-    @GetMapping("/type/{type}")
-    public List<Category> getCategoriesByType(@PathVariable Category.CategoryType type) {
-        return repository.findByType(type);
+        return service.getAllCategories();
     }
 
     @PostMapping
     public Category createCategory(@RequestBody Category category) {
-        return repository.save(category);
+        return service.createCategory(category);
     }
 
     @PostMapping("/{categoryId}/subcategories")

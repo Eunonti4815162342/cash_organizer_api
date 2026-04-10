@@ -7,8 +7,10 @@ import java.util.List;
 
 public interface CategoryRepository extends JpaRepository<Category, Long> {
     
-    @Query("SELECT c FROM Category c ORDER BY c.type DESC, c.name ASC")
-    List<Category> findAllSorted();
+    java.util.List<Category> findAllByUser(com.tritit.cashorganizer.api.domain.model.User user);
 
-    List<Category> findByType(Category.CategoryType type);
+    @Query("SELECT c FROM Category c WHERE c.user = :user ORDER BY c.type DESC, c.name ASC")
+    java.util.List<Category> findAllByUserSorted(@org.springframework.data.repository.query.Param("user") com.tritit.cashorganizer.api.domain.model.User user);
+
+    java.util.List<Category> findByUserAndType(com.tritit.cashorganizer.api.domain.model.User user, com.tritit.cashorganizer.api.domain.model.Category.CategoryType type);
 }

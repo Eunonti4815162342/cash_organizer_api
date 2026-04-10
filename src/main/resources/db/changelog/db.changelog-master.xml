@@ -14,4 +14,12 @@
         <sqlFile path="db/changelog/changes/02-sync-schema-updates.sql" />
     </changeSet>
 
+    <changeSet id="7" author="alvaro">
+        <sqlFile path="db/changelog/changes/03-create-users-table.sql" />
+    </changeSet>
+
+    <changeSet id="8" author="alvaro">
+        <sqlFile path="db/changelog/changes/04-add-user-relationship.sql" />
+    </changeSet>
+
 </databaseChangeLog>

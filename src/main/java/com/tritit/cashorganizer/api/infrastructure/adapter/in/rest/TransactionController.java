@@ -1,7 +1,7 @@
 package com.tritit.cashorganizer.api.infrastructure.adapter.in.rest;
 
 import com.tritit.cashorganizer.api.domain.model.TransactionItem;
-import com.tritit.cashorganizer.api.infrastructure.adapter.out.persistence.TransactionRepository;
+import com.tritit.cashorganizer.api.application.TransactionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,8 +13,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TransactionController {
 
-    private final TransactionRepository repository;
-    private final com.tritit.cashorganizer.api.application.TransactionService service;
+    private final TransactionService service;
 
     @GetMapping
     public List<TransactionItem> getAllTransactions(
@@ -22,13 +21,7 @@ public class TransactionController {
             @RequestParam(required = false) String endDate,
             @RequestParam(required = false) Long accountId) {
         
-        if (startDate != null && endDate != null) {
-            if (accountId != null) {
-                return repository.findAllByAccountAndDateRange(accountId, startDate, endDate);
-            }
-            return repository.findAllByDateRange(startDate, endDate);
-        }
-        return repository.findAll();
+        return service.getTransactions(startDate, endDate, accountId);
     }
 
     @PostMapping

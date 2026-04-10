@@ -14,10 +14,26 @@ public class CategoryService {
 
     private final CategoryRepository categoryRepository;
     private final SubcategoryRepository subcategoryRepository;
+    private final com.tritit.cashorganizer.api.infrastructure.adapter.out.persistence.UserRepository userRepository;
+
+    private com.tritit.cashorganizer.api.domain.model.User getCurrentUser() {
+        String email = org.springframework.security.core.context.SecurityContextHolder.getContext().getAuthentication().getName();
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Authenticated user not found"));
+    }
+
+    @Transactional
+    public java.util.List<com.tritit.cashorganizer.api.domain.model.Category> getAllCategories() {
+        com.tritit.cashorganizer.api.domain.model.User user = getCurrentUser();
+        return categoryRepository.findAllByUser(user);
+    }
 
     @Transactional
     public Category createCategory(Category category) {
-        boolean exists = categoryRepository.findAll().stream()
+        com.tritit.cashorganizer.api.domain.model.User user = getCurrentUser();
+        category.setUser(user);
+        
+        boolean exists = categoryRepository.findAllByUser(user).stream()
                 .anyMatch(c -> c.getName().equalsIgnoreCase(category.getName()) && c.getType() == category.getType());
         
         if (exists) {
