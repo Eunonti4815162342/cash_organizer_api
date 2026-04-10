@@ -10,4 +10,8 @@
         <sqlFile path="db/changelog/changes/01-create-initial-schema.sql" />
     </changeSet>
 
+    <changeSet id="6" author="alvaro">
+        <sqlFile path="db/changelog/changes/02-sync-schema-updates.sql" />
+    </changeSet>
+
 </databaseChangeLog>
