@@ -23,8 +23,7 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.disable())
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/v2/auth/**").permitAll()
-                .anyRequest().authenticated()
+                .anyRequest().permitAll() // Permitimos todo temporalmente
             );
         return http.build();
     }
