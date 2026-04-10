@@ -19,8 +19,7 @@ public class AuthService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-    
-    private final String SECRET_KEY = "esto-es-una-clave-secreta-temporal-de-32-caracteres";
+    private final com.tritit.cashorganizer.api.infrastructure.config.JwtService jwtService;
 
     public void register(String email, String password) {
         if (userRepository.findByEmail(email).isPresent()) {
@@ -41,12 +40,7 @@ public class AuthService {
             throw new RuntimeException("Credenciales inválidas");
         }
 
-        String token = Jwts.builder()
-                .subject(user.getEmail())
-                .issuedAt(new Date())
-                .expiration(new Date(System.currentTimeMillis() + 86400000))
-                .signWith(Keys.hmacShaKeyFor(SECRET_KEY.getBytes(StandardCharsets.UTF_8)))
-                .compact();
+        String token = jwtService.generateToken(user);
 
         Map<String, String> response = new HashMap<>();
         response.put("token", token);
