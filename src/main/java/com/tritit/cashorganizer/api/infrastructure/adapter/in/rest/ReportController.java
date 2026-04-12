@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/reports")
@@ -16,6 +17,15 @@ import java.util.List;
 public class ReportController {
 
     private final ReportService reportService;
+
+    @GetMapping("/category-stats")
+    public ResponseEntity<Map<String, Long>> getCategoryStats(
+            @RequestParam(required = false) String startDate,
+            @RequestParam(required = false) String endDate,
+            @RequestParam(required = false) List<Long> accountIds,
+            @RequestParam(defaultValue = "false") boolean groupBySubcategory) {
+        return ResponseEntity.ok(reportService.getCategoryGroupedData(startDate, endDate, accountIds, groupBySubcategory));
+    }
 
     @GetMapping("/pdf")
     public ResponseEntity<byte[]> generatePdfReport(

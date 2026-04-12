@@ -3,9 +3,11 @@ package com.tritit.cashorganizer.api.infrastructure.adapter.in.rest;
 import com.tritit.cashorganizer.api.domain.model.TransactionItem;
 import com.tritit.cashorganizer.api.application.TransactionService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/transactions")
@@ -16,12 +18,15 @@ public class TransactionController {
     private final TransactionService service;
 
     @GetMapping
-    public List<TransactionItem> getAllTransactions(
+    public Page<TransactionItem> getAllTransactions(
             @RequestParam(required = false) String startDate,
             @RequestParam(required = false) String endDate,
-            @RequestParam(required = false) Long accountId) {
+            @RequestParam(required = false) Long accountId,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "20") int size) {
         
-        return service.getTransactions(startDate, endDate, accountId);
+        Pageable pageable = PageRequest.of(page, size, Sort.by("date").descending());
+        return service.getTransactions(startDate, endDate, accountId, pageable);
     }
 
     @PostMapping

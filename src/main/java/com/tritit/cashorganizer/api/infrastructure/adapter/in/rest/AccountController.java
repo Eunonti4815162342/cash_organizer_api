@@ -1,7 +1,7 @@
 package com.tritit.cashorganizer.api.infrastructure.adapter.in.rest;
 
+import com.tritit.cashorganizer.api.application.AccountService;
 import com.tritit.cashorganizer.api.domain.model.AccountItem;
-import com.tritit.cashorganizer.api.infrastructure.adapter.out.persistence.AccountRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,17 +13,16 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AccountController {
 
-    private final AccountRepository repository;
-    private final com.tritit.cashorganizer.api.application.AccountService service;
+    private final AccountService service;
 
     @GetMapping
-    public List<AccountItem> getAllAccounts() {
+    public List<AccountItem> getAccounts() {
         return service.getAllActiveAccounts();
     }
 
     @PostMapping
     public AccountItem createAccount(@RequestBody AccountItem accountItem) {
-        return repository.save(accountItem);
+        return service.createAccount(accountItem);
     }
 
     @PutMapping("/{id}")
@@ -32,12 +31,11 @@ public class AccountController {
     }
 
     @DeleteMapping("/{id}")
-    public void closeAccount(@PathVariable Long id) {
-        service.closeAccount(id);
-    }
-
-    @DeleteMapping("/{id}/permanent")
-    public void deleteAccountPermanently(@PathVariable Long id) {
-        service.permanentlyDeleteAccount(id);
+    public void deleteAccount(@PathVariable Long id, @RequestParam(defaultValue = "false") boolean permanent) {
+        if (permanent) {
+            service.permanentlyDeleteAccount(id);
+        } else {
+            service.closeAccount(id);
+        }
     }
 }

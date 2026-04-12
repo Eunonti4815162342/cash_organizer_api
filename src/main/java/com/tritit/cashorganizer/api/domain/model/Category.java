@@ -1,34 +1,21 @@
 package com.tritit.cashorganizer.api.domain.model;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import java.util.List;
 
-@Entity
-@Table(name = "categories", schema = "cash_organizer")
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class Category {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    @com.fasterxml.jackson.annotation.JsonIgnore
     private User user;
-
     private String name;
     private String iconName;
-    
-    @Enumerated(EnumType.STRING)
-    private CategoryType type; // EXPENSE o INCOME
-
-    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
-    @JsonManagedReference
-    @OrderBy("name ASC")
+    private CategoryType type;
     private List<Subcategory> subcategories;
 
     public enum CategoryType {

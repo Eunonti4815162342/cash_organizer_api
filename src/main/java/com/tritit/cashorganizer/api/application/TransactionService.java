@@ -1,17 +1,21 @@
 package com.tritit.cashorganizer.api.application;
 
 import com.tritit.cashorganizer.api.domain.model.AccountItem;
-import com.tritit.cashorganizer.api.domain.model.Amount;
 import com.tritit.cashorganizer.api.domain.model.TransactionItem;
 import com.tritit.cashorganizer.api.domain.model.User;
 import com.tritit.cashorganizer.api.infrastructure.adapter.out.persistence.AccountRepository;
+import com.tritit.cashorganizer.api.infrastructure.adapter.out.persistence.PersistenceMapper;
 import com.tritit.cashorganizer.api.infrastructure.adapter.out.persistence.TransactionRepository;
 import com.tritit.cashorganizer.api.infrastructure.adapter.out.persistence.UserRepository;
+import com.tritit.cashorganizer.api.infrastructure.adapter.out.persistence.entity.AccountEntity;
+import com.tritit.cashorganizer.api.infrastructure.adapter.out.persistence.entity.TransactionItemEntity;
+import com.tritit.cashorganizer.api.infrastructure.adapter.out.persistence.entity.UserEntity;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -20,85 +24,89 @@ public class TransactionService {
     private final TransactionRepository transactionRepository;
     private final AccountRepository accountRepository;
     private final UserRepository userRepository;
+    private final PersistenceMapper mapper;
 
-    private User getCurrentUser() {
+    private UserEntity getCurrentUserEntity() {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         return userRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("Authenticated user not found"));
     }
 
     @Transactional(readOnly = true)
-    public List<TransactionItem> getTransactions(String startDate, String endDate, Long accountId) {
-        User user = getCurrentUser();
+    public Page<TransactionItem> getTransactions(String startDate, String endDate, Long accountId, Pageable pageable) {
+        UserEntity user = getCurrentUserEntity();
         
+        Page<TransactionItemEntity> entities;
         if (startDate != null && endDate != null) {
             if (accountId != null) {
-                return transactionRepository.findAllByUserAndAccountAndDateRange(user, accountId, startDate, endDate);
+                entities = transactionRepository.findAllByUserAndAccountAndDateRange(user, accountId, startDate, endDate, pageable);
+            } else {
+                entities = transactionRepository.findAllByUserAndDateRange(user, startDate, endDate, pageable);
             }
-            return transactionRepository.findAllByUserAndDateRange(user, startDate, endDate);
+        } else {
+            entities = transactionRepository.findAllByUser(user, pageable);
         }
-        return transactionRepository.findAllByUser(user);
+        return entities.map(mapper::toDomain);
     }
 
     @Transactional
     public TransactionItem createTransaction(TransactionItem transaction) {
-        User user = getCurrentUser();
-        transaction.setUser(user);
+        UserEntity user = getCurrentUserEntity();
+        TransactionItemEntity entity = mapper.toEntity(transaction);
+        entity.setUser(user);
         
-        applyTransactionImpact(transaction, false, user);
-        return transactionRepository.save(transaction);
+        applyTransactionImpact(entity, false, user);
+        return mapper.toDomain(transactionRepository.save(entity));
     }
 
     @Transactional
     public TransactionItem updateTransaction(Long id, TransactionItem newTransaction) {
-        User user = getCurrentUser();
+        UserEntity user = getCurrentUserEntity();
         
-        TransactionItem oldTransaction = transactionRepository.findById(id)
+        TransactionItemEntity oldEntity = transactionRepository.findById(id)
                 .filter(t -> t.getUser().getId().equals(user.getId()))
                 .orElseThrow(() -> new RuntimeException("Transaction not found or access denied"));
 
-        // 1. Revert old impact
-        applyTransactionImpact(oldTransaction, true, user);
+        applyTransactionImpact(oldEntity, true, user);
 
-        // 2. Apply new impact
-        newTransaction.setUser(user);
-        applyTransactionImpact(newTransaction, false, user);
+        TransactionItemEntity newEntity = mapper.toEntity(newTransaction);
+        newEntity.setUser(user);
+        newEntity.setId(id);
+        applyTransactionImpact(newEntity, false, user);
 
-        newTransaction.setId(id);
-        return transactionRepository.save(newTransaction);
+        return mapper.toDomain(transactionRepository.save(newEntity));
     }
 
     @Transactional
     public void deleteTransaction(Long id) {
-        User user = getCurrentUser();
+        UserEntity user = getCurrentUserEntity();
         
-        TransactionItem transaction = transactionRepository.findById(id)
+        TransactionItemEntity entity = transactionRepository.findById(id)
                 .filter(t -> t.getUser().getId().equals(user.getId()))
                 .orElseThrow(() -> new RuntimeException("Transaction not found or access denied"));
         
-        // REVERSAL LOGIC
-        if (transaction.getType() == TransactionItem.TransactionType.ACCOUNT_CLOSE) {
-            AccountItem account = transaction.getAccount();
+        if (entity.getType() == TransactionItem.TransactionType.ACCOUNT_CLOSE) {
+            AccountEntity account = entity.getAccount();
             account.setActive(true);
             accountRepository.save(account);
         } else {
-            applyTransactionImpact(transaction, true, user);
+            applyTransactionImpact(entity, true, user);
         }
         
-        transactionRepository.delete(transaction);
+        transactionRepository.delete(entity);
     }
 
-    private void applyTransactionImpact(TransactionItem transaction, boolean revert, User user) {
-        if (transaction.getAccount() == null) throw new RuntimeException("Source account is mandatory");
+    private void applyTransactionImpact(TransactionItemEntity entity, boolean revert, UserEntity user) {
+        if (entity.getAccount() == null) throw new RuntimeException("Source account is mandatory");
 
-        AccountItem fromAccount = accountRepository.findById(transaction.getAccount().getId())
+        AccountEntity fromAccount = accountRepository.findById(entity.getAccount().getId())
                 .filter(a -> a.getUser().getId().equals(user.getId()))
                 .orElseThrow(() -> new RuntimeException("Source account not found or access denied"));
 
-        long val = transaction.getAmount().getValue();
+        long val = entity.getAmount().getValue();
         if (revert) val = -val;
 
-        TransactionItem.TransactionType type = transaction.getType();
+        TransactionItem.TransactionType type = entity.getType();
         if (type == null) type = TransactionItem.TransactionType.EXPENSE;
 
         switch (type) {
@@ -109,15 +117,17 @@ public class TransactionService {
                 fromAccount.getAmount().setValue(fromAccount.getAmount().getValue() - val);
                 break;
             case TRANSFER:
-                if (transaction.getToAccount() == null) throw new RuntimeException("Destination account is mandatory for transfers");
+                if (entity.getToAccount() == null) throw new RuntimeException("Destination account is mandatory for transfers");
                 
-                AccountItem toAccount = accountRepository.findById(transaction.getToAccount().getId())
+                AccountEntity toAccount = accountRepository.findById(entity.getToAccount().getId())
                         .filter(a -> a.getUser().getId().equals(user.getId()))
                         .orElseThrow(() -> new RuntimeException("Destination account not found or access denied"));
                 
                 fromAccount.getAmount().setValue(fromAccount.getAmount().getValue() - val);
                 toAccount.getAmount().setValue(toAccount.getAmount().getValue() + val);
                 accountRepository.save(toAccount);
+                break;
+            default:
                 break;
         }
         accountRepository.save(fromAccount);

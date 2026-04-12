@@ -1,8 +1,8 @@
 package com.tritit.cashorganizer.api.infrastructure.adapter.in.rest;
 
+import com.tritit.cashorganizer.api.application.CategoryService;
 import com.tritit.cashorganizer.api.domain.model.Category;
 import com.tritit.cashorganizer.api.domain.model.Subcategory;
-import com.tritit.cashorganizer.api.application.CategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,8 +17,8 @@ public class CategoryController {
     private final CategoryService service;
 
     @GetMapping
-    public List<Category> getAllCategories() {
-        return service.getAllCategories();
+    public List<Category> getCategories() {
+        return service.getCategories();
     }
 
     @PostMapping
@@ -26,18 +26,5 @@ public class CategoryController {
         return service.createCategory(category);
     }
 
-    @PostMapping("/{categoryId}/subcategories")
-    public Subcategory createSubcategory(@PathVariable Long categoryId, @RequestBody Subcategory subcategory) {
-        return service.createSubcategory(categoryId, subcategory);
-    }
-
-    @PutMapping("/{id}")
-    public Category updateCategory(@PathVariable Long id, @RequestBody Category category) {
-        return service.updateCategory(id, category);
-    }
-
-    @PutMapping("/subcategories/{id}")
-    public Subcategory updateSubcategory(@PathVariable Long id, @RequestBody Subcategory subcategory) {
-        return service.updateSubcategory(id, subcategory);
-    }
+    // Nota: Las rutas de subcategorías se pueden añadir aquí si el servicio las soporta
 }

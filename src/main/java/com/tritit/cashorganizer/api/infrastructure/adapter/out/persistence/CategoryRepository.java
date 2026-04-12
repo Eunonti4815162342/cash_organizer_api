@@ -1,16 +1,12 @@
 package com.tritit.cashorganizer.api.infrastructure.adapter.out.persistence;
 
-import com.tritit.cashorganizer.api.domain.model.Category;
+import com.tritit.cashorganizer.api.infrastructure.adapter.out.persistence.entity.CategoryEntity;
+import com.tritit.cashorganizer.api.infrastructure.adapter.out.persistence.entity.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 import java.util.List;
 
-public interface CategoryRepository extends JpaRepository<Category, Long> {
-    
-    java.util.List<Category> findAllByUser(com.tritit.cashorganizer.api.domain.model.User user);
-
-    @Query("SELECT c FROM Category c WHERE c.user = :user ORDER BY c.type DESC, c.name ASC")
-    java.util.List<Category> findAllByUserSorted(@org.springframework.data.repository.query.Param("user") com.tritit.cashorganizer.api.domain.model.User user);
-
-    java.util.List<Category> findByUserAndType(com.tritit.cashorganizer.api.domain.model.User user, com.tritit.cashorganizer.api.domain.model.Category.CategoryType type);
+@Repository
+public interface CategoryRepository extends JpaRepository<CategoryEntity, Long> {
+    List<CategoryEntity> findAllByUser(UserEntity user);
 }

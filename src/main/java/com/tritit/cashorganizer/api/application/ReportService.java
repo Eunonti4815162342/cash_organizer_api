@@ -4,19 +4,27 @@ import com.lowagie.text.*;
 import com.lowagie.text.Font;
 import com.lowagie.text.Image;
 import com.lowagie.text.pdf.*;
+import com.lowagie.text.pdf.draw.LineSeparator;
 import com.tritit.cashorganizer.api.domain.model.AccountItem;
 import com.tritit.cashorganizer.api.domain.model.TransactionItem;
+import com.tritit.cashorganizer.api.domain.model.Amount;
 import com.tritit.cashorganizer.api.domain.model.User;
 import com.tritit.cashorganizer.api.infrastructure.adapter.out.persistence.AccountRepository;
+import com.tritit.cashorganizer.api.infrastructure.adapter.out.persistence.PersistenceMapper;
 import com.tritit.cashorganizer.api.infrastructure.adapter.out.persistence.TransactionRepository;
 import com.tritit.cashorganizer.api.infrastructure.adapter.out.persistence.UserRepository;
+import com.tritit.cashorganizer.api.infrastructure.adapter.out.persistence.entity.AccountEntity;
+import com.tritit.cashorganizer.api.infrastructure.adapter.out.persistence.entity.TransactionItemEntity;
+import com.tritit.cashorganizer.api.infrastructure.adapter.out.persistence.entity.UserEntity;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.awt.Color;
 import java.io.ByteArrayOutputStream;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -26,158 +34,183 @@ public class ReportService {
     private final AccountRepository accountRepository;
     private final TransactionRepository transactionRepository;
     private final UserRepository userRepository;
+    private final PersistenceMapper mapper;
 
-    private User getCurrentUser() {
+    private UserEntity getCurrentUserEntity() {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         return userRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("Authenticated user not found"));
     }
 
+    public Map<String, Long> getCategoryGroupedData(String startDate, String endDate, List<Long> accountIds, boolean groupBySubcategory) {
+        UserEntity user = getCurrentUserEntity();
+        List<TransactionItemEntity> transactions = (startDate != null && endDate != null)
+                ? transactionRepository.findAllByUserAndDateRange(user, startDate, endDate, Pageable.unpaged()).getContent()
+                : transactionRepository.findAllByUser(user, Pageable.unpaged()).getContent();
+
+        return transactions.stream()
+                .filter(t -> t.getCategory() != null)
+                .filter(t -> accountIds == null || accountIds.isEmpty() || (t.getAccount() != null && accountIds.contains(t.getAccount().getId())))
+                .collect(Collectors.groupingBy(
+                        t -> (groupBySubcategory && t.getSubcategory() != null) 
+                             ? t.getCategory().getName() + " > " + t.getSubcategory().getName() 
+                             : t.getCategory().getName(),
+                        Collectors.summingLong(t -> t.getAmount().getValue())
+                ));
+    }
+
     public byte[] generatePdfReport(String title, String chartType, String startDate, String endDate, List<Long> accountIds, List<Long> categoryIds) {
-        User user = getCurrentUser();
+        UserEntity user = getCurrentUserEntity();
         
-        // 1. Obtención de datos filtrados
-        List<AccountItem> allAccounts = accountRepository.findAllByUser(user);
-        List<AccountItem> filteredAccounts = (accountIds == null || accountIds.isEmpty()) 
+        List<AccountEntity> allAccounts = accountRepository.findAllByUser(user);
+        List<AccountEntity> filteredAccounts = (accountIds == null || accountIds.isEmpty()) 
                 ? allAccounts 
                 : allAccounts.stream().filter(a -> accountIds.contains(a.getId())).collect(Collectors.toList());
 
-        List<TransactionItem> transactions;
+        List<TransactionItemEntity> transactions;
         if (startDate != null && endDate != null) {
-            transactions = transactionRepository.findAllByUserAndDateRange(user, startDate, endDate);
+            transactions = transactionRepository.findAllByUserAndDateRange(user, startDate, endDate, Pageable.unpaged()).getContent();
         } else {
-            transactions = transactionRepository.findAllByUser(user);
+            transactions = transactionRepository.findAllByUser(user, Pageable.unpaged()).getContent();
         }
 
-        // Filtro adicional por cuentas y categorías en memoria (para mayor flexibilidad)
-        List<TransactionItem> filteredTransactions = transactions.stream()
+        List<TransactionItemEntity> filteredTransactions = transactions.stream()
                 .filter(t -> (accountIds == null || accountIds.isEmpty() || (t.getAccount() != null && accountIds.contains(t.getAccount().getId()))))
                 .filter(t -> (categoryIds == null || categoryIds.isEmpty() || (t.getCategory() != null && categoryIds.contains(t.getCategory().getId()))))
                 .collect(Collectors.toList());
 
         try (ByteArrayOutputStream out = new ByteArrayOutputStream()) {
-            Document document = new Document(PageSize.A4);
+            Document document = new Document(PageSize.A4, 36, 36, 36, 36);
             PdfWriter writer = PdfWriter.getInstance(document, out);
             document.open();
 
+            // Modern Colors
+            Color primaryBlue = new Color(0, 159, 251);
+            Color lightGray = new Color(245, 245, 245);
+            Color darkBlue = new Color(74, 99, 111);
+
             // Fonts
-            Font fontTitle = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 18, new Color(0, 159, 251));
-            Font fontSubtitle = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 14, Color.DARK_GRAY);
-            Font fontHeader = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12, Color.WHITE);
-            Font fontBody = FontFactory.getFont(FontFactory.HELVETICA, 10);
+            Font fontTitle = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 22, primaryBlue);
+            Font fontSubtitle = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 14, darkBlue);
+            Font fontLabel = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 10, Color.GRAY);
+            Font fontBody = FontFactory.getFont(FontFactory.HELVETICA, 10, darkBlue);
+            Font fontHeader = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 10, Color.WHITE);
 
-            // Header
-            Paragraph pTitle = new Paragraph("Cash Organizer - Custom Financial Report", fontTitle);
-            pTitle.setAlignment(Paragraph.ALIGN_CENTER);
-            document.add(pTitle);
+            // 1. TOP HEADER SECTION
+            PdfPTable headerTable = new PdfPTable(2);
+            headerTable.setWidthPercentage(100);
+            headerTable.setWidths(new float[]{2, 1});
 
-            Paragraph pUser = new Paragraph("User: " + user.getEmail() + " | Period: " + (startDate != null ? startDate : "All") + " to " + (endDate != null ? endDate : "All"), fontBody);
-            pUser.setAlignment(Paragraph.ALIGN_CENTER);
-            pUser.setSpacingAfter(10);
-            document.add(pUser);
+            PdfPCell titleCell = new PdfPCell(new Phrase("CASH ORGANIZER", fontTitle));
+            titleCell.setBorder(Rectangle.NO_BORDER);
+            titleCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+            headerTable.addCell(titleCell);
 
-            Paragraph pDesc = new Paragraph(title, fontSubtitle);
-            pDesc.setAlignment(Paragraph.ALIGN_CENTER);
-            pDesc.setSpacingAfter(20);
-            document.add(pDesc);
+            PdfPCell infoCell = new PdfPCell();
+            infoCell.setBorder(Rectangle.NO_BORDER);
+            infoCell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+            infoCell.addElement(new Paragraph("FINANCIAL REPORT", fontLabel));
+            infoCell.addElement(new Paragraph(title.toUpperCase(), fontSubtitle));
+            headerTable.addCell(infoCell);
+            document.add(headerTable);
 
-            // Chart Section
-            Image chartImage = chartType.equalsIgnoreCase("PIE") 
-                    ? createPieChartImage(writer, filteredAccounts) 
-                    : createBarChartImage(writer, filteredAccounts);
-            
-            if (chartImage != null) {
-                chartImage.setAlignment(Image.ALIGN_CENTER);
-                document.add(chartImage);
-            }
-            
-            document.add(new Paragraph(" ")); 
+            document.add(new Paragraph(" "));
+            LineSeparator ls = new LineSeparator(1f, 100, primaryBlue, Element.ALIGN_CENTER, -2);
+            document.add(ls);
+            document.add(new Paragraph(" "));
 
-            // Accounts Table
-            document.add(new Paragraph("Filtered Accounts Summary", fontSubtitle));
+            // 2. SUMMARY CARDS
+            double totalBalance = filteredAccounts.stream().mapToDouble(a -> a.getAmount().getValue()).sum() / 100.0;
+            double totalExpenses = filteredTransactions.stream()
+                .filter(t -> t.getAmount().isNegative())
+                .mapToDouble(t -> Math.abs(t.getAmount().getValue())).sum() / 100.0;
+
+            PdfPTable summaryTable = new PdfPTable(3);
+            summaryTable.setWidthPercentage(100);
+            summaryTable.setSpacingBefore(10);
+            summaryTable.setSpacingAfter(20);
+
+            addSummaryCard(summaryTable, "CURRENT BALANCE", "EUR " + String.format("%.2f", totalBalance), primaryBlue, fontLabel, fontSubtitle);
+            addSummaryCard(summaryTable, "PERIOD EXPENSES", "EUR " + String.format("%.2f", totalExpenses), Color.RED, fontLabel, fontSubtitle);
+            addSummaryCard(summaryTable, "REPORT DATE", java.time.LocalDate.now().toString(), darkBlue, fontLabel, fontSubtitle);
+            document.add(summaryTable);
+
+            // 3. CHART AND ACCOUNTS
+            document.add(new Paragraph("ACCOUNTS OVERVIEW", fontSubtitle));
+            document.add(new Paragraph(" ", fontBody));
+
             PdfPTable accTable = new PdfPTable(3);
             accTable.setWidthPercentage(100);
-            accTable.setSpacingBefore(10);
-            writeTableHeader(accTable, fontHeader, new String[]{"Account", "Type", "Balance"});
-            for (AccountItem acc : filteredAccounts) {
-                accTable.addCell(new Phrase(acc.getName(), fontBody));
-                accTable.addCell(new Phrase(acc.getAccountType() != null ? acc.getAccountType() : "N/A", fontBody));
-                double bal = (acc.getAmount() != null ? acc.getAmount().getValue() : 0) / 100.0;
-                accTable.addCell(new Phrase("EUR " + String.format("%.2f", bal), fontBody));
+            writeModernHeader(accTable, fontHeader, primaryBlue, new String[]{"Account Name", "Type", "Balance"});
+            for (AccountEntity acc : filteredAccounts) {
+                accTable.addCell(createCell(acc.getName(), fontBody, false));
+                accTable.addCell(createCell(acc.getAccountType() != null ? acc.getAccountType() : "Standard", fontBody, false));
+                double bal = acc.getAmount().getValue() / 100.0;
+                accTable.addCell(createCell("EUR " + String.format("%.2f", bal), fontBody, true));
             }
             document.add(accTable);
 
-            // Transactions Table
-            document.add(new Paragraph("Filtered Transactions", fontSubtitle));
+            document.add(new Paragraph(" "));
+
+            // 4. TRANSACTION HISTORY
+            document.add(new Paragraph("TRANSACTION DETAILS", fontSubtitle));
+            document.add(new Paragraph(" ", fontBody));
+
             PdfPTable txTable = new PdfPTable(4);
             txTable.setWidthPercentage(100);
-            txTable.setSpacingBefore(10);
-            writeTableHeader(txTable, fontHeader, new String[]{"Date", "Category", "Description", "Amount"});
-            for (TransactionItem tx : filteredTransactions) {
-                txTable.addCell(new Phrase(tx.getDate() != null ? tx.getDate().split("T")[0] : "N/A", fontBody));
-                txTable.addCell(new Phrase(tx.getCategory() != null ? tx.getCategory().getName() : "General", fontBody));
-                txTable.addCell(new Phrase(tx.getDescription(), fontBody));
-                double val = (tx.getAmount() != null ? tx.getAmount().getValue() : 0) / 100.0;
-                String sign = (tx.getAmount() != null && tx.getAmount().isNegative()) ? "-" : "";
-                txTable.addCell(new Phrase(sign + "EUR " + String.format("%.2f", val), fontBody));
+            txTable.setWidths(new float[]{1, 2, 3, 1});
+            writeModernHeader(txTable, fontHeader, primaryBlue, new String[]{"Date", "Category", "Description", "Amount"});
+            
+            for (TransactionItemEntity tx : filteredTransactions) {
+                String catName = tx.getCategory() != null ? tx.getCategory().getName() : "General";
+                if (tx.getSubcategory() != null) catName += " > " + tx.getSubcategory().getName();
+
+                txTable.addCell(createCell(tx.getDate().split("T")[0], fontBody, false));
+                txTable.addCell(createCell(catName, fontBody, false));
+                txTable.addCell(createCell(tx.getDescription(), fontBody, false));
+                
+                double val = tx.getAmount().getValue() / 100.0;
+                String sign = tx.getAmount().isNegative() ? "-" : "+";
+                Font amountFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 10, tx.getAmount().isNegative() ? Color.RED : new Color(39, 174, 96));
+                txTable.addCell(createCell(sign + " €" + String.format("%.2f", Math.abs(val)), amountFont, true));
             }
             document.add(txTable);
 
+            // Footer
             document.close();
             return out.toByteArray();
         } catch (Exception e) {
-            throw new RuntimeException("Error generating PDF report", e);
+            throw new RuntimeException("Error generating modern PDF", e);
         }
     }
 
-    private Image createBarChartImage(PdfWriter writer, List<AccountItem> accounts) throws BadElementException {
-        PdfContentByte cb = writer.getDirectContent();
-        PdfTemplate template = cb.createTemplate(400, 200);
-        float x = 50; float y = 30; float width = 30; float maxHeight = 130;
-        if (accounts.isEmpty()) return null;
-        double maxVal = accounts.stream().mapToDouble(a -> a.getAmount() != null ? Math.abs(a.getAmount().getValue()) : 0).max().orElse(100.0);
-        for (AccountItem acc : accounts) {
-            double val = acc.getAmount() != null ? acc.getAmount().getValue() : 0;
-            float normalizedHeight = (float) ((Math.abs(val) / maxVal) * maxHeight);
-            template.setColorFill(val < 0 ? Color.RED : new Color(0, 159, 251));
-            template.rectangle(x, y, width, normalizedHeight);
-            template.fill();
-            x += 50;
-        }
-        return Image.getInstance(template);
-    }
-
-    private Image createPieChartImage(PdfWriter writer, List<AccountItem> accounts) throws BadElementException {
-        PdfContentByte cb = writer.getDirectContent();
-        PdfTemplate template = cb.createTemplate(400, 200);
-        float centerX = 150; float centerY = 100; float radius = 80;
-        if (accounts.isEmpty()) return null;
-        double total = accounts.stream().mapToDouble(a -> a.getAmount() != null ? Math.abs(a.getAmount().getValue()) : 0).sum();
-        if (total == 0) return null;
-        float startAngle = 0;
-        Color[] colors = {Color.BLUE, Color.GREEN, Color.ORANGE, Color.MAGENTA, Color.CYAN, Color.RED};
-        int i = 0;
-        for (AccountItem acc : accounts) {
-            double val = acc.getAmount() != null ? Math.abs(acc.getAmount().getValue()) : 0;
-            float arc = (float) (val / total * 360);
-            template.setColorFill(colors[i % colors.length]);
-            template.moveTo(centerX, centerY);
-            template.arc(centerX - radius, centerY - radius, centerX + radius, centerY + radius, startAngle, arc);
-            template.lineTo(centerX, centerY);
-            template.fill();
-            startAngle += arc;
-            i++;
-        }
-        return Image.getInstance(template);
-    }
-
-    private void writeTableHeader(PdfPTable table, Font font, String[] headers) {
+    private void addSummaryCard(PdfPTable table, String label, String value, Color valueColor, Font fontLabel, Font fontValue) {
         PdfPCell cell = new PdfPCell();
-        cell.setBackgroundColor(new Color(0, 159, 251));
-        cell.setPadding(5);
+        cell.setPadding(10);
+        cell.setBackgroundColor(new Color(250, 250, 250));
+        cell.setBorderColor(new Color(230, 230, 230));
+        cell.addElement(new Paragraph(label, fontLabel));
+        Font customFont = new Font(fontValue);
+        customFont.setColor(valueColor);
+        cell.addElement(new Paragraph(value, customFont));
+        table.addCell(cell);
+    }
+
+    private void writeModernHeader(PdfPTable table, Font font, Color bgColor, String[] headers) {
         for (String h : headers) {
-            cell.setPhrase(new Phrase(h, font));
+            PdfPCell cell = new PdfPCell(new Phrase(h, font));
+            cell.setBackgroundColor(bgColor);
+            cell.setPadding(8);
+            cell.setBorder(Rectangle.NO_BORDER);
             table.addCell(cell);
         }
+    }
+
+    private PdfPCell createCell(String text, Font font, boolean alignRight) {
+        PdfPCell cell = new PdfPCell(new Phrase(text, font));
+        cell.setPadding(6);
+        cell.setBorderColor(new Color(240, 240, 240));
+        if (alignRight) cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+        return cell;
     }
 }

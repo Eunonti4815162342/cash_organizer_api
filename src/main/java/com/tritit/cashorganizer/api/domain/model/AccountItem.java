@@ -1,50 +1,24 @@
 package com.tritit.cashorganizer.api.domain.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import jakarta.persistence.Column;
-import jakarta.persistence.Embedded;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity
-@Table(name = "accounts", schema = "cash_organizer")
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class AccountItem {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @ManyToOne(fetch = jakarta.persistence.FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    @com.fasterxml.jackson.annotation.JsonIgnore
     private User user;
-
     private String name;
-
-    @Embedded
-    private Amount amount;
-
-    @ManyToOne
-    @JoinColumn(name = "entity_id")
-    @JsonIgnoreProperties("accounts")
-    private FinancialEntity entity;
-
     private String description;
     private String accountType;
     private Integer flags;
     private String notes;
     private Integer accountOrder;
-
-    @Column(nullable = false)
-    private Boolean active = true;
+    private Boolean active;
+    private Amount amount;
+    private FinancialEntity entity;
 }

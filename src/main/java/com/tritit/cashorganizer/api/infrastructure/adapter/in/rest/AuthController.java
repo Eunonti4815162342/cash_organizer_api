@@ -17,7 +17,7 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody AuthRequest request) {
         try {
-            return ResponseEntity.ok(authService.login(request.getEmail(), request.getPassword()));
+            return ResponseEntity.ok(authService.login(request.getEmail(), request.getPassword(), request.isRememberMe()));
         } catch (Exception e) {
             return ResponseEntity.status(401).body(e.getMessage());
         }
@@ -31,7 +31,7 @@ public class AuthController {
             return ResponseEntity.ok("Usuario registrado correctamente");
         } catch (Exception e) {
             System.err.println("[AuthController] Register Error: " + e.getMessage());
-            e.printStackTrace(); // Esto mostrará el error real en tu consola del servidor
+            e.printStackTrace(); 
             return ResponseEntity.status(400).body(e.getMessage());
         }
     }
@@ -40,5 +40,6 @@ public class AuthController {
     public static class AuthRequest {
         private String email;
         private String password;
+        private boolean rememberMe;
     }
 }

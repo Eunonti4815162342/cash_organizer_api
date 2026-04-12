@@ -1,21 +1,22 @@
 package com.tritit.cashorganizer.api.infrastructure.adapter.out.persistence;
 
-import com.tritit.cashorganizer.api.domain.model.TransactionItem;
-import com.tritit.cashorganizer.api.domain.model.User;
+import com.tritit.cashorganizer.api.infrastructure.adapter.out.persistence.entity.TransactionItemEntity;
+import com.tritit.cashorganizer.api.infrastructure.adapter.out.persistence.entity.UserEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-import java.util.List;
 
 @Repository
-public interface TransactionRepository extends JpaRepository<TransactionItem, Long> {
+public interface TransactionRepository extends JpaRepository<TransactionItemEntity, Long> {
     
-    List<TransactionItem> findAllByUser(User user);
+    Page<TransactionItemEntity> findAllByUser(UserEntity user, Pageable pageable);
 
-    @Query("SELECT t FROM TransactionItem t WHERE t.user = :user AND t.date >= :startDate AND t.date <= :endDate ORDER BY t.date DESC")
-    List<TransactionItem> findAllByUserAndDateRange(@Param("user") User user, @Param("startDate") String startDate, @Param("endDate") String endDate);
+    @Query("SELECT t FROM TransactionItemEntity t WHERE t.user = :user AND t.date >= :startDate AND t.date <= :endDate ORDER BY t.date DESC")
+    Page<TransactionItemEntity> findAllByUserAndDateRange(@Param("user") UserEntity user, @Param("startDate") String startDate, @Param("endDate") String endDate, Pageable pageable);
 
-    @Query("SELECT t FROM TransactionItem t WHERE t.user = :user AND (t.account.id = :accountId OR t.toAccount.id = :accountId) AND t.date >= :startDate AND t.date <= :endDate ORDER BY t.date DESC")
-    List<TransactionItem> findAllByUserAndAccountAndDateRange(@Param("user") User user, @Param("accountId") Long accountId, @Param("startDate") String startDate, @Param("endDate") String endDate);
+    @Query("SELECT t FROM TransactionItemEntity t WHERE t.user = :user AND (t.account.id = :accountId OR t.toAccount.id = :accountId) AND t.date >= :startDate AND t.date <= :endDate ORDER BY t.date DESC")
+    Page<TransactionItemEntity> findAllByUserAndAccountAndDateRange(@Param("user") UserEntity user, @Param("accountId") Long accountId, @Param("startDate") String startDate, @Param("endDate") String endDate, Pageable pageable);
 }
