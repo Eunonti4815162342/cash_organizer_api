@@ -26,5 +26,18 @@ public class CategoryController {
         return service.createCategory(category);
     }
 
-    // Nota: Las rutas de subcategorías se pueden añadir aquí si el servicio las soporta
+    @DeleteMapping("/subcategories/{id}")
+    public void deleteSubcategory(@PathVariable Long id) {
+        service.deleteSubcategory(id);
+    }
+
+    @GetMapping("/{id}/transactions")
+    public List<com.tritit.cashorganizer.api.domain.model.TransactionItem> getTransactionsByCategory(@PathVariable Long id) {
+        return service.getTransactionsByCategory(id);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteCategory(@PathVariable Long id) {
+        service.deleteCategory(id);
+    }
 }
