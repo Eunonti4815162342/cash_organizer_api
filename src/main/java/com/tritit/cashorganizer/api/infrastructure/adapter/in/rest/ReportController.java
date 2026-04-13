@@ -34,9 +34,10 @@ public class ReportController {
             @RequestParam(required = false) String startDate,
             @RequestParam(required = false) String endDate,
             @RequestParam(required = false) List<Long> accountIds,
-            @RequestParam(required = false) List<Long> categoryIds) {
+            @RequestParam(required = false) List<Long> categoryIds,
+            @RequestParam(defaultValue = "en") String lang) {
         
-        byte[] pdfBytes = reportService.generatePdfReport(title, chartType, startDate, endDate, accountIds, categoryIds);
+        byte[] pdfBytes = reportService.generatePdfReport(title, chartType, startDate, endDate, accountIds, categoryIds, lang);
 
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=report.pdf")
