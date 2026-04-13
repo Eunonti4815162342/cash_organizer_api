@@ -101,7 +101,7 @@ public class ReportService {
             headerTable.setWidthPercentage(100);
             headerTable.setWidths(new float[]{2, 1});
 
-            PdfPCell titleCell = new PdfPCell(new Phrase("CASH ORGANIZER", fontTitle));
+            PdfPCell titleCell = new PdfPCell(new Phrase("CASHKEEP", fontTitle));
             titleCell.setBorder(Rectangle.NO_BORDER);
             titleCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
             headerTable.addCell(titleCell);
