@@ -26,7 +26,14 @@ public class TransactionController {
             @RequestParam(defaultValue = "20") int size) {
         
         Pageable pageable = PageRequest.of(page, size, Sort.by("date").descending());
-        return service.getTransactions(startDate, endDate, accountId, pageable);
+        
+        if (startDate != null && endDate != null) {
+            if (accountId != null) {
+                return service.getTransactionsByAccountAndDateRange(accountId, startDate, endDate, pageable);
+            }
+            return service.getTransactionsByDateRange(startDate, endDate, pageable);
+        }
+        return service.getAllTransactions(pageable);
     }
 
     @PostMapping

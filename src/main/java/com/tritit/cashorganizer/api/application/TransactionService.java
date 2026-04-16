@@ -3,13 +3,10 @@ package com.tritit.cashorganizer.api.application;
 import com.tritit.cashorganizer.api.domain.model.AccountItem;
 import com.tritit.cashorganizer.api.domain.model.TransactionItem;
 import com.tritit.cashorganizer.api.domain.model.User;
-import com.tritit.cashorganizer.api.infrastructure.adapter.out.persistence.AccountRepository;
-import com.tritit.cashorganizer.api.infrastructure.adapter.out.persistence.PersistenceMapper;
-import com.tritit.cashorganizer.api.infrastructure.adapter.out.persistence.TransactionRepository;
-import com.tritit.cashorganizer.api.infrastructure.adapter.out.persistence.UserRepository;
-import com.tritit.cashorganizer.api.infrastructure.adapter.out.persistence.entity.AccountEntity;
-import com.tritit.cashorganizer.api.infrastructure.adapter.out.persistence.entity.TransactionItemEntity;
-import com.tritit.cashorganizer.api.infrastructure.adapter.out.persistence.entity.UserEntity;
+import com.tritit.cashorganizer.api.domain.port.in.TransactionUseCase;
+import com.tritit.cashorganizer.api.domain.port.out.AccountPersistencePort;
+import com.tritit.cashorganizer.api.domain.port.out.TransactionPersistencePort;
+import com.tritit.cashorganizer.api.domain.port.out.UserPersistencePort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,94 +16,102 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-public class TransactionService {
+public class TransactionService implements TransactionUseCase {
 
-    private final TransactionRepository transactionRepository;
-    private final AccountRepository accountRepository;
-    private final UserRepository userRepository;
-    private final PersistenceMapper mapper;
+    private final TransactionPersistencePort transactionPersistencePort;
+    private final AccountPersistencePort accountPersistencePort;
+    private final UserPersistencePort userPersistencePort;
 
-    private UserEntity getCurrentUserEntity() {
+    private User getCurrentUser() {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
-        return userRepository.findByEmail(email)
+        return userPersistencePort.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("Authenticated user not found"));
     }
 
+    @Override
     @Transactional(readOnly = true)
-    public Page<TransactionItem> getTransactions(String startDate, String endDate, Long accountId, Pageable pageable) {
-        UserEntity user = getCurrentUserEntity();
-        
-        Page<TransactionItemEntity> entities;
-        if (startDate != null && endDate != null) {
-            if (accountId != null) {
-                entities = transactionRepository.findAllByUserAndAccountAndDateRange(user, accountId, startDate, endDate, pageable);
-            } else {
-                entities = transactionRepository.findAllByUserAndDateRange(user, startDate, endDate, pageable);
-            }
-        } else {
-            entities = transactionRepository.findAllByUser(user, pageable);
-        }
-        return entities.map(mapper::toDomain);
+    public Page<TransactionItem> getAllTransactions(Pageable pageable) {
+        User user = getCurrentUser();
+        return transactionPersistencePort.findAllByUser(user, pageable);
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public Page<TransactionItem> getTransactionsByDateRange(String startDate, String endDate, Pageable pageable) {
+        User user = getCurrentUser();
+        return transactionPersistencePort.findAllByUserAndDateRange(user, startDate, endDate, pageable);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<TransactionItem> getTransactionsByAccountAndDateRange(Long accountId, String startDate, String endDate, Pageable pageable) {
+        User user = getCurrentUser();
+        return transactionPersistencePort.findAllByUserAndAccountAndDateRange(user, accountId, startDate, endDate, pageable);
+    }
+
+    @Override
     @Transactional
     public TransactionItem createTransaction(TransactionItem transaction) {
-        UserEntity user = getCurrentUserEntity();
-        TransactionItemEntity entity = mapper.toEntity(transaction);
-        entity.setUser(user);
+        User user = getCurrentUser();
+        transaction.setUser(user);
         
-        applyTransactionImpact(entity, false, user);
-        return mapper.toDomain(transactionRepository.save(entity));
+        applyTransactionImpact(transaction, false, user);
+        return transactionPersistencePort.save(transaction);
     }
 
+    @Override
     @Transactional
     public TransactionItem updateTransaction(Long id, TransactionItem newTransaction) {
-        UserEntity user = getCurrentUserEntity();
+        User user = getCurrentUser();
         
-        TransactionItemEntity oldEntity = transactionRepository.findById(id)
+        TransactionItem oldTransaction = transactionPersistencePort.findById(id)
                 .filter(t -> t.getUser().getId().equals(user.getId()))
                 .orElseThrow(() -> new RuntimeException("Transaction not found or access denied"));
 
-        applyTransactionImpact(oldEntity, true, user);
+        // Revertimos impacto de la anterior
+        applyTransactionImpact(oldTransaction, true, user);
 
-        TransactionItemEntity newEntity = mapper.toEntity(newTransaction);
-        newEntity.setUser(user);
-        newEntity.setId(id);
-        applyTransactionImpact(newEntity, false, user);
+        // Aplicamos impacto de la nueva
+        newTransaction.setUser(user);
+        newTransaction.setId(id);
+        applyTransactionImpact(newTransaction, false, user);
 
-        return mapper.toDomain(transactionRepository.save(newEntity));
+        return transactionPersistencePort.save(newTransaction);
     }
 
+    @Override
     @Transactional
     public void deleteTransaction(Long id) {
-        UserEntity user = getCurrentUserEntity();
+        User user = getCurrentUser();
         
-        TransactionItemEntity entity = transactionRepository.findById(id)
+        TransactionItem transaction = transactionPersistencePort.findById(id)
                 .filter(t -> t.getUser().getId().equals(user.getId()))
                 .orElseThrow(() -> new RuntimeException("Transaction not found or access denied"));
         
-        if (entity.getType() == TransactionItem.TransactionType.ACCOUNT_CLOSE) {
-            AccountEntity account = entity.getAccount();
-            account.setActive(true);
-            accountRepository.save(account);
+        if (transaction.getType() == TransactionItem.TransactionType.ACCOUNT_CLOSE) {
+            AccountItem account = transaction.getAccount();
+            if (account != null) {
+                account.setActive(true);
+                accountPersistencePort.save(account);
+            }
         } else {
-            applyTransactionImpact(entity, true, user);
+            applyTransactionImpact(transaction, true, user);
         }
         
-        transactionRepository.delete(entity);
+        transactionPersistencePort.deleteById(id);
     }
 
-    private void applyTransactionImpact(TransactionItemEntity entity, boolean revert, UserEntity user) {
-        if (entity.getAccount() == null) throw new RuntimeException("Source account is mandatory");
+    private void applyTransactionImpact(TransactionItem transaction, boolean revert, User user) {
+        if (transaction.getAccount() == null) throw new RuntimeException("Source account is mandatory");
 
-        AccountEntity fromAccount = accountRepository.findById(entity.getAccount().getId())
+        AccountItem fromAccount = accountPersistencePort.findById(transaction.getAccount().getId())
                 .filter(a -> a.getUser().getId().equals(user.getId()))
                 .orElseThrow(() -> new RuntimeException("Source account not found or access denied"));
 
-        long val = entity.getAmount().getValue();
+        long val = transaction.getAmount().getValue();
         if (revert) val = -val;
 
-        TransactionItem.TransactionType type = entity.getType();
+        TransactionItem.TransactionType type = transaction.getType();
         if (type == null) type = TransactionItem.TransactionType.EXPENSE;
 
         switch (type) {
@@ -117,19 +122,19 @@ public class TransactionService {
                 fromAccount.getAmount().setValue(fromAccount.getAmount().getValue() - val);
                 break;
             case TRANSFER:
-                if (entity.getToAccount() == null) throw new RuntimeException("Destination account is mandatory for transfers");
+                if (transaction.getToAccount() == null) throw new RuntimeException("Destination account is mandatory for transfers");
                 
-                AccountEntity toAccount = accountRepository.findById(entity.getToAccount().getId())
+                AccountItem toAccount = accountPersistencePort.findById(transaction.getToAccount().getId())
                         .filter(a -> a.getUser().getId().equals(user.getId()))
                         .orElseThrow(() -> new RuntimeException("Destination account not found or access denied"));
                 
                 fromAccount.getAmount().setValue(fromAccount.getAmount().getValue() - val);
                 toAccount.getAmount().setValue(toAccount.getAmount().getValue() + val);
-                accountRepository.save(toAccount);
+                accountPersistencePort.save(toAccount);
                 break;
             default:
                 break;
         }
-        accountRepository.save(fromAccount);
+        accountPersistencePort.save(fromAccount);
     }
 }

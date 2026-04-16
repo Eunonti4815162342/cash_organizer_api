@@ -1,0 +1,64 @@
+package com.tritit.cashorganizer.api.infrastructure.adapter.out.persistence;
+
+import com.tritit.cashorganizer.api.domain.model.TransactionItem;
+import com.tritit.cashorganizer.api.domain.model.User;
+import com.tritit.cashorganizer.api.domain.port.out.TransactionPersistencePort;
+import com.tritit.cashorganizer.api.infrastructure.adapter.out.persistence.entity.TransactionItemEntity;
+import com.tritit.cashorganizer.api.infrastructure.adapter.out.persistence.entity.UserEntity;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Component;
+import java.util.Optional;
+
+@Component
+@RequiredArgsConstructor
+public class TransactionPersistenceAdapter implements TransactionPersistencePort {
+
+    private final TransactionRepository transactionRepository;
+    private final PersistenceMapper mapper;
+
+    @Override
+    public TransactionItem save(TransactionItem transaction) {
+        TransactionItemEntity entity = mapper.toEntity(transaction);
+        TransactionItemEntity savedEntity = transactionRepository.save(entity);
+        return mapper.toDomain(savedEntity);
+    }
+
+    @Override
+    public void delete(TransactionItem transaction) {
+        transactionRepository.delete(mapper.toEntity(transaction));
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        transactionRepository.deleteById(id);
+    }
+
+    @Override
+    public Page<TransactionItem> findAllByUser(User user, Pageable pageable) {
+        UserEntity userEntity = mapper.toEntity(user);
+        return transactionRepository.findAllByUser(userEntity, pageable)
+                .map(mapper::toDomain);
+    }
+
+    @Override
+    public Optional<TransactionItem> findById(Long id) {
+        return transactionRepository.findById(id)
+                .map(mapper::toDomain);
+    }
+
+    @Override
+    public Page<TransactionItem> findAllByUserAndDateRange(User user, String startDate, String endDate, Pageable pageable) {
+        UserEntity userEntity = mapper.toEntity(user);
+        return transactionRepository.findAllByUserAndDateRange(userEntity, startDate, endDate, pageable)
+                .map(mapper::toDomain);
+    }
+
+    @Override
+    public Page<TransactionItem> findAllByUserAndAccountAndDateRange(User user, Long accountId, String startDate, String endDate, Pageable pageable) {
+        UserEntity userEntity = mapper.toEntity(user);
+        return transactionRepository.findAllByUserAndAccountAndDateRange(userEntity, accountId, startDate, endDate, pageable)
+                .map(mapper::toDomain);
+    }
+}
