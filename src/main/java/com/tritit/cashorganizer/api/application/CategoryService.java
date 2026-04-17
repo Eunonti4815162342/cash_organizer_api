@@ -2,116 +2,81 @@ package com.tritit.cashorganizer.api.application;
 
 import com.tritit.cashorganizer.api.domain.model.Category;
 import com.tritit.cashorganizer.api.domain.model.TransactionItem;
-import com.tritit.cashorganizer.api.infrastructure.adapter.out.persistence.CategoryRepository;
-import com.tritit.cashorganizer.api.infrastructure.adapter.out.persistence.PersistenceMapper;
-import com.tritit.cashorganizer.api.infrastructure.adapter.out.persistence.SubcategoryRepository;
-import com.tritit.cashorganizer.api.infrastructure.adapter.out.persistence.TransactionRepository;
-import com.tritit.cashorganizer.api.infrastructure.adapter.out.persistence.UserRepository;
-import com.tritit.cashorganizer.api.infrastructure.adapter.out.persistence.entity.SubcategoryEntity;
-import com.tritit.cashorganizer.api.infrastructure.adapter.out.persistence.entity.TransactionItemEntity;
-import com.tritit.cashorganizer.api.infrastructure.adapter.out.persistence.entity.UserEntity;
-import com.tritit.cashorganizer.api.infrastructure.adapter.out.persistence.entity.CategoryEntity;
+import com.tritit.cashorganizer.api.domain.model.User;
+import com.tritit.cashorganizer.api.domain.port.in.CategoryUseCase;
+import com.tritit.cashorganizer.api.domain.port.out.CategoryPersistencePort;
+import com.tritit.cashorganizer.api.domain.port.out.TransactionPersistencePort;
+import com.tritit.cashorganizer.api.domain.port.out.UserContextPort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class CategoryService {
+public class CategoryService implements CategoryUseCase {
 
-    private final CategoryRepository categoryRepository;
-    private final SubcategoryRepository subcategoryRepository;
-    private final TransactionRepository transactionRepository;
-    private final UserRepository userRepository;
-    private final PersistenceMapper mapper;
+    private final CategoryPersistencePort categoryPersistencePort;
+    private final TransactionPersistencePort transactionPersistencePort;
+    private final UserContextPort userContextPort;
 
-    private UserEntity getCurrentUserEntity() {
-        String email = SecurityContextHolder.getContext().getAuthentication().getName();
-        return userRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("Authenticated user not found"));
-    }
-
+    @Override
     @Transactional(readOnly = true)
     public List<Category> getCategories() {
-        UserEntity user = getCurrentUserEntity();
-        return categoryRepository.findAllByUser(user).stream()
-                .map(mapper::toDomain)
-                .collect(Collectors.toList());
+        User user = userContextPort.getCurrentUser();
+        return categoryPersistencePort.findAllByUser(user);
     }
 
+    @Override
     @Transactional
     public Category createCategory(Category category) {
-        UserEntity user = getCurrentUserEntity();
-        CategoryEntity entity = mapper.toEntity(category);
-        entity.setUser(user);
-        return mapper.toDomain(categoryRepository.save(entity));
+        User user = userContextPort.getCurrentUser();
+        category.setUser(user);
+        return categoryPersistencePort.save(category);
     }
 
+    @Override
     public List<TransactionItem> getTransactionsByCategory(Long categoryId) {
-        UserEntity user = getCurrentUserEntity();
-        
-        // Obtener todas las transacciones del usuario
-        List<TransactionItemEntity> allTransactions = transactionRepository.findAllByUser(user, Pageable.unpaged()).getContent();
-        
-        // Filtrar las que pertenecen a esta categoría o a cualquiera de sus subcategorías
-        return allTransactions.stream()
+        User user = userContextPort.getCurrentUser();
+
+        return transactionPersistencePort.findAllByUser(user, Pageable.unpaged()).getContent().stream()
                 .filter(t -> t.getCategory() != null && t.getCategory().getId().equals(categoryId))
-                .map(mapper::toDomain)
-                .collect(Collectors.toList());
+                .toList();
     }
 
+    @Override
     @Transactional
     public void deleteCategory(Long id) {
-        UserEntity user = getCurrentUserEntity();
-        CategoryEntity category = categoryRepository.findById(id)
+        User user = userContextPort.getCurrentUser();
+        Category category = categoryPersistencePort.findById(id)
                 .orElseThrow(() -> new RuntimeException("Category not found"));
 
-        if (!category.getUser().getId().equals(user.getId())) {
-            throw new RuntimeException("Access denied");
-        }
-
-        // REGLA: No se puede borrar si tiene transacciones
         List<TransactionItem> linkedTransactions = getTransactionsByCategory(id);
         if (!linkedTransactions.isEmpty()) {
             throw new RuntimeException("Cannot delete category with linked transactions. Please reassign them first.");
         }
 
-        categoryRepository.delete(category);
+        categoryPersistencePort.delete(id);
     }
 
+    @Override
     @Transactional
     public void deleteSubcategory(Long subcategoryId) {
-        UserEntity user = getCurrentUserEntity();
-        
-        SubcategoryEntity subcategory = subcategoryRepository.findById(subcategoryId)
-                .orElseThrow(() -> new RuntimeException("Subcategory not found"));
+        User user = userContextPort.getCurrentUser();
 
-        // Verificar que la subcategoría pertenece a una categoría del usuario
-        if (!subcategory.getCategory().getUser().getId().equals(user.getId())) {
-            throw new RuntimeException("Access denied to this subcategory");
-        }
+        List<TransactionItem> transactions = transactionPersistencePort.findAllByUser(user, Pageable.unpaged()).getContent();
 
-        // 1. Buscar transacciones asociadas a esta subcategoría
-        // Usamos Pageable.unpaged() porque queremos procesar todas para la migración
-        List<TransactionItemEntity> transactions = transactionRepository.findAllByUser(user, Pageable.unpaged()).getContent();
-        
-        List<TransactionItemEntity> linkedTransactions = transactions.stream()
+        List<TransactionItem> linkedTransactions = transactions.stream()
                 .filter(t -> t.getSubcategory() != null && t.getSubcategory().getId().equals(subcategoryId))
-                .collect(Collectors.toList());
+                .toList();
 
-        // 2. Reasignar a la categoría padre y poner subcategoría a null
-        for (TransactionItemEntity tx : linkedTransactions) {
-            tx.setCategory(subcategory.getCategory());
-            tx.setSubcategory(null);
-            transactionRepository.save(tx);
+        for (TransactionItem tx : linkedTransactions) {
+            transactionPersistencePort.save(tx);
         }
 
-        // 3. Eliminar físicamente la subcategoría
-        subcategoryRepository.delete(subcategory);
+        categoryPersistencePort.deleteSubcategoryById(subcategoryId);
     }
 }
+

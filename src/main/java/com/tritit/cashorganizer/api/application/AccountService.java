@@ -4,94 +4,76 @@ import com.tritit.cashorganizer.api.domain.model.AccountItem;
 import com.tritit.cashorganizer.api.domain.model.TransactionItem;
 import com.tritit.cashorganizer.api.domain.model.Amount;
 import com.tritit.cashorganizer.api.domain.model.User;
-import com.tritit.cashorganizer.api.infrastructure.adapter.out.persistence.AccountRepository;
+import com.tritit.cashorganizer.api.domain.port.in.AccountUseCase;
+import com.tritit.cashorganizer.api.domain.port.out.AccountPersistencePort;
+import com.tritit.cashorganizer.api.domain.port.out.TransactionPersistencePort;
+import com.tritit.cashorganizer.api.domain.port.out.UserContextPort;
 import com.tritit.cashorganizer.api.infrastructure.adapter.out.persistence.PersistenceMapper;
-import com.tritit.cashorganizer.api.infrastructure.adapter.out.persistence.TransactionRepository;
-import com.tritit.cashorganizer.api.infrastructure.adapter.out.persistence.UserRepository;
-import com.tritit.cashorganizer.api.infrastructure.adapter.out.persistence.entity.AccountEntity;
-import com.tritit.cashorganizer.api.infrastructure.adapter.out.persistence.entity.UserEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class AccountService {
+public class AccountService implements AccountUseCase {
 
-    private final AccountRepository accountRepository;
-    private final TransactionRepository transactionRepository;
-    private final UserRepository userRepository;
+    private final AccountPersistencePort accountPersistencePort;
+    private final TransactionPersistencePort transactionPersistencePort;
+    private final UserContextPort userContextPort;
     private final PersistenceMapper mapper;
 
-    private UserEntity getCurrentUserEntity() {
-        String email = SecurityContextHolder.getContext().getAuthentication().getName();
-        return userRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("Authenticated user not found"));
-    }
-
+    @Override
     public List<AccountItem> getAllActiveAccounts() {
-        UserEntity user = getCurrentUserEntity();
-        return accountRepository.findAllByUser(user).stream()
+        User user = userContextPort.getCurrentUser();
+        return accountPersistencePort.findAllByUser(user).stream()
                 .filter(a -> a.getActive() == null || a.getActive())
-                .map(mapper::toDomain)
-                .collect(Collectors.toList());
+                .toList();
     }
 
+    @Override
     @Transactional
     public AccountItem updateAccount(Long id, AccountItem accountDetails) {
-        UserEntity user = getCurrentUserEntity();
-        
-        AccountEntity account = accountRepository.findById(id)
-                .filter(a -> a.getUser().getId().equals(user.getId()))
+        User user = userContextPort.getCurrentUser();
+
+        AccountItem account = accountPersistencePort.findById(id)
                 .orElseThrow(() -> new RuntimeException("Account not found or access denied"));
 
-        boolean nameExists = accountRepository.findAllByUser(user).stream()
+        boolean nameExists = accountPersistencePort.findAllByUser(user).stream()
                 .anyMatch(a -> !a.getId().equals(id) && a.getName().equalsIgnoreCase(accountDetails.getName()));
-        
+
         if (nameExists) {
             throw new RuntimeException("An account with this name already exists.");
         }
-        
+
         account.setName(accountDetails.getName());
         account.setDescription(accountDetails.getDescription());
         account.setAccountType(accountDetails.getAccountType());
         account.setNotes(accountDetails.getNotes());
         account.setFlags(accountDetails.getFlags());
-        if (accountDetails.getEntity() != null) {
-            account.setFinancialEntity(mapper.toEntity(accountDetails.getEntity()));
-        }
-        
-        boolean hasTransactions = transactionRepository.findAllByUser(user, Pageable.unpaged()).getContent().stream()
-                .anyMatch(t -> (t.getAccount() != null && t.getAccount().getId().equals(id)) || 
-                             (t.getToAccount() != null && t.getToAccount().getId().equals(id)));
+        account.setEntity(accountDetails.getEntity());
+        account.setAmount(accountDetails.getAmount());
 
-        if (accountDetails.getAmount() != null) {
-            account.setAmount(mapper.toEntity(accountDetails.getAmount()));
-        }
-        
-        return mapper.toDomain(accountRepository.save(account));
+        return accountPersistencePort.save(account);
     }
 
+    @Override
     @Transactional
     public void closeAccount(Long id) {
-        UserEntity user = getCurrentUserEntity();
-        AccountEntity account = accountRepository.findById(id)
-                .filter(a -> a.getUser().getId().equals(user.getId()))
+        User user = userContextPort.getCurrentUser();
+        AccountItem account = accountPersistencePort.findById(id)
                 .orElseThrow(() -> new RuntimeException("Account not found or access denied"));
 
         if (account.getActive() != null && !account.getActive()) return;
 
         account.setActive(false);
-        accountRepository.save(account);
+        accountPersistencePort.save(account);
 
         TransactionItem closeTx = new TransactionItem();
-        closeTx.setUser(mapper.toDomain(user));
-        closeTx.setAccount(mapper.toDomain(account));
+        closeTx.setUser(user);
+        closeTx.setAccount(account);
         closeTx.setType(TransactionItem.TransactionType.ACCOUNT_CLOSE);
         closeTx.setDate(LocalDateTime.now().toString());
         closeTx.setDescription("Account Closed: " + account.getName());
@@ -99,31 +81,32 @@ public class AccountService {
         closeTx.setStatusFlags(0);
         closeTx.setIsScheduled(false);
         closeTx.setIsHeader(false);
-        
-        transactionRepository.save(mapper.toEntity(closeTx));
+
+        transactionPersistencePort.save(closeTx);
     }
 
+    @Override
     @Transactional
     public void permanentlyDeleteAccount(Long id) {
-        UserEntity user = getCurrentUserEntity();
-        AccountEntity account = accountRepository.findById(id)
-                .filter(a -> a.getUser().getId().equals(user.getId()))
+        User user = userContextPort.getCurrentUser();
+        AccountItem account = accountPersistencePort.findById(id)
                 .orElseThrow(() -> new RuntimeException("Account not found or access denied"));
 
-        transactionRepository.findAllByUser(user, Pageable.unpaged()).getContent().stream()
-                .filter(t -> (t.getAccount() != null && t.getAccount().getId().equals(id)) || 
+        transactionPersistencePort.findAllByUser(user, Pageable.unpaged()).getContent().stream()
+                .filter(t -> (t.getAccount() != null && t.getAccount().getId().equals(id)) ||
                              (t.getToAccount() != null && t.getToAccount().getId().equals(id)))
-                .forEach(transactionRepository::delete);
+                .forEach(transactionPersistencePort::delete);
 
-        accountRepository.delete(account);
+        accountPersistencePort.delete(id);
     }
 
+    @Override
     @Transactional
     public AccountItem createAccount(AccountItem accountItem) {
-        UserEntity user = getCurrentUserEntity();
-        AccountEntity entity = mapper.toEntity(accountItem);
-        entity.setUser(user);
-        entity.setActive(true);
-        return mapper.toDomain(accountRepository.save(entity));
+        User user = userContextPort.getCurrentUser();
+        accountItem.setUser(user);
+        accountItem.setActive(true);
+        return accountPersistencePort.save(accountItem);
     }
 }
+

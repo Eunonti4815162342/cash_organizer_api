@@ -3,11 +3,9 @@ package com.tritit.cashorganizer.api.infrastructure.adapter.out.persistence;
 import com.tritit.cashorganizer.api.domain.model.AccountItem;
 import com.tritit.cashorganizer.api.domain.model.User;
 import com.tritit.cashorganizer.api.domain.port.out.AccountPersistencePort;
-import com.tritit.cashorganizer.api.infrastructure.adapter.out.persistence.entity.AccountEntity;
 import com.tritit.cashorganizer.api.infrastructure.adapter.out.persistence.entity.UserEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -35,9 +33,8 @@ public class AccountPersistenceAdapter implements AccountPersistencePort {
 
     @Override
     public AccountItem save(AccountItem account) {
-        AccountEntity entity = mapper.toEntity(account);
-        AccountEntity savedEntity = accountRepository.save(entity);
-        return mapper.toDomain(savedEntity);
+        var entity = mapper.toEntity(account);
+        return mapper.toDomain(accountRepository.save(entity));
     }
 
     @Override
