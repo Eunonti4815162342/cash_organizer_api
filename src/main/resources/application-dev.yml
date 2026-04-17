@@ -33,6 +33,15 @@ server:
     include-message: always
     include-stacktrace: always
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: always
+
 logging:
   level:
     root: INFO
