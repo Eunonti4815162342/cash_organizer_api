@@ -110,17 +110,26 @@ pipeline {
                     while [ $ATTEMPT -lt $MAX_ATTEMPTS ]; do
                         # Check if port 8085 is listening (works without curl in alpine)
                         if docker exec ${DOCKER_CONTAINER} sh -c 'exec 3<>/dev/tcp/localhost/8085 && exec 3>&- && exec 3<&-' 2>/dev/null; then
-                            echo "✓ Backend port 8085 is responding"
-                            echo "✓ Container status:"
-                            docker ps -f name=${DOCKER_CONTAINER} --format "Status: {{.Status}}"
-                            exit 0
+                            echo "✓ Backend port 8085 is listening"
+                            sleep 2
+
+                            # Now check health endpoint from Jenkins host
+                            HEALTH=$(curl -s http://localhost:${APP_PORT}/actuator/health 2>/dev/null)
+                            if echo "$HEALTH" | grep -q "UP"; then
+                                echo "✓ Backend health check: UP"
+                                echo "Health response: $HEALTH"
+                                echo ""
+                                echo "✅ DEPLOYMENT SUCCESSFUL!"
+                                docker ps -f name=${DOCKER_CONTAINER} --format "Container: {{.Names}} | Status: {{.Status}} | Ports: {{.Ports}}"
+                                exit 0
+                            fi
                         fi
                         ATTEMPT=$((ATTEMPT + 1))
                         echo "Attempt $ATTEMPT/$MAX_ATTEMPTS - waiting for application startup..."
                         sleep 2
                     done
 
-                    echo "✗ Deployment verification failed after $MAX_ATTEMPTS attempts ($(($MAX_ATTEMPTS * 2)) seconds)"
+                    echo "✗ Deployment verification failed after $MAX_ATTEMPTS attempts"
                     echo "Container logs (last 100 lines):"
                     docker logs --tail=100 ${DOCKER_CONTAINER}
                     exit 1
