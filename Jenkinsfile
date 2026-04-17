@@ -69,38 +69,14 @@ pipeline {
                 sh '''
                     echo "Deploying new backend container..."
 
-                    # Load environment variables from docker.env
-                    ENV_FILE="/home/eunonti/docker-services/llama_finance/docker.env"
-
-                    # Try to read the environment file
-                    if [ -f "$ENV_FILE" ]; then
-                        set -a
-                        source "$ENV_FILE"
-                        set +a
-                        echo "✓ Loaded environment from $ENV_FILE"
-                    else
-                        echo "ERROR: docker.env not found at $ENV_FILE"
-                        echo "Checked locations:"
-                        echo "  - /home/eunonti/docker-services/llama_finance/docker.env"
-                        ls -la /home/eunonti/docker-services/llama_finance/ 2>/dev/null || echo "Directory not found"
-                        exit 1
-                    fi
-
-                    # Extract database credentials using correct variable names
+                    # Use environment variables from Jenkins (set in docker-compose)
                     DB_HOST=${DB_POSTGRESDB_HOST:-llama_db}
                     DB_PORT=${DB_POSTGRESDB_PORT:-5432}
                     DB_NAME=${DB_POSTGRESDB_DATABASE:-cash_organizer}
-                    DB_USER=${DB_POSTGRESDB_USER:-postgres}
-                    DB_PASSWORD=${DB_POSTGRESDB_PASSWORD}
+                    DB_USER=${DB_POSTGRESDB_USER:-llama_user}
+                    DB_PASSWORD=${DB_POSTGRESDB_PASSWORD:-llama_password}
 
-                    if [ -z "$DB_PASSWORD" ]; then
-                        echo "ERROR: DB_POSTGRESDB_PASSWORD not found in $ENV_FILE"
-                        echo "Available variables:"
-                        grep "^DB_\|^JWT_" "$ENV_FILE" | cut -d= -f1
-                        exit 1
-                    fi
-
-                    echo "Deploying with database: ${DB_HOST}:${DB_PORT}/${DB_NAME} as user ${DB_USER}"
+                    echo "Deploying backend to: ${DB_HOST}:${DB_PORT}/${DB_NAME}"
 
                     docker run -d \
                         --name ${DOCKER_CONTAINER} \
@@ -110,7 +86,7 @@ pipeline {
                         -e SPRING_DATASOURCE_URL="jdbc:postgresql://${DB_HOST}:${DB_PORT}/${DB_NAME}" \
                         -e SPRING_DATASOURCE_USERNAME="${DB_USER}" \
                         -e SPRING_DATASOURCE_PASSWORD="${DB_PASSWORD}" \
-                        -e JWT_SECRET_KEY=secure_jwt_key_from_env \
+                        -e JWT_SECRET_KEY=change_in_production \
                         --health-cmd="curl -f http://localhost:8085/actuator/health || exit 1" \
                         --health-interval=30s \
                         --health-timeout=10s \
