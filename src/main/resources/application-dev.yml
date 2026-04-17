@@ -22,7 +22,7 @@ spring:
 application:
   security:
     jwt:
-      secret-key: "VGhpc0lzQVZhbGlkQmFzZTY0RW5jb2RlZFNlY3JldEtleUZvcjI1NkJpdEhtYWNTaGEyNTZFbmNyeXB0aW9u"
+      secret-key: "LYYK2GeSEKRd0cZIZqufCYgwjQu89UPC"
       expiration: 86400000
     cors:
       allowed-origins: ${CORS_ALLOWED_ORIGINS:http://localhost:3000,http://localhost:8085,http://127.0.0.1:3000}
