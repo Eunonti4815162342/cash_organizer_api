@@ -72,7 +72,7 @@ pipeline {
                     # Use environment variables from Jenkins (set in docker-compose)
                     DB_HOST=${DB_POSTGRESDB_HOST:-llama_db}
                     DB_PORT=${DB_POSTGRESDB_PORT:-5432}
-                    DB_NAME=${DB_POSTGRESDB_DATABASE:-cash_organizer}
+                    DB_NAME=${DB_POSTGRESDB_DATABASE:-llama_finanzas}
                     DB_USER=${DB_POSTGRESDB_USER:-llama_user}
                     DB_PASSWORD=${DB_POSTGRESDB_PASSWORD:-llama_password}
 
