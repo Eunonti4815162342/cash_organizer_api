@@ -104,7 +104,7 @@ pipeline {
             steps {
                 sh '''
                     echo "Verifying backend health..."
-                    MAX_ATTEMPTS=15
+                    MAX_ATTEMPTS=40
                     ATTEMPT=0
 
                     while [ $ATTEMPT -lt $MAX_ATTEMPTS ]; do
@@ -115,12 +115,12 @@ pipeline {
                         fi
                         ATTEMPT=$((ATTEMPT + 1))
                         echo "Attempt $ATTEMPT/$MAX_ATTEMPTS - waiting for application startup..."
-                        sleep 3
+                        sleep 2
                     done
 
-                    echo "✗ Deployment verification failed after $MAX_ATTEMPTS attempts"
-                    echo "Container logs:"
-                    docker logs --tail=50 ${DOCKER_CONTAINER}
+                    echo "✗ Deployment verification failed after $MAX_ATTEMPTS attempts ($(($MAX_ATTEMPTS * 2)) seconds)"
+                    echo "Container logs (last 100 lines):"
+                    docker logs --tail=100 ${DOCKER_CONTAINER}
                     exit 1
                 '''
             }
