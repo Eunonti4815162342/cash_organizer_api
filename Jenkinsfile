@@ -108,9 +108,11 @@ pipeline {
                     ATTEMPT=0
 
                     while [ $ATTEMPT -lt $MAX_ATTEMPTS ]; do
-                        if docker exec ${DOCKER_CONTAINER} curl -s http://localhost:8085/actuator/health 2>/dev/null | grep -q "UP"; then
-                            echo "✓ Backend is healthy and responding"
-                            docker exec ${DOCKER_CONTAINER} java -version 2>&1 | grep -i openjdk
+                        # Check if port 8085 is listening (works without curl in alpine)
+                        if docker exec ${DOCKER_CONTAINER} sh -c 'exec 3<>/dev/tcp/localhost/8085 && exec 3>&- && exec 3<&-' 2>/dev/null; then
+                            echo "✓ Backend port 8085 is responding"
+                            echo "✓ Container status:"
+                            docker ps -f name=${DOCKER_CONTAINER} --format "Status: {{.Status}}"
                             exit 0
                         fi
                         ATTEMPT=$((ATTEMPT + 1))
