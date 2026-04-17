@@ -1,0 +1,138 @@
+2026-04-17T21:49:51.044+02:00  INFO 2708 --- [main] c.t.c.api.CashOrganizerApiApplication    : Starting CashOrganizerApiApplication using Java 17.0.12 with PID 2708 (C:\EntornoLocal\cash_organizer\cash_organizer_api\build\classes\java\main started by AlvaroVeigaVazquez in C:\EntornoLocal\cash_organizer\cash_organizer_api)
+2026-04-17T21:49:51.048+02:00  INFO 2708 --- [main] c.t.c.api.CashOrganizerApiApplication    : The following 1 profile is active: "dev"
+2026-04-17T21:49:53.866+02:00  WARN 2708 --- [main] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-04-17T21:49:56.265+02:00  WARN 2708 --- [main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used by Spring Security for automatically configuring username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider. If the current configuration is intentional, to turn off this warning, increase the logging level of 'org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer' to ERROR
+2026-04-17T21:49:56.377+02:00  WARN 2708 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-04-17T21:49:57.354+02:00  INFO 2708 --- [main] c.t.c.api.CashOrganizerApiApplication    : Started CashOrganizerApiApplication in 6.851 seconds (process running for 7.568)
+2026-04-17T21:57:25.754+02:00  INFO 3052 --- [main] c.t.c.api.CashOrganizerApiApplication    : Starting CashOrganizerApiApplication using Java 17.0.12 with PID 3052 (C:\EntornoLocal\cash_organizer\cash_organizer_api\build\classes\java\main started by AlvaroVeigaVazquez in C:\EntornoLocal\cash_organizer\cash_organizer_api)
+2026-04-17T21:57:25.757+02:00  INFO 3052 --- [main] c.t.c.api.CashOrganizerApiApplication    : The following 1 profile is active: "dev"
+2026-04-17T21:57:28.472+02:00  WARN 3052 --- [main] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-04-17T21:57:30.661+02:00  WARN 3052 --- [main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used by Spring Security for automatically configuring username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider. If the current configuration is intentional, to turn off this warning, increase the logging level of 'org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer' to ERROR
+2026-04-17T21:57:30.758+02:00  WARN 3052 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-04-17T21:57:31.592+02:00  INFO 3052 --- [main] c.t.c.api.CashOrganizerApiApplication    : Started CashOrganizerApiApplication in 6.188 seconds (process running for 6.789)
+2026-04-17T22:01:47.529+02:00  INFO 5588 --- [main] c.t.c.api.CashOrganizerApiApplication    : Starting CashOrganizerApiApplication using Java 17.0.12 with PID 5588 (C:\EntornoLocal\cash_organizer\cash_organizer_api\build\classes\java\main started by AlvaroVeigaVazquez in C:\EntornoLocal\cash_organizer\cash_organizer_api)
+2026-04-17T22:01:47.531+02:00  INFO 5588 --- [main] c.t.c.api.CashOrganizerApiApplication    : The following 1 profile is active: "dev"
+2026-04-17T22:01:49.676+02:00  WARN 5588 --- [main] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-04-17T22:01:51.451+02:00  WARN 5588 --- [main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used by Spring Security for automatically configuring username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider. If the current configuration is intentional, to turn off this warning, increase the logging level of 'org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer' to ERROR
+2026-04-17T22:01:51.535+02:00  WARN 5588 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-04-17T22:01:52.101+02:00  INFO 5588 --- [main] c.t.c.api.CashOrganizerApiApplication    : Started CashOrganizerApiApplication in 4.932 seconds (process running for 5.257)
+2026-04-17T22:03:04.017+02:00  INFO 26932 --- [main] c.t.c.api.CashOrganizerApiApplication    : Starting CashOrganizerApiApplication using Java 17.0.12 with PID 26932 (C:\EntornoLocal\cash_organizer\cash_organizer_api\build\classes\java\main started by AlvaroVeigaVazquez in C:\EntornoLocal\cash_organizer\cash_organizer_api)
+2026-04-17T22:03:04.021+02:00  INFO 26932 --- [main] c.t.c.api.CashOrganizerApiApplication    : The following 1 profile is active: "dev"
+2026-04-17T22:03:06.105+02:00  WARN 26932 --- [main] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-04-17T22:03:07.837+02:00  WARN 26932 --- [main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used by Spring Security for automatically configuring username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider. If the current configuration is intentional, to turn off this warning, increase the logging level of 'org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer' to ERROR
+2026-04-17T22:03:07.912+02:00  WARN 26932 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-04-17T22:03:08.454+02:00  WARN 26932 --- [main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Failed to start bean 'webServerStartStop'
+2026-04-17T22:03:08.481+02:00 ERROR 26932 --- [main] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Web server failed to start. Port 8085 was already in use.
+
+Action:
+
+Identify and stop the process that's listening on port 8085 or configure this application to listen on another port.
+
+2026-04-17T22:09:41.883+02:00  INFO 23028 --- [main] c.t.c.api.CashOrganizerApiApplication    : Starting CashOrganizerApiApplication using Java 17.0.12 with PID 23028 (C:\EntornoLocal\cash_organizer\cash_organizer_api\build\classes\java\main started by AlvaroVeigaVazquez in C:\EntornoLocal\cash_organizer\cash_organizer_api)
+2026-04-17T22:09:41.887+02:00  INFO 23028 --- [main] c.t.c.api.CashOrganizerApiApplication    : The following 1 profile is active: "dev"
+2026-04-17T22:09:44.751+02:00  WARN 23028 --- [main] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-04-17T22:09:47.521+02:00  WARN 23028 --- [main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used by Spring Security for automatically configuring username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider. If the current configuration is intentional, to turn off this warning, increase the logging level of 'org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer' to ERROR
+2026-04-17T22:09:47.653+02:00  WARN 23028 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-04-17T22:09:48.408+02:00  WARN 23028 --- [main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Failed to start bean 'webServerStartStop'
+2026-04-17T22:09:48.451+02:00 ERROR 23028 --- [main] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Web server failed to start. Port 8085 was already in use.
+
+Action:
+
+Identify and stop the process that's listening on port 8085 or configure this application to listen on another port.
+
+2026-04-17T22:13:53.032+02:00  INFO 22884 --- [main] c.t.c.api.CashOrganizerApiApplication    : Starting CashOrganizerApiApplication using Java 17.0.12 with PID 22884 (C:\EntornoLocal\cash_organizer\cash_organizer_api\build\classes\java\main started by AlvaroVeigaVazquez in C:\EntornoLocal\cash_organizer\cash_organizer_api)
+2026-04-17T22:13:53.037+02:00  INFO 22884 --- [main] c.t.c.api.CashOrganizerApiApplication    : The following 1 profile is active: "dev"
+2026-04-17T22:13:56.588+02:00  WARN 22884 --- [main] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-04-17T22:13:59.217+02:00  WARN 22884 --- [main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used by Spring Security for automatically configuring username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider. If the current configuration is intentional, to turn off this warning, increase the logging level of 'org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer' to ERROR
+2026-04-17T22:13:59.327+02:00  WARN 22884 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-04-17T22:14:00.288+02:00  WARN 22884 --- [main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Failed to start bean 'webServerStartStop'
+2026-04-17T22:14:00.331+02:00 ERROR 22884 --- [main] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Web server failed to start. Port 8085 was already in use.
+
+Action:
+
+Identify and stop the process that's listening on port 8085 or configure this application to listen on another port.
+
+2026-04-17T22:17:50.277+02:00  INFO 30168 --- [main] c.t.c.api.CashOrganizerApiApplication    : Starting CashOrganizerApiApplication using Java 17.0.12 with PID 30168 (C:\EntornoLocal\cash_organizer\cash_organizer_api\build\classes\java\main started by AlvaroVeigaVazquez in C:\EntornoLocal\cash_organizer\cash_organizer_api)
+2026-04-17T22:17:50.279+02:00  INFO 30168 --- [main] c.t.c.api.CashOrganizerApiApplication    : The following 1 profile is active: "dev"
+2026-04-17T22:17:52.464+02:00  WARN 30168 --- [main] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-04-17T22:17:54.223+02:00  WARN 30168 --- [main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used by Spring Security for automatically configuring username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider. If the current configuration is intentional, to turn off this warning, increase the logging level of 'org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer' to ERROR
+2026-04-17T22:17:54.290+02:00  WARN 30168 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-04-17T22:17:54.848+02:00  WARN 30168 --- [main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Failed to start bean 'webServerStartStop'
+2026-04-17T22:17:54.878+02:00 ERROR 30168 --- [main] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Web server failed to start. Port 8085 was already in use.
+
+Action:
+
+Identify and stop the process that's listening on port 8085 or configure this application to listen on another port.
+
+2026-04-17T22:18:08.483+02:00  INFO 30512 --- [main] c.t.c.api.CashOrganizerApiApplication    : Starting CashOrganizerApiApplication using Java 17.0.12 with PID 30512 (C:\EntornoLocal\cash_organizer\cash_organizer_api\build\classes\java\main started by AlvaroVeigaVazquez in C:\EntornoLocal\cash_organizer\cash_organizer_api)
+2026-04-17T22:18:08.486+02:00  INFO 30512 --- [main] c.t.c.api.CashOrganizerApiApplication    : The following 1 profile is active: "dev"
+2026-04-17T22:18:10.634+02:00  WARN 30512 --- [main] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-04-17T22:18:12.517+02:00  WARN 30512 --- [main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used by Spring Security for automatically configuring username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider. If the current configuration is intentional, to turn off this warning, increase the logging level of 'org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer' to ERROR
+2026-04-17T22:18:12.606+02:00  WARN 30512 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-04-17T22:18:13.199+02:00  WARN 30512 --- [main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Failed to start bean 'webServerStartStop'
+2026-04-17T22:18:13.231+02:00 ERROR 30512 --- [main] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Web server failed to start. Port 8085 was already in use.
+
+Action:
+
+Identify and stop the process that's listening on port 8085 or configure this application to listen on another port.
+
+2026-04-17T22:18:33.930+02:00  INFO 25540 --- [main] c.t.c.api.CashOrganizerApiApplication    : Starting CashOrganizerApiApplication using Java 17.0.12 with PID 25540 (C:\EntornoLocal\cash_organizer\cash_organizer_api\build\classes\java\main started by AlvaroVeigaVazquez in C:\EntornoLocal\cash_organizer\cash_organizer_api)
+2026-04-17T22:18:33.934+02:00  INFO 25540 --- [main] c.t.c.api.CashOrganizerApiApplication    : The following 1 profile is active: "dev"
+2026-04-17T22:18:35.945+02:00  WARN 25540 --- [main] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-04-17T22:18:37.817+02:00  WARN 25540 --- [main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used by Spring Security for automatically configuring username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider. If the current configuration is intentional, to turn off this warning, increase the logging level of 'org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer' to ERROR
+2026-04-17T22:18:37.888+02:00  WARN 25540 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-04-17T22:18:38.483+02:00  WARN 25540 --- [main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Failed to start bean 'webServerStartStop'
+2026-04-17T22:18:38.511+02:00 ERROR 25540 --- [main] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Web server failed to start. Port 8085 was already in use.
+
+Action:
+
+Identify and stop the process that's listening on port 8085 or configure this application to listen on another port.
+
