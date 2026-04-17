@@ -111,9 +111,9 @@ pipeline {
                     timeout 300 docker logs -f ${DOCKER_CONTAINER} &
                     LOGS_PID=$!
 
-                    # Wait a bit and check health
-                    sleep 30
-                    for i in {1..30}; do
+                    # Wait for Spring Boot + Liquibase to fully start (critical on Raspberry Pi)
+                    sleep 120
+                    for i in {1..20}; do
                         # Check health from inside container using wget (which is available in alpine)
                         HEALTH=$(docker exec ${DOCKER_CONTAINER} wget -q -O- http://localhost:8085/actuator/health 2>/dev/null)
                         if echo "$HEALTH" | grep -q "UP"; then
