@@ -71,13 +71,18 @@ pipeline {
 
                     # Load environment variables from docker.env
                     ENV_FILE="/home/eunonti/docker-services/llama_finance/docker.env"
+
+                    # Try to read the environment file
                     if [ -f "$ENV_FILE" ]; then
                         set -a
                         source "$ENV_FILE"
                         set +a
                         echo "✓ Loaded environment from $ENV_FILE"
                     else
-                        echo "Warning: $ENV_FILE not found, using defaults"
+                        echo "ERROR: docker.env not found at $ENV_FILE"
+                        echo "Checked locations:"
+                        echo "  - /home/eunonti/docker-services/llama_finance/docker.env"
+                        ls -la /home/eunonti/docker-services/llama_finance/ 2>/dev/null || echo "Directory not found"
                         exit 1
                     fi
 
@@ -90,8 +95,12 @@ pipeline {
 
                     if [ -z "$DB_PASSWORD" ]; then
                         echo "ERROR: DB_POSTGRESDB_PASSWORD not found in $ENV_FILE"
+                        echo "Available variables:"
+                        grep "^DB_\|^JWT_" "$ENV_FILE" | cut -d= -f1
                         exit 1
                     fi
+
+                    echo "Deploying with database: ${DB_HOST}:${DB_PORT}/${DB_NAME} as user ${DB_USER}"
 
                     docker run -d \
                         --name ${DOCKER_CONTAINER} \
