@@ -78,19 +78,27 @@ pipeline {
                         echo "✓ Loaded environment from $ENV_FILE"
                     else
                         echo "Warning: $ENV_FILE not found, using defaults"
+                        exit 1
                     fi
 
-                    # Extract database credentials from environment
-                    # These should be defined in docker.env as POSTGRES_PASSWORD, etc.
-                    DB_PASSWORD=${POSTGRES_PASSWORD:-postgres}
-                    DB_USER=${POSTGRES_USER:-postgres}
+                    # Extract database credentials using correct variable names
+                    DB_HOST=${DB_POSTGRESDB_HOST:-llama_db}
+                    DB_PORT=${DB_POSTGRESDB_PORT:-5432}
+                    DB_NAME=${DB_POSTGRESDB_DATABASE:-cash_organizer}
+                    DB_USER=${DB_POSTGRESDB_USER:-postgres}
+                    DB_PASSWORD=${DB_POSTGRESDB_PASSWORD}
+
+                    if [ -z "$DB_PASSWORD" ]; then
+                        echo "ERROR: DB_POSTGRESDB_PASSWORD not found in $ENV_FILE"
+                        exit 1
+                    fi
 
                     docker run -d \
                         --name ${DOCKER_CONTAINER} \
                         --network llama_net \
                         -p ${APP_PORT}:8085 \
                         -e SPRING_PROFILES_ACTIVE=prod \
-                        -e SPRING_DATASOURCE_URL=jdbc:postgresql://llama_db:5432/cash_organizer \
+                        -e SPRING_DATASOURCE_URL="jdbc:postgresql://${DB_HOST}:${DB_PORT}/${DB_NAME}" \
                         -e SPRING_DATASOURCE_USERNAME="${DB_USER}" \
                         -e SPRING_DATASOURCE_PASSWORD="${DB_PASSWORD}" \
                         -e JWT_SECRET_KEY=secure_jwt_key_from_env \
