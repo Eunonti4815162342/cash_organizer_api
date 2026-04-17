@@ -87,6 +87,7 @@ pipeline {
                         -e SPRING_DATASOURCE_USERNAME="${DB_USER}" \
                         -e SPRING_DATASOURCE_PASSWORD="${DB_PASSWORD}" \
                         -e JWT_SECRET_KEY=change_in_production \
+                        -e CORS_ALLOWED_ORIGINS="http://192.168.1.145:8086,http://192.168.1.145:8085" \
                         --health-cmd="curl -f http://localhost:8085/actuator/health || exit 1" \
                         --health-interval=30s \
                         --health-timeout=10s \
