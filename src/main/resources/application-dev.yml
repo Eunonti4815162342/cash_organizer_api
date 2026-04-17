@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/cash_organizer_dev
-    username: postgres
-    password: postgres
+    url: jdbc:postgresql://192.168.1.145:5432/llama_finanzas
+    username: llama_user
+    password: llama_password
     driver-class-name: org.postgresql.Driver
 
   jpa:
@@ -17,7 +17,7 @@ spring:
   liquibase:
     enabled: true
     change-log: classpath:db/changelog/db.changelog-master.xml
-    default-schema: cash_organizer
+    default-schema: llama_finanzas
 
 application:
   security:
