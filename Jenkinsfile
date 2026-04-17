@@ -114,8 +114,8 @@ pipeline {
                     # Wait a bit and check health
                     sleep 30
                     for i in {1..30}; do
-                        # Use Docker container name in llama_net network for health check
-                        HEALTH=$(docker exec ${DOCKER_CONTAINER} sh -c 'wget -q -O- http://localhost:8085/actuator/health 2>/dev/null' 2>/dev/null)
+                        # Check health from inside container using wget (which is available in alpine)
+                        HEALTH=$(docker exec ${DOCKER_CONTAINER} wget -q -O- http://localhost:8085/actuator/health 2>/dev/null)
                         if echo "$HEALTH" | grep -q "UP"; then
                             kill $LOGS_PID 2>/dev/null || true
                             echo "================================================================"
