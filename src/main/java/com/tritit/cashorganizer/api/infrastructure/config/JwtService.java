@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import javax.crypto.spec.SecretKeySpec;
+import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -35,13 +37,14 @@ public class JwtService {
     }
 
     public String generateToken(Map<String, Object> extraClaims, UserDetails userDetails, long expiration) {
+        Key key = new SecretKeySpec(secretKey.getBytes(), 0, secretKey.getBytes().length, SignatureAlgorithm.HS256.getJcaName());
         return Jwts
                 .builder()
                 .setClaims(extraClaims)
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + expiration))
-                .signWith(SignatureAlgorithm.HS256, secretKey.getBytes())
+                .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
     }
 
@@ -59,9 +62,10 @@ public class JwtService {
     }
 
     private Claims extractAllClaims(String token) {
+        Key key = new SecretKeySpec(secretKey.getBytes(), 0, secretKey.getBytes().length, SignatureAlgorithm.HS256.getJcaName());
         return Jwts
                 .parser()
-                .setSigningKey(secretKey.getBytes())
+                .setSigningKey(key)
                 .parseClaimsJws(token)
                 .getBody();
     }

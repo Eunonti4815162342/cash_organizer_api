@@ -34,9 +34,15 @@ public class AuthController {
             return ResponseEntity.ok("Usuario registrado correctamente");
         } catch (Exception e) {
             System.err.println("[AuthController] Register Error: " + e.getMessage());
-            e.printStackTrace(); 
+            e.printStackTrace();
             return ResponseEntity.status(400).body(e.getMessage());
         }
+    }
+
+    @PostMapping("/test")
+    public ResponseEntity<?> test(@RequestBody AuthRequest request) {
+        System.out.println("[AuthController] Test endpoint - received: " + request.getEmail());
+        return ResponseEntity.ok("Test OK - received: " + request.getEmail());
     }
 
     @Data

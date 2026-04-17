@@ -296,3 +296,938 @@ Action:
 
 Identify and stop the process that's listening on port 8085 or configure this application to listen on another port.
 
+2026-04-17T22:35:29.300+02:00  INFO 23044 --- [main] c.t.c.api.CashOrganizerApiApplication    : Starting CashOrganizerApiApplication using Java 17.0.12 with PID 23044 (C:\EntornoLocal\cash_organizer\cash_organizer_api\build\classes\java\main started by AlvaroVeigaVazquez in C:\EntornoLocal\cash_organizer\cash_organizer_api)
+2026-04-17T22:35:29.308+02:00  INFO 23044 --- [main] c.t.c.api.CashOrganizerApiApplication    : The following 1 profile is active: "dev"
+2026-04-17T22:35:34.248+02:00  WARN 23044 --- [main] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-04-17T22:35:38.623+02:00  WARN 23044 --- [main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used by Spring Security for automatically configuring username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider. If the current configuration is intentional, to turn off this warning, increase the logging level of 'org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer' to ERROR
+2026-04-17T22:35:38.811+02:00  WARN 23044 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-04-17T22:35:40.287+02:00  WARN 23044 --- [main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Failed to start bean 'webServerStartStop'
+2026-04-17T22:35:40.359+02:00 ERROR 23044 --- [main] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Web server failed to start. Port 8085 was already in use.
+
+Action:
+
+Identify and stop the process that's listening on port 8085 or configure this application to listen on another port.
+
+2026-04-17T22:36:07.944+02:00  INFO 13672 --- [main] c.t.c.api.CashOrganizerApiApplication    : Starting CashOrganizerApiApplication using Java 17.0.12 with PID 13672 (C:\EntornoLocal\cash_organizer\cash_organizer_api\build\classes\java\main started by AlvaroVeigaVazquez in C:\EntornoLocal\cash_organizer\cash_organizer_api)
+2026-04-17T22:36:07.952+02:00  INFO 13672 --- [main] c.t.c.api.CashOrganizerApiApplication    : The following 1 profile is active: "dev"
+2026-04-17T22:36:13.166+02:00  WARN 13672 --- [main] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-04-17T22:36:17.652+02:00  WARN 13672 --- [main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used by Spring Security for automatically configuring username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider. If the current configuration is intentional, to turn off this warning, increase the logging level of 'org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer' to ERROR
+2026-04-17T22:36:17.857+02:00  WARN 13672 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-04-17T22:36:19.221+02:00  WARN 13672 --- [main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Failed to start bean 'webServerStartStop'
+2026-04-17T22:36:19.292+02:00 ERROR 13672 --- [main] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Web server failed to start. Port 8085 was already in use.
+
+Action:
+
+Identify and stop the process that's listening on port 8085 or configure this application to listen on another port.
+
+2026-04-17T22:36:37.605+02:00  INFO 31428 --- [main] c.t.c.api.CashOrganizerApiApplication    : Starting CashOrganizerApiApplication using Java 17.0.12 with PID 31428 (C:\EntornoLocal\cash_organizer\cash_organizer_api\build\classes\java\main started by AlvaroVeigaVazquez in C:\EntornoLocal\cash_organizer\cash_organizer_api)
+2026-04-17T22:36:37.609+02:00  INFO 31428 --- [main] c.t.c.api.CashOrganizerApiApplication    : The following 1 profile is active: "dev"
+2026-04-17T22:36:42.577+02:00  WARN 31428 --- [main] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-04-17T22:36:46.927+02:00  WARN 31428 --- [main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used by Spring Security for automatically configuring username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider. If the current configuration is intentional, to turn off this warning, increase the logging level of 'org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer' to ERROR
+2026-04-17T22:36:47.107+02:00  WARN 31428 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-04-17T22:36:48.427+02:00  WARN 31428 --- [main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Failed to start bean 'webServerStartStop'
+2026-04-17T22:36:48.494+02:00 ERROR 31428 --- [main] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Web server failed to start. Port 8086 was already in use.
+
+Action:
+
+Identify and stop the process that's listening on port 8086 or configure this application to listen on another port.
+
+2026-04-17T22:36:50.254+02:00 DEBUG 27828 --- [http-nio-8086-exec-5] o.s.security.web.FilterChainProxy        : Securing GET /actuator/health
+2026-04-17T22:36:50.254+02:00 DEBUG 27828 --- [http-nio-8086-exec-5] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:36:50.254+02:00 DEBUG 27828 --- [http-nio-8086-exec-5] o.s.security.web.FilterChainProxy        : Secured GET /actuator/health
+2026-04-17T22:36:50.270+02:00 DEBUG 27828 --- [http-nio-8086-exec-5] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:36:50.270+02:00 DEBUG 27828 --- [http-nio-8086-exec-5] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:36:50.270+02:00 DEBUG 27828 --- [http-nio-8086-exec-5] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:36:53.498+02:00 DEBUG 27828 --- [http-nio-8086-exec-6] o.s.security.web.FilterChainProxy        : Securing GET /actuator/health
+2026-04-17T22:36:53.499+02:00 DEBUG 27828 --- [http-nio-8086-exec-6] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:36:53.499+02:00 DEBUG 27828 --- [http-nio-8086-exec-6] o.s.security.web.FilterChainProxy        : Secured GET /actuator/health
+2026-04-17T22:36:53.499+02:00 DEBUG 27828 --- [http-nio-8086-exec-6] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:36:53.499+02:00 DEBUG 27828 --- [http-nio-8086-exec-6] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:36:53.499+02:00 DEBUG 27828 --- [http-nio-8086-exec-6] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:36:55.186+02:00 DEBUG 27828 --- [http-nio-8086-exec-3] o.s.security.web.FilterChainProxy        : Securing POST /api/auth/test
+2026-04-17T22:36:55.189+02:00 DEBUG 27828 --- [http-nio-8086-exec-3] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:36:55.189+02:00 DEBUG 27828 --- [http-nio-8086-exec-3] o.s.security.web.FilterChainProxy        : Secured POST /api/auth/test
+2026-04-17T22:36:55.195+02:00 DEBUG 27828 --- [http-nio-8086-exec-3] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:36:55.195+02:00 DEBUG 27828 --- [http-nio-8086-exec-3] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:36:55.199+02:00 DEBUG 27828 --- [http-nio-8086-exec-3] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:36:56.737+02:00 DEBUG 27828 --- [http-nio-8086-exec-7] o.s.security.web.FilterChainProxy        : Securing GET /actuator/health
+2026-04-17T22:36:56.738+02:00 DEBUG 27828 --- [http-nio-8086-exec-7] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:36:56.738+02:00 DEBUG 27828 --- [http-nio-8086-exec-7] o.s.security.web.FilterChainProxy        : Secured GET /actuator/health
+2026-04-17T22:36:56.742+02:00 DEBUG 27828 --- [http-nio-8086-exec-7] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:36:56.743+02:00 DEBUG 27828 --- [http-nio-8086-exec-7] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:36:56.746+02:00 DEBUG 27828 --- [http-nio-8086-exec-7] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:36:59.977+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.security.web.FilterChainProxy        : Securing GET /actuator/health
+2026-04-17T22:36:59.977+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:36:59.977+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.security.web.FilterChainProxy        : Secured GET /actuator/health
+2026-04-17T22:36:59.979+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:36:59.979+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:36:59.983+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:37:03.219+02:00 DEBUG 27828 --- [http-nio-8086-exec-4] o.s.security.web.FilterChainProxy        : Securing GET /actuator/health
+2026-04-17T22:37:03.221+02:00 DEBUG 27828 --- [http-nio-8086-exec-4] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:37:03.222+02:00 DEBUG 27828 --- [http-nio-8086-exec-4] o.s.security.web.FilterChainProxy        : Secured GET /actuator/health
+2026-04-17T22:37:03.225+02:00 DEBUG 27828 --- [http-nio-8086-exec-4] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:37:03.225+02:00 DEBUG 27828 --- [http-nio-8086-exec-4] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:37:03.231+02:00 DEBUG 27828 --- [http-nio-8086-exec-4] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:37:06.468+02:00 DEBUG 27828 --- [http-nio-8086-exec-2] o.s.security.web.FilterChainProxy        : Securing GET /actuator/health
+2026-04-17T22:37:06.472+02:00 DEBUG 27828 --- [http-nio-8086-exec-2] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:37:06.473+02:00 DEBUG 27828 --- [http-nio-8086-exec-2] o.s.security.web.FilterChainProxy        : Secured GET /actuator/health
+2026-04-17T22:37:06.473+02:00 DEBUG 27828 --- [http-nio-8086-exec-2] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:37:06.473+02:00 DEBUG 27828 --- [http-nio-8086-exec-2] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:37:06.473+02:00 DEBUG 27828 --- [http-nio-8086-exec-2] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:37:09.689+02:00 DEBUG 27828 --- [http-nio-8086-exec-10] o.s.security.web.FilterChainProxy        : Securing GET /actuator/health
+2026-04-17T22:37:09.689+02:00 DEBUG 27828 --- [http-nio-8086-exec-10] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:37:09.689+02:00 DEBUG 27828 --- [http-nio-8086-exec-10] o.s.security.web.FilterChainProxy        : Secured GET /actuator/health
+2026-04-17T22:37:09.694+02:00 DEBUG 27828 --- [http-nio-8086-exec-10] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:37:09.694+02:00 DEBUG 27828 --- [http-nio-8086-exec-10] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:37:09.695+02:00 DEBUG 27828 --- [http-nio-8086-exec-10] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:37:12.909+02:00 DEBUG 27828 --- [http-nio-8086-exec-9] o.s.security.web.FilterChainProxy        : Securing GET /actuator/health
+2026-04-17T22:37:12.909+02:00 DEBUG 27828 --- [http-nio-8086-exec-9] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:37:12.909+02:00 DEBUG 27828 --- [http-nio-8086-exec-9] o.s.security.web.FilterChainProxy        : Secured GET /actuator/health
+2026-04-17T22:37:12.911+02:00 DEBUG 27828 --- [http-nio-8086-exec-9] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:37:12.911+02:00 DEBUG 27828 --- [http-nio-8086-exec-9] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:37:12.914+02:00 DEBUG 27828 --- [http-nio-8086-exec-9] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:37:16.128+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.security.web.FilterChainProxy        : Securing GET /actuator/health
+2026-04-17T22:37:16.128+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:37:16.128+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.security.web.FilterChainProxy        : Secured GET /actuator/health
+2026-04-17T22:37:16.132+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:37:16.132+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:37:16.136+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:37:19.357+02:00 DEBUG 27828 --- [http-nio-8086-exec-4] o.s.security.web.FilterChainProxy        : Securing GET /actuator/health
+2026-04-17T22:37:19.357+02:00 DEBUG 27828 --- [http-nio-8086-exec-4] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:37:19.357+02:00 DEBUG 27828 --- [http-nio-8086-exec-4] o.s.security.web.FilterChainProxy        : Secured GET /actuator/health
+2026-04-17T22:37:19.358+02:00 DEBUG 27828 --- [http-nio-8086-exec-4] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:37:19.360+02:00 DEBUG 27828 --- [http-nio-8086-exec-4] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:37:19.360+02:00 DEBUG 27828 --- [http-nio-8086-exec-4] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:37:22.582+02:00 DEBUG 27828 --- [http-nio-8086-exec-2] o.s.security.web.FilterChainProxy        : Securing GET /actuator/health
+2026-04-17T22:37:22.583+02:00 DEBUG 27828 --- [http-nio-8086-exec-2] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:37:22.583+02:00 DEBUG 27828 --- [http-nio-8086-exec-2] o.s.security.web.FilterChainProxy        : Secured GET /actuator/health
+2026-04-17T22:37:22.587+02:00 DEBUG 27828 --- [http-nio-8086-exec-2] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:37:22.587+02:00 DEBUG 27828 --- [http-nio-8086-exec-2] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:37:22.588+02:00 DEBUG 27828 --- [http-nio-8086-exec-2] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:37:25.807+02:00 DEBUG 27828 --- [http-nio-8086-exec-3] o.s.security.web.FilterChainProxy        : Securing GET /actuator/health
+2026-04-17T22:37:25.807+02:00 DEBUG 27828 --- [http-nio-8086-exec-3] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:37:25.807+02:00 DEBUG 27828 --- [http-nio-8086-exec-3] o.s.security.web.FilterChainProxy        : Secured GET /actuator/health
+2026-04-17T22:37:25.809+02:00 DEBUG 27828 --- [http-nio-8086-exec-3] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:37:25.809+02:00 DEBUG 27828 --- [http-nio-8086-exec-3] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:37:25.809+02:00 DEBUG 27828 --- [http-nio-8086-exec-3] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:37:29.049+02:00 DEBUG 27828 --- [http-nio-8086-exec-9] o.s.security.web.FilterChainProxy        : Securing GET /actuator/health
+2026-04-17T22:37:29.049+02:00 DEBUG 27828 --- [http-nio-8086-exec-9] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:37:29.049+02:00 DEBUG 27828 --- [http-nio-8086-exec-9] o.s.security.web.FilterChainProxy        : Secured GET /actuator/health
+2026-04-17T22:37:29.053+02:00 DEBUG 27828 --- [http-nio-8086-exec-9] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:37:29.053+02:00 DEBUG 27828 --- [http-nio-8086-exec-9] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:37:29.057+02:00 DEBUG 27828 --- [http-nio-8086-exec-9] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:37:29.116+02:00 DEBUG 27828 --- [http-nio-8086-exec-7] o.s.security.web.FilterChainProxy        : Securing POST /api/auth/test
+2026-04-17T22:37:29.116+02:00 DEBUG 27828 --- [http-nio-8086-exec-7] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:37:29.116+02:00 DEBUG 27828 --- [http-nio-8086-exec-7] o.s.security.web.FilterChainProxy        : Secured POST /api/auth/test
+2026-04-17T22:37:29.121+02:00 DEBUG 27828 --- [http-nio-8086-exec-7] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:37:29.121+02:00 DEBUG 27828 --- [http-nio-8086-exec-7] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:37:29.123+02:00 DEBUG 27828 --- [http-nio-8086-exec-7] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:37:31.331+02:00 DEBUG 27828 --- [http-nio-8086-exec-8] o.s.security.web.FilterChainProxy        : Securing POST /api/auth/test
+2026-04-17T22:37:31.331+02:00 DEBUG 27828 --- [http-nio-8086-exec-8] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:37:31.331+02:00 DEBUG 27828 --- [http-nio-8086-exec-8] o.s.security.web.FilterChainProxy        : Secured POST /api/auth/test
+2026-04-17T22:37:31.331+02:00 DEBUG 27828 --- [http-nio-8086-exec-8] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:37:31.337+02:00 DEBUG 27828 --- [http-nio-8086-exec-8] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:37:31.339+02:00 DEBUG 27828 --- [http-nio-8086-exec-8] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:37:32.281+02:00 DEBUG 27828 --- [http-nio-8086-exec-5] o.s.security.web.FilterChainProxy        : Securing GET /actuator/health
+2026-04-17T22:37:32.281+02:00 DEBUG 27828 --- [http-nio-8086-exec-5] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:37:32.281+02:00 DEBUG 27828 --- [http-nio-8086-exec-5] o.s.security.web.FilterChainProxy        : Secured GET /actuator/health
+2026-04-17T22:37:32.285+02:00 DEBUG 27828 --- [http-nio-8086-exec-5] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:37:32.285+02:00 DEBUG 27828 --- [http-nio-8086-exec-5] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:37:32.287+02:00 DEBUG 27828 --- [http-nio-8086-exec-5] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:37:32.670+02:00 DEBUG 27828 --- [http-nio-8086-exec-6] o.s.security.web.FilterChainProxy        : Securing POST /api/auth/login
+2026-04-17T22:37:32.670+02:00 DEBUG 27828 --- [http-nio-8086-exec-6] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:37:32.670+02:00 DEBUG 27828 --- [http-nio-8086-exec-6] o.s.security.web.FilterChainProxy        : Secured POST /api/auth/login
+2026-04-17T22:37:32.976+02:00 DEBUG 27828 --- [http-nio-8086-exec-6] org.hibernate.SQL                        : 
+    select
+        ue1_0.id,
+        ue1_0.email,
+        ue1_0.password,
+        ue1_0.role 
+    from
+        cash_organizer.users ue1_0 
+    where
+        ue1_0.email=?
+2026-04-17T22:37:33.542+02:00 DEBUG 27828 --- [http-nio-8086-exec-3] o.s.security.web.FilterChainProxy        : Securing POST /api/auth/test
+2026-04-17T22:37:33.542+02:00 DEBUG 27828 --- [http-nio-8086-exec-3] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:37:33.546+02:00 DEBUG 27828 --- [http-nio-8086-exec-3] o.s.security.web.FilterChainProxy        : Secured POST /api/auth/test
+2026-04-17T22:37:33.547+02:00 DEBUG 27828 --- [http-nio-8086-exec-3] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:37:33.549+02:00 DEBUG 27828 --- [http-nio-8086-exec-3] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:37:33.549+02:00 DEBUG 27828 --- [http-nio-8086-exec-3] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:37:35.508+02:00 DEBUG 27828 --- [http-nio-8086-exec-9] o.s.security.web.FilterChainProxy        : Securing GET /actuator/health
+2026-04-17T22:37:35.508+02:00 DEBUG 27828 --- [http-nio-8086-exec-9] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:37:35.508+02:00 DEBUG 27828 --- [http-nio-8086-exec-9] o.s.security.web.FilterChainProxy        : Secured GET /actuator/health
+2026-04-17T22:37:35.513+02:00 DEBUG 27828 --- [http-nio-8086-exec-9] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:37:35.513+02:00 DEBUG 27828 --- [http-nio-8086-exec-9] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:37:35.513+02:00 DEBUG 27828 --- [http-nio-8086-exec-9] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:37:35.765+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.security.web.FilterChainProxy        : Securing POST /api/auth/test
+2026-04-17T22:37:35.765+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:37:35.767+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.security.web.FilterChainProxy        : Secured POST /api/auth/test
+2026-04-17T22:37:35.771+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:37:35.771+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:37:35.774+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:37:37.995+02:00 DEBUG 27828 --- [http-nio-8086-exec-8] o.s.security.web.FilterChainProxy        : Securing POST /api/auth/test
+2026-04-17T22:37:37.995+02:00 DEBUG 27828 --- [http-nio-8086-exec-8] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:37:37.995+02:00 DEBUG 27828 --- [http-nio-8086-exec-8] o.s.security.web.FilterChainProxy        : Secured POST /api/auth/test
+2026-04-17T22:37:37.999+02:00 DEBUG 27828 --- [http-nio-8086-exec-8] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:37:37.999+02:00 DEBUG 27828 --- [http-nio-8086-exec-8] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:37:38.004+02:00 DEBUG 27828 --- [http-nio-8086-exec-8] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:37:38.742+02:00 DEBUG 27828 --- [http-nio-8086-exec-5] o.s.security.web.FilterChainProxy        : Securing GET /actuator/health
+2026-04-17T22:37:38.742+02:00 DEBUG 27828 --- [http-nio-8086-exec-5] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:37:38.742+02:00 DEBUG 27828 --- [http-nio-8086-exec-5] o.s.security.web.FilterChainProxy        : Secured GET /actuator/health
+2026-04-17T22:37:38.746+02:00 DEBUG 27828 --- [http-nio-8086-exec-5] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:37:38.746+02:00 DEBUG 27828 --- [http-nio-8086-exec-5] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:37:38.748+02:00 DEBUG 27828 --- [http-nio-8086-exec-5] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:37:40.229+02:00 DEBUG 27828 --- [http-nio-8086-exec-6] o.s.security.web.FilterChainProxy        : Securing POST /api/auth/test
+2026-04-17T22:37:40.233+02:00 DEBUG 27828 --- [http-nio-8086-exec-6] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:37:40.233+02:00 DEBUG 27828 --- [http-nio-8086-exec-6] o.s.security.web.FilterChainProxy        : Secured POST /api/auth/test
+2026-04-17T22:37:40.236+02:00 DEBUG 27828 --- [http-nio-8086-exec-6] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:37:40.237+02:00 DEBUG 27828 --- [http-nio-8086-exec-6] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:37:40.237+02:00 DEBUG 27828 --- [http-nio-8086-exec-6] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:37:41.960+02:00 DEBUG 27828 --- [http-nio-8086-exec-10] o.s.security.web.FilterChainProxy        : Securing GET /actuator/health
+2026-04-17T22:37:41.960+02:00 DEBUG 27828 --- [http-nio-8086-exec-10] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:37:41.960+02:00 DEBUG 27828 --- [http-nio-8086-exec-10] o.s.security.web.FilterChainProxy        : Secured GET /actuator/health
+2026-04-17T22:37:41.968+02:00 DEBUG 27828 --- [http-nio-8086-exec-10] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:37:41.968+02:00 DEBUG 27828 --- [http-nio-8086-exec-10] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:37:41.969+02:00 DEBUG 27828 --- [http-nio-8086-exec-10] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:37:42.457+02:00 DEBUG 27828 --- [http-nio-8086-exec-7] o.s.security.web.FilterChainProxy        : Securing POST /api/auth/test
+2026-04-17T22:37:42.460+02:00 DEBUG 27828 --- [http-nio-8086-exec-7] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:37:42.461+02:00 DEBUG 27828 --- [http-nio-8086-exec-7] o.s.security.web.FilterChainProxy        : Secured POST /api/auth/test
+2026-04-17T22:37:42.464+02:00 DEBUG 27828 --- [http-nio-8086-exec-7] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:37:42.464+02:00 DEBUG 27828 --- [http-nio-8086-exec-7] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:37:42.465+02:00 DEBUG 27828 --- [http-nio-8086-exec-7] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:37:44.692+02:00 DEBUG 27828 --- [http-nio-8086-exec-8] o.s.security.web.FilterChainProxy        : Securing POST /api/auth/test
+2026-04-17T22:37:44.693+02:00 DEBUG 27828 --- [http-nio-8086-exec-8] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:37:44.693+02:00 DEBUG 27828 --- [http-nio-8086-exec-8] o.s.security.web.FilterChainProxy        : Secured POST /api/auth/test
+2026-04-17T22:37:44.696+02:00 DEBUG 27828 --- [http-nio-8086-exec-8] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:37:44.696+02:00 DEBUG 27828 --- [http-nio-8086-exec-8] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:37:44.698+02:00 DEBUG 27828 --- [http-nio-8086-exec-8] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:37:45.174+02:00 DEBUG 27828 --- [http-nio-8086-exec-5] o.s.security.web.FilterChainProxy        : Securing GET /actuator/health
+2026-04-17T22:37:45.176+02:00 DEBUG 27828 --- [http-nio-8086-exec-5] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:37:45.176+02:00 DEBUG 27828 --- [http-nio-8086-exec-5] o.s.security.web.FilterChainProxy        : Secured GET /actuator/health
+2026-04-17T22:37:45.176+02:00 DEBUG 27828 --- [http-nio-8086-exec-5] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:37:45.176+02:00 DEBUG 27828 --- [http-nio-8086-exec-5] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:37:45.181+02:00 DEBUG 27828 --- [http-nio-8086-exec-5] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:37:46.942+02:00 DEBUG 27828 --- [http-nio-8086-exec-6] o.s.security.web.FilterChainProxy        : Securing POST /api/auth/test
+2026-04-17T22:37:46.942+02:00 DEBUG 27828 --- [http-nio-8086-exec-6] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:37:46.942+02:00 DEBUG 27828 --- [http-nio-8086-exec-6] o.s.security.web.FilterChainProxy        : Secured POST /api/auth/test
+2026-04-17T22:37:46.944+02:00 DEBUG 27828 --- [http-nio-8086-exec-6] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:37:46.944+02:00 DEBUG 27828 --- [http-nio-8086-exec-6] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:37:46.944+02:00 DEBUG 27828 --- [http-nio-8086-exec-6] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:37:48.412+02:00 DEBUG 27828 --- [http-nio-8086-exec-3] o.s.security.web.FilterChainProxy        : Securing GET /actuator/health
+2026-04-17T22:37:48.412+02:00 DEBUG 27828 --- [http-nio-8086-exec-3] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:37:48.412+02:00 DEBUG 27828 --- [http-nio-8086-exec-3] o.s.security.web.FilterChainProxy        : Secured GET /actuator/health
+2026-04-17T22:37:48.415+02:00 DEBUG 27828 --- [http-nio-8086-exec-3] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:37:48.415+02:00 DEBUG 27828 --- [http-nio-8086-exec-3] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:37:48.415+02:00 DEBUG 27828 --- [http-nio-8086-exec-3] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:37:49.162+02:00 DEBUG 27828 --- [http-nio-8086-exec-9] o.s.security.web.FilterChainProxy        : Securing POST /api/auth/test
+2026-04-17T22:37:49.163+02:00 DEBUG 27828 --- [http-nio-8086-exec-9] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:37:49.163+02:00 DEBUG 27828 --- [http-nio-8086-exec-9] o.s.security.web.FilterChainProxy        : Secured POST /api/auth/test
+2026-04-17T22:37:49.166+02:00 DEBUG 27828 --- [http-nio-8086-exec-9] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:37:49.166+02:00 DEBUG 27828 --- [http-nio-8086-exec-9] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:37:49.167+02:00 DEBUG 27828 --- [http-nio-8086-exec-9] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:37:51.386+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.security.web.FilterChainProxy        : Securing POST /api/auth/test
+2026-04-17T22:37:51.386+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:37:51.386+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.security.web.FilterChainProxy        : Secured POST /api/auth/test
+2026-04-17T22:37:51.389+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:37:51.391+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:37:51.394+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:37:51.619+02:00 DEBUG 27828 --- [http-nio-8086-exec-4] o.s.security.web.FilterChainProxy        : Securing GET /actuator/health
+2026-04-17T22:37:51.619+02:00 DEBUG 27828 --- [http-nio-8086-exec-4] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:37:51.619+02:00 DEBUG 27828 --- [http-nio-8086-exec-4] o.s.security.web.FilterChainProxy        : Secured GET /actuator/health
+2026-04-17T22:37:51.619+02:00 DEBUG 27828 --- [http-nio-8086-exec-4] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:37:51.619+02:00 DEBUG 27828 --- [http-nio-8086-exec-4] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:37:51.628+02:00 DEBUG 27828 --- [http-nio-8086-exec-4] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:37:53.612+02:00 DEBUG 27828 --- [http-nio-8086-exec-2] o.s.security.web.FilterChainProxy        : Securing POST /api/auth/test
+2026-04-17T22:37:53.612+02:00 DEBUG 27828 --- [http-nio-8086-exec-2] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:37:53.612+02:00 DEBUG 27828 --- [http-nio-8086-exec-2] o.s.security.web.FilterChainProxy        : Secured POST /api/auth/test
+2026-04-17T22:37:53.616+02:00 DEBUG 27828 --- [http-nio-8086-exec-2] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:37:53.616+02:00 DEBUG 27828 --- [http-nio-8086-exec-2] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:37:53.618+02:00 DEBUG 27828 --- [http-nio-8086-exec-2] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:37:54.844+02:00 DEBUG 27828 --- [http-nio-8086-exec-6] o.s.security.web.FilterChainProxy        : Securing GET /actuator/health
+2026-04-17T22:37:54.844+02:00 DEBUG 27828 --- [http-nio-8086-exec-6] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:37:54.844+02:00 DEBUG 27828 --- [http-nio-8086-exec-6] o.s.security.web.FilterChainProxy        : Secured GET /actuator/health
+2026-04-17T22:37:54.848+02:00 DEBUG 27828 --- [http-nio-8086-exec-6] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:37:54.848+02:00 DEBUG 27828 --- [http-nio-8086-exec-6] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:37:54.850+02:00 DEBUG 27828 --- [http-nio-8086-exec-6] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:37:55.840+02:00 DEBUG 27828 --- [http-nio-8086-exec-10] o.s.security.web.FilterChainProxy        : Securing POST /api/auth/test
+2026-04-17T22:37:55.840+02:00 DEBUG 27828 --- [http-nio-8086-exec-10] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:37:55.840+02:00 DEBUG 27828 --- [http-nio-8086-exec-10] o.s.security.web.FilterChainProxy        : Secured POST /api/auth/test
+2026-04-17T22:37:55.844+02:00 DEBUG 27828 --- [http-nio-8086-exec-10] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:37:55.844+02:00 DEBUG 27828 --- [http-nio-8086-exec-10] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:37:55.848+02:00 DEBUG 27828 --- [http-nio-8086-exec-10] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:37:58.069+02:00 DEBUG 27828 --- [http-nio-8086-exec-7] o.s.security.web.FilterChainProxy        : Securing GET /actuator/health
+2026-04-17T22:37:58.069+02:00 DEBUG 27828 --- [http-nio-8086-exec-7] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:37:58.069+02:00 DEBUG 27828 --- [http-nio-8086-exec-7] o.s.security.web.FilterChainProxy        : Secured GET /actuator/health
+2026-04-17T22:37:58.071+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.security.web.FilterChainProxy        : Securing POST /api/auth/test
+2026-04-17T22:37:58.071+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:37:58.071+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.security.web.FilterChainProxy        : Secured POST /api/auth/test
+2026-04-17T22:37:58.072+02:00 DEBUG 27828 --- [http-nio-8086-exec-7] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:37:58.073+02:00 DEBUG 27828 --- [http-nio-8086-exec-7] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:37:58.073+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:37:58.073+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:37:58.074+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:37:58.074+02:00 DEBUG 27828 --- [http-nio-8086-exec-7] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:00.303+02:00 DEBUG 27828 --- [http-nio-8086-exec-5] o.s.security.web.FilterChainProxy        : Securing POST /api/auth/test
+2026-04-17T22:38:00.303+02:00 DEBUG 27828 --- [http-nio-8086-exec-5] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:00.303+02:00 DEBUG 27828 --- [http-nio-8086-exec-5] o.s.security.web.FilterChainProxy        : Secured POST /api/auth/test
+2026-04-17T22:38:00.307+02:00 DEBUG 27828 --- [http-nio-8086-exec-5] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:38:00.307+02:00 DEBUG 27828 --- [http-nio-8086-exec-5] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:38:00.311+02:00 DEBUG 27828 --- [http-nio-8086-exec-5] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:01.276+02:00 DEBUG 27828 --- [http-nio-8086-exec-6] o.s.security.web.FilterChainProxy        : Securing GET /actuator/health
+2026-04-17T22:38:01.278+02:00 DEBUG 27828 --- [http-nio-8086-exec-6] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:01.278+02:00 DEBUG 27828 --- [http-nio-8086-exec-6] o.s.security.web.FilterChainProxy        : Secured GET /actuator/health
+2026-04-17T22:38:01.279+02:00 DEBUG 27828 --- [http-nio-8086-exec-6] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:38:01.279+02:00 DEBUG 27828 --- [http-nio-8086-exec-6] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:38:01.279+02:00 DEBUG 27828 --- [http-nio-8086-exec-6] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:02.546+02:00 DEBUG 27828 --- [http-nio-8086-exec-10] o.s.security.web.FilterChainProxy        : Securing POST /api/auth/test
+2026-04-17T22:38:02.546+02:00 DEBUG 27828 --- [http-nio-8086-exec-10] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:02.546+02:00 DEBUG 27828 --- [http-nio-8086-exec-10] o.s.security.web.FilterChainProxy        : Secured POST /api/auth/test
+2026-04-17T22:38:02.551+02:00 DEBUG 27828 --- [http-nio-8086-exec-10] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:38:02.551+02:00 DEBUG 27828 --- [http-nio-8086-exec-10] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:38:02.553+02:00 DEBUG 27828 --- [http-nio-8086-exec-10] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:04.487+02:00 DEBUG 27828 --- [http-nio-8086-exec-7] o.s.security.web.FilterChainProxy        : Securing GET /actuator/health
+2026-04-17T22:38:04.487+02:00 DEBUG 27828 --- [http-nio-8086-exec-7] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:04.487+02:00 DEBUG 27828 --- [http-nio-8086-exec-7] o.s.security.web.FilterChainProxy        : Secured GET /actuator/health
+2026-04-17T22:38:04.487+02:00 DEBUG 27828 --- [http-nio-8086-exec-7] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:38:04.487+02:00 DEBUG 27828 --- [http-nio-8086-exec-7] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:38:04.493+02:00 DEBUG 27828 --- [http-nio-8086-exec-7] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:04.777+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.security.web.FilterChainProxy        : Securing POST /api/auth/test
+2026-04-17T22:38:04.777+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:04.777+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.security.web.FilterChainProxy        : Secured POST /api/auth/test
+2026-04-17T22:38:04.784+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:38:04.784+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:38:04.784+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:07.009+02:00 DEBUG 27828 --- [http-nio-8086-exec-8] o.s.security.web.FilterChainProxy        : Securing POST /api/auth/test
+2026-04-17T22:38:07.009+02:00 DEBUG 27828 --- [http-nio-8086-exec-8] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:07.009+02:00 DEBUG 27828 --- [http-nio-8086-exec-8] o.s.security.web.FilterChainProxy        : Secured POST /api/auth/test
+2026-04-17T22:38:07.009+02:00 DEBUG 27828 --- [http-nio-8086-exec-8] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:38:07.009+02:00 DEBUG 27828 --- [http-nio-8086-exec-8] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:38:07.015+02:00 DEBUG 27828 --- [http-nio-8086-exec-8] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:07.689+02:00 DEBUG 27828 --- [http-nio-8086-exec-2] o.s.security.web.FilterChainProxy        : Securing GET /actuator/health
+2026-04-17T22:38:07.694+02:00 DEBUG 27828 --- [http-nio-8086-exec-2] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:07.694+02:00 DEBUG 27828 --- [http-nio-8086-exec-2] o.s.security.web.FilterChainProxy        : Secured GET /actuator/health
+2026-04-17T22:38:07.697+02:00 DEBUG 27828 --- [http-nio-8086-exec-2] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:38:07.697+02:00 DEBUG 27828 --- [http-nio-8086-exec-2] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:38:07.700+02:00 DEBUG 27828 --- [http-nio-8086-exec-2] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:09.243+02:00 DEBUG 27828 --- [http-nio-8086-exec-3] o.s.security.web.FilterChainProxy        : Securing POST /api/auth/test
+2026-04-17T22:38:09.243+02:00 DEBUG 27828 --- [http-nio-8086-exec-3] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:09.243+02:00 DEBUG 27828 --- [http-nio-8086-exec-3] o.s.security.web.FilterChainProxy        : Secured POST /api/auth/test
+2026-04-17T22:38:09.247+02:00 DEBUG 27828 --- [http-nio-8086-exec-3] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:38:09.247+02:00 DEBUG 27828 --- [http-nio-8086-exec-3] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:38:09.247+02:00 DEBUG 27828 --- [http-nio-8086-exec-3] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:10.917+02:00 DEBUG 27828 --- [http-nio-8086-exec-9] o.s.security.web.FilterChainProxy        : Securing GET /actuator/health
+2026-04-17T22:38:10.917+02:00 DEBUG 27828 --- [http-nio-8086-exec-9] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:10.917+02:00 DEBUG 27828 --- [http-nio-8086-exec-9] o.s.security.web.FilterChainProxy        : Secured GET /actuator/health
+2026-04-17T22:38:10.920+02:00 DEBUG 27828 --- [http-nio-8086-exec-9] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:38:10.920+02:00 DEBUG 27828 --- [http-nio-8086-exec-9] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:38:10.920+02:00 DEBUG 27828 --- [http-nio-8086-exec-9] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:11.471+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.security.web.FilterChainProxy        : Securing POST /api/auth/test
+2026-04-17T22:38:11.471+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:11.471+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.security.web.FilterChainProxy        : Secured POST /api/auth/test
+2026-04-17T22:38:11.474+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:38:11.474+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:38:11.477+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:13.695+02:00 DEBUG 27828 --- [http-nio-8086-exec-8] o.s.security.web.FilterChainProxy        : Securing POST /api/auth/test
+2026-04-17T22:38:13.697+02:00 DEBUG 27828 --- [http-nio-8086-exec-8] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:13.697+02:00 DEBUG 27828 --- [http-nio-8086-exec-8] o.s.security.web.FilterChainProxy        : Secured POST /api/auth/test
+2026-04-17T22:38:13.699+02:00 DEBUG 27828 --- [http-nio-8086-exec-8] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:38:13.699+02:00 DEBUG 27828 --- [http-nio-8086-exec-8] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:38:13.702+02:00 DEBUG 27828 --- [http-nio-8086-exec-8] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:14.136+02:00 DEBUG 27828 --- [http-nio-8086-exec-5] o.s.security.web.FilterChainProxy        : Securing GET /actuator/health
+2026-04-17T22:38:14.139+02:00 DEBUG 27828 --- [http-nio-8086-exec-5] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:14.139+02:00 DEBUG 27828 --- [http-nio-8086-exec-5] o.s.security.web.FilterChainProxy        : Secured GET /actuator/health
+2026-04-17T22:38:14.140+02:00 DEBUG 27828 --- [http-nio-8086-exec-5] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:38:14.140+02:00 DEBUG 27828 --- [http-nio-8086-exec-5] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:38:14.140+02:00 DEBUG 27828 --- [http-nio-8086-exec-5] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:14.799+02:00 DEBUG 27828 --- [http-nio-8086-exec-6] o.s.security.web.FilterChainProxy        : Securing POST /api/auth/login
+2026-04-17T22:38:14.799+02:00 DEBUG 27828 --- [http-nio-8086-exec-6] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:14.799+02:00 DEBUG 27828 --- [http-nio-8086-exec-6] o.s.security.web.FilterChainProxy        : Secured POST /api/auth/login
+2026-04-17T22:38:14.807+02:00 DEBUG 27828 --- [http-nio-8086-exec-6] org.hibernate.SQL                        : 
+    select
+        ue1_0.id,
+        ue1_0.email,
+        ue1_0.password,
+        ue1_0.role 
+    from
+        cash_organizer.users ue1_0 
+    where
+        ue1_0.email=?
+2026-04-17T22:38:15.917+02:00 DEBUG 27828 --- [http-nio-8086-exec-3] o.s.security.web.FilterChainProxy        : Securing POST /api/auth/test
+2026-04-17T22:38:15.918+02:00 DEBUG 27828 --- [http-nio-8086-exec-3] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:15.918+02:00 DEBUG 27828 --- [http-nio-8086-exec-3] o.s.security.web.FilterChainProxy        : Secured POST /api/auth/test
+2026-04-17T22:38:15.920+02:00 DEBUG 27828 --- [http-nio-8086-exec-3] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:38:15.920+02:00 DEBUG 27828 --- [http-nio-8086-exec-3] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:38:15.923+02:00 DEBUG 27828 --- [http-nio-8086-exec-3] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:17.354+02:00 DEBUG 27828 --- [http-nio-8086-exec-9] o.s.security.web.FilterChainProxy        : Securing GET /actuator/health
+2026-04-17T22:38:17.354+02:00 DEBUG 27828 --- [http-nio-8086-exec-9] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:17.354+02:00 DEBUG 27828 --- [http-nio-8086-exec-9] o.s.security.web.FilterChainProxy        : Secured GET /actuator/health
+2026-04-17T22:38:17.358+02:00 DEBUG 27828 --- [http-nio-8086-exec-9] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:38:17.358+02:00 DEBUG 27828 --- [http-nio-8086-exec-9] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:38:17.361+02:00 DEBUG 27828 --- [http-nio-8086-exec-9] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:18.149+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.security.web.FilterChainProxy        : Securing POST /api/auth/test
+2026-04-17T22:38:18.149+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:18.149+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.security.web.FilterChainProxy        : Secured POST /api/auth/test
+2026-04-17T22:38:18.153+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:38:18.153+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:38:18.153+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:18.945+02:00 DEBUG 27828 --- [http-nio-8086-exec-8] o.s.security.web.FilterChainProxy        : Securing POST /api/auth/login
+2026-04-17T22:38:18.945+02:00 DEBUG 27828 --- [http-nio-8086-exec-8] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:18.945+02:00 DEBUG 27828 --- [http-nio-8086-exec-8] o.s.security.web.FilterChainProxy        : Secured POST /api/auth/login
+2026-04-17T22:38:18.945+02:00 DEBUG 27828 --- [http-nio-8086-exec-8] org.hibernate.SQL                        : 
+    select
+        ue1_0.id,
+        ue1_0.email,
+        ue1_0.password,
+        ue1_0.role 
+    from
+        cash_organizer.users ue1_0 
+    where
+        ue1_0.email=?
+2026-04-17T22:38:20.386+02:00 DEBUG 27828 --- [http-nio-8086-exec-2] o.s.security.web.FilterChainProxy        : Securing POST /api/auth/test
+2026-04-17T22:38:20.387+02:00 DEBUG 27828 --- [http-nio-8086-exec-2] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:20.387+02:00 DEBUG 27828 --- [http-nio-8086-exec-2] o.s.security.web.FilterChainProxy        : Secured POST /api/auth/test
+2026-04-17T22:38:20.390+02:00 DEBUG 27828 --- [http-nio-8086-exec-2] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:38:20.390+02:00 DEBUG 27828 --- [http-nio-8086-exec-2] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:38:20.394+02:00 DEBUG 27828 --- [http-nio-8086-exec-2] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:20.561+02:00 DEBUG 27828 --- [http-nio-8086-exec-3] o.s.security.web.FilterChainProxy        : Securing GET /actuator/health
+2026-04-17T22:38:20.561+02:00 DEBUG 27828 --- [http-nio-8086-exec-3] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:20.561+02:00 DEBUG 27828 --- [http-nio-8086-exec-3] o.s.security.web.FilterChainProxy        : Secured GET /actuator/health
+2026-04-17T22:38:20.567+02:00 DEBUG 27828 --- [http-nio-8086-exec-3] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:38:20.570+02:00 DEBUG 27828 --- [http-nio-8086-exec-3] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:38:20.570+02:00 DEBUG 27828 --- [http-nio-8086-exec-3] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:22.615+02:00 DEBUG 27828 --- [http-nio-8086-exec-9] o.s.security.web.FilterChainProxy        : Securing POST /api/auth/test
+2026-04-17T22:38:22.615+02:00 DEBUG 27828 --- [http-nio-8086-exec-9] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:22.615+02:00 DEBUG 27828 --- [http-nio-8086-exec-9] o.s.security.web.FilterChainProxy        : Secured POST /api/auth/test
+2026-04-17T22:38:22.619+02:00 DEBUG 27828 --- [http-nio-8086-exec-9] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:38:22.620+02:00 DEBUG 27828 --- [http-nio-8086-exec-9] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:38:22.622+02:00 DEBUG 27828 --- [http-nio-8086-exec-9] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:23.779+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.security.web.FilterChainProxy        : Securing GET /actuator/health
+2026-04-17T22:38:23.782+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:23.782+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.security.web.FilterChainProxy        : Secured GET /actuator/health
+2026-04-17T22:38:23.784+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:38:23.784+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:38:23.784+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:24.839+02:00 DEBUG 27828 --- [http-nio-8086-exec-8] o.s.security.web.FilterChainProxy        : Securing POST /api/auth/test
+2026-04-17T22:38:24.839+02:00 DEBUG 27828 --- [http-nio-8086-exec-8] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:24.839+02:00 DEBUG 27828 --- [http-nio-8086-exec-8] o.s.security.web.FilterChainProxy        : Secured POST /api/auth/test
+2026-04-17T22:38:24.846+02:00 DEBUG 27828 --- [http-nio-8086-exec-8] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:38:24.846+02:00 DEBUG 27828 --- [http-nio-8086-exec-8] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:38:24.848+02:00 DEBUG 27828 --- [http-nio-8086-exec-8] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:26.997+02:00 DEBUG 27828 --- [http-nio-8086-exec-2] o.s.security.web.FilterChainProxy        : Securing GET /actuator/health
+2026-04-17T22:38:26.997+02:00 DEBUG 27828 --- [http-nio-8086-exec-2] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:26.999+02:00 DEBUG 27828 --- [http-nio-8086-exec-2] o.s.security.web.FilterChainProxy        : Secured GET /actuator/health
+2026-04-17T22:38:27.002+02:00 DEBUG 27828 --- [http-nio-8086-exec-2] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:38:27.002+02:00 DEBUG 27828 --- [http-nio-8086-exec-2] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:38:27.002+02:00 DEBUG 27828 --- [http-nio-8086-exec-2] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:27.069+02:00 DEBUG 27828 --- [http-nio-8086-exec-3] o.s.security.web.FilterChainProxy        : Securing POST /api/auth/test
+2026-04-17T22:38:27.069+02:00 DEBUG 27828 --- [http-nio-8086-exec-3] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:27.069+02:00 DEBUG 27828 --- [http-nio-8086-exec-3] o.s.security.web.FilterChainProxy        : Secured POST /api/auth/test
+2026-04-17T22:38:27.076+02:00 DEBUG 27828 --- [http-nio-8086-exec-3] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:38:27.076+02:00 DEBUG 27828 --- [http-nio-8086-exec-3] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:38:27.076+02:00 DEBUG 27828 --- [http-nio-8086-exec-3] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:29.279+02:00 DEBUG 27828 --- [http-nio-8086-exec-9] o.s.security.web.FilterChainProxy        : Securing POST /api/auth/test
+2026-04-17T22:38:29.279+02:00 DEBUG 27828 --- [http-nio-8086-exec-9] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:29.279+02:00 DEBUG 27828 --- [http-nio-8086-exec-9] o.s.security.web.FilterChainProxy        : Secured POST /api/auth/test
+2026-04-17T22:38:29.284+02:00 DEBUG 27828 --- [http-nio-8086-exec-9] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:38:29.284+02:00 DEBUG 27828 --- [http-nio-8086-exec-9] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:38:29.284+02:00 DEBUG 27828 --- [http-nio-8086-exec-9] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:30.220+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.security.web.FilterChainProxy        : Securing GET /actuator/health
+2026-04-17T22:38:30.220+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:30.220+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.security.web.FilterChainProxy        : Secured GET /actuator/health
+2026-04-17T22:38:30.220+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:38:30.220+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:38:30.220+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:31.504+02:00 DEBUG 27828 --- [http-nio-8086-exec-8] o.s.security.web.FilterChainProxy        : Securing POST /api/auth/test
+2026-04-17T22:38:31.504+02:00 DEBUG 27828 --- [http-nio-8086-exec-8] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:31.504+02:00 DEBUG 27828 --- [http-nio-8086-exec-8] o.s.security.web.FilterChainProxy        : Secured POST /api/auth/test
+2026-04-17T22:38:31.506+02:00 DEBUG 27828 --- [http-nio-8086-exec-8] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:38:31.506+02:00 DEBUG 27828 --- [http-nio-8086-exec-8] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:38:31.510+02:00 DEBUG 27828 --- [http-nio-8086-exec-8] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:33.461+02:00 DEBUG 27828 --- [http-nio-8086-exec-5] o.s.security.web.FilterChainProxy        : Securing GET /actuator/health
+2026-04-17T22:38:33.461+02:00 DEBUG 27828 --- [http-nio-8086-exec-5] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:33.461+02:00 DEBUG 27828 --- [http-nio-8086-exec-5] o.s.security.web.FilterChainProxy        : Secured GET /actuator/health
+2026-04-17T22:38:33.468+02:00 DEBUG 27828 --- [http-nio-8086-exec-5] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:38:33.468+02:00 DEBUG 27828 --- [http-nio-8086-exec-5] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:38:33.470+02:00 DEBUG 27828 --- [http-nio-8086-exec-5] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:33.703+02:00 DEBUG 27828 --- [http-nio-8086-exec-6] o.s.security.web.FilterChainProxy        : Securing POST /api/auth/test
+2026-04-17T22:38:33.706+02:00 DEBUG 27828 --- [http-nio-8086-exec-6] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:33.706+02:00 DEBUG 27828 --- [http-nio-8086-exec-6] o.s.security.web.FilterChainProxy        : Secured POST /api/auth/test
+2026-04-17T22:38:33.710+02:00 DEBUG 27828 --- [http-nio-8086-exec-6] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:38:33.710+02:00 DEBUG 27828 --- [http-nio-8086-exec-6] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:38:33.713+02:00 DEBUG 27828 --- [http-nio-8086-exec-6] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:35.930+02:00 DEBUG 27828 --- [http-nio-8086-exec-10] o.s.security.web.FilterChainProxy        : Securing POST /api/auth/test
+2026-04-17T22:38:35.930+02:00 DEBUG 27828 --- [http-nio-8086-exec-10] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:35.930+02:00 DEBUG 27828 --- [http-nio-8086-exec-10] o.s.security.web.FilterChainProxy        : Secured POST /api/auth/test
+2026-04-17T22:38:35.934+02:00 DEBUG 27828 --- [http-nio-8086-exec-10] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:38:35.934+02:00 DEBUG 27828 --- [http-nio-8086-exec-10] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:38:35.940+02:00 DEBUG 27828 --- [http-nio-8086-exec-10] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:36.692+02:00 DEBUG 27828 --- [http-nio-8086-exec-7] o.s.security.web.FilterChainProxy        : Securing GET /actuator/health
+2026-04-17T22:38:36.692+02:00 DEBUG 27828 --- [http-nio-8086-exec-7] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:36.692+02:00 DEBUG 27828 --- [http-nio-8086-exec-7] o.s.security.web.FilterChainProxy        : Secured GET /actuator/health
+2026-04-17T22:38:36.694+02:00 DEBUG 27828 --- [http-nio-8086-exec-7] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:38:36.694+02:00 DEBUG 27828 --- [http-nio-8086-exec-7] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:38:36.695+02:00 DEBUG 27828 --- [http-nio-8086-exec-7] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:37.330+02:00 DEBUG 27828 --- [http-nio-8086-exec-4] o.s.security.web.FilterChainProxy        : Securing GET /actuator/health
+2026-04-17T22:38:37.330+02:00 DEBUG 27828 --- [http-nio-8086-exec-4] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:37.330+02:00 DEBUG 27828 --- [http-nio-8086-exec-4] o.s.security.web.FilterChainProxy        : Secured GET /actuator/health
+2026-04-17T22:38:37.330+02:00 DEBUG 27828 --- [http-nio-8086-exec-4] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:38:37.330+02:00 DEBUG 27828 --- [http-nio-8086-exec-4] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:38:37.334+02:00 DEBUG 27828 --- [http-nio-8086-exec-4] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:38.150+02:00 DEBUG 27828 --- [http-nio-8086-exec-5] o.s.security.web.FilterChainProxy        : Securing POST /api/auth/test
+2026-04-17T22:38:38.155+02:00 DEBUG 27828 --- [http-nio-8086-exec-5] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:38.155+02:00 DEBUG 27828 --- [http-nio-8086-exec-5] o.s.security.web.FilterChainProxy        : Secured POST /api/auth/test
+2026-04-17T22:38:38.157+02:00 DEBUG 27828 --- [http-nio-8086-exec-5] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:38:38.157+02:00 DEBUG 27828 --- [http-nio-8086-exec-5] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:38:38.157+02:00 DEBUG 27828 --- [http-nio-8086-exec-5] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:39.552+02:00 DEBUG 27828 --- [http-nio-8086-exec-6] o.s.security.web.FilterChainProxy        : Securing GET /actuator/health
+2026-04-17T22:38:39.552+02:00 DEBUG 27828 --- [http-nio-8086-exec-6] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:39.552+02:00 DEBUG 27828 --- [http-nio-8086-exec-6] o.s.security.web.FilterChainProxy        : Secured GET /actuator/health
+2026-04-17T22:38:39.552+02:00 DEBUG 27828 --- [http-nio-8086-exec-6] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:38:39.556+02:00 DEBUG 27828 --- [http-nio-8086-exec-6] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:38:39.557+02:00 DEBUG 27828 --- [http-nio-8086-exec-6] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:39.908+02:00 DEBUG 27828 --- [http-nio-8086-exec-10] o.s.security.web.FilterChainProxy        : Securing GET /actuator/health
+2026-04-17T22:38:39.908+02:00 DEBUG 27828 --- [http-nio-8086-exec-10] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:39.908+02:00 DEBUG 27828 --- [http-nio-8086-exec-10] o.s.security.web.FilterChainProxy        : Secured GET /actuator/health
+2026-04-17T22:38:39.910+02:00 DEBUG 27828 --- [http-nio-8086-exec-10] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:38:39.910+02:00 DEBUG 27828 --- [http-nio-8086-exec-10] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:38:39.910+02:00 DEBUG 27828 --- [http-nio-8086-exec-10] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:40.365+02:00 DEBUG 27828 --- [http-nio-8086-exec-7] o.s.security.web.FilterChainProxy        : Securing POST /api/auth/test
+2026-04-17T22:38:40.365+02:00 DEBUG 27828 --- [http-nio-8086-exec-7] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:40.365+02:00 DEBUG 27828 --- [http-nio-8086-exec-7] o.s.security.web.FilterChainProxy        : Secured POST /api/auth/test
+2026-04-17T22:38:40.369+02:00 DEBUG 27828 --- [http-nio-8086-exec-7] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:38:40.369+02:00 DEBUG 27828 --- [http-nio-8086-exec-7] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:38:40.371+02:00 DEBUG 27828 --- [http-nio-8086-exec-7] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:40.753+02:00 DEBUG 27828 --- [http-nio-8086-exec-4] o.s.security.web.FilterChainProxy        : Securing POST /api/auth/login
+2026-04-17T22:38:40.753+02:00 DEBUG 27828 --- [http-nio-8086-exec-4] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:40.753+02:00 DEBUG 27828 --- [http-nio-8086-exec-4] o.s.security.web.FilterChainProxy        : Secured POST /api/auth/login
+2026-04-17T22:38:40.755+02:00 DEBUG 27828 --- [http-nio-8086-exec-4] org.hibernate.SQL                        : 
+    select
+        ue1_0.id,
+        ue1_0.email,
+        ue1_0.password,
+        ue1_0.role 
+    from
+        cash_organizer.users ue1_0 
+    where
+        ue1_0.email=?
+2026-04-17T22:38:41.787+02:00 DEBUG 27828 --- [http-nio-8086-exec-8] o.s.security.web.FilterChainProxy        : Securing GET /actuator/health
+2026-04-17T22:38:41.789+02:00 DEBUG 27828 --- [http-nio-8086-exec-8] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:41.789+02:00 DEBUG 27828 --- [http-nio-8086-exec-8] o.s.security.web.FilterChainProxy        : Secured GET /actuator/health
+2026-04-17T22:38:41.791+02:00 DEBUG 27828 --- [http-nio-8086-exec-8] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:38:41.793+02:00 DEBUG 27828 --- [http-nio-8086-exec-8] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:38:41.795+02:00 DEBUG 27828 --- [http-nio-8086-exec-8] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:42.614+02:00 DEBUG 27828 --- [http-nio-8086-exec-2] o.s.security.web.FilterChainProxy        : Securing POST /api/auth/test
+2026-04-17T22:38:42.614+02:00 DEBUG 27828 --- [http-nio-8086-exec-2] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:42.614+02:00 DEBUG 27828 --- [http-nio-8086-exec-2] o.s.security.web.FilterChainProxy        : Secured POST /api/auth/test
+2026-04-17T22:38:42.619+02:00 DEBUG 27828 --- [http-nio-8086-exec-2] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:38:42.619+02:00 DEBUG 27828 --- [http-nio-8086-exec-2] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:38:42.622+02:00 DEBUG 27828 --- [http-nio-8086-exec-2] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:43.119+02:00 DEBUG 27828 --- [http-nio-8086-exec-3] o.s.security.web.FilterChainProxy        : Securing GET /actuator/health
+2026-04-17T22:38:43.119+02:00 DEBUG 27828 --- [http-nio-8086-exec-3] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:43.119+02:00 DEBUG 27828 --- [http-nio-8086-exec-3] o.s.security.web.FilterChainProxy        : Secured GET /actuator/health
+2026-04-17T22:38:43.122+02:00 DEBUG 27828 --- [http-nio-8086-exec-3] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:38:43.122+02:00 DEBUG 27828 --- [http-nio-8086-exec-3] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:38:43.124+02:00 DEBUG 27828 --- [http-nio-8086-exec-3] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:44.013+02:00 DEBUG 27828 --- [http-nio-8086-exec-9] o.s.security.web.FilterChainProxy        : Securing GET /actuator/health
+2026-04-17T22:38:44.013+02:00 DEBUG 27828 --- [http-nio-8086-exec-9] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:44.013+02:00 DEBUG 27828 --- [http-nio-8086-exec-9] o.s.security.web.FilterChainProxy        : Secured GET /actuator/health
+2026-04-17T22:38:44.017+02:00 DEBUG 27828 --- [http-nio-8086-exec-9] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:38:44.017+02:00 DEBUG 27828 --- [http-nio-8086-exec-9] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:38:44.020+02:00 DEBUG 27828 --- [http-nio-8086-exec-9] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:44.835+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.security.web.FilterChainProxy        : Securing POST /api/auth/test
+2026-04-17T22:38:44.836+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:44.836+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.security.web.FilterChainProxy        : Secured POST /api/auth/test
+2026-04-17T22:38:44.838+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:38:44.838+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:38:44.840+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:46.252+02:00 DEBUG 27828 --- [http-nio-8086-exec-8] o.s.security.web.FilterChainProxy        : Securing GET /actuator/health
+2026-04-17T22:38:46.252+02:00 DEBUG 27828 --- [http-nio-8086-exec-8] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:46.252+02:00 DEBUG 27828 --- [http-nio-8086-exec-8] o.s.security.web.FilterChainProxy        : Secured GET /actuator/health
+2026-04-17T22:38:46.257+02:00 DEBUG 27828 --- [http-nio-8086-exec-8] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:38:46.257+02:00 DEBUG 27828 --- [http-nio-8086-exec-8] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:38:46.259+02:00 DEBUG 27828 --- [http-nio-8086-exec-8] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:46.340+02:00 DEBUG 27828 --- [http-nio-8086-exec-2] o.s.security.web.FilterChainProxy        : Securing GET /actuator/health
+2026-04-17T22:38:46.340+02:00 DEBUG 27828 --- [http-nio-8086-exec-2] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:46.340+02:00 DEBUG 27828 --- [http-nio-8086-exec-2] o.s.security.web.FilterChainProxy        : Secured GET /actuator/health
+2026-04-17T22:38:46.342+02:00 DEBUG 27828 --- [http-nio-8086-exec-2] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:38:46.342+02:00 DEBUG 27828 --- [http-nio-8086-exec-2] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:38:46.344+02:00 DEBUG 27828 --- [http-nio-8086-exec-2] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:47.064+02:00 DEBUG 27828 --- [http-nio-8086-exec-3] o.s.security.web.FilterChainProxy        : Securing POST /api/auth/test
+2026-04-17T22:38:47.064+02:00 DEBUG 27828 --- [http-nio-8086-exec-3] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:47.064+02:00 DEBUG 27828 --- [http-nio-8086-exec-3] o.s.security.web.FilterChainProxy        : Secured POST /api/auth/test
+2026-04-17T22:38:47.073+02:00 DEBUG 27828 --- [http-nio-8086-exec-3] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:38:47.073+02:00 DEBUG 27828 --- [http-nio-8086-exec-3] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:38:47.073+02:00 DEBUG 27828 --- [http-nio-8086-exec-3] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:48.490+02:00 DEBUG 27828 --- [http-nio-8086-exec-9] o.s.security.web.FilterChainProxy        : Securing GET /actuator/health
+2026-04-17T22:38:48.490+02:00 DEBUG 27828 --- [http-nio-8086-exec-9] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:48.490+02:00 DEBUG 27828 --- [http-nio-8086-exec-9] o.s.security.web.FilterChainProxy        : Secured GET /actuator/health
+2026-04-17T22:38:48.500+02:00 DEBUG 27828 --- [http-nio-8086-exec-9] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:38:48.500+02:00 DEBUG 27828 --- [http-nio-8086-exec-9] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:38:48.502+02:00 DEBUG 27828 --- [http-nio-8086-exec-9] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:49.331+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.security.web.FilterChainProxy        : Securing POST /api/auth/test
+2026-04-17T22:38:49.331+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:49.331+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.security.web.FilterChainProxy        : Secured POST /api/auth/test
+2026-04-17T22:38:49.331+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:38:49.331+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:38:49.339+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:49.560+02:00 DEBUG 27828 --- [http-nio-8086-exec-8] o.s.security.web.FilterChainProxy        : Securing GET /actuator/health
+2026-04-17T22:38:49.567+02:00 DEBUG 27828 --- [http-nio-8086-exec-8] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:49.567+02:00 DEBUG 27828 --- [http-nio-8086-exec-8] o.s.security.web.FilterChainProxy        : Secured GET /actuator/health
+2026-04-17T22:38:49.571+02:00 DEBUG 27828 --- [http-nio-8086-exec-8] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:38:49.571+02:00 DEBUG 27828 --- [http-nio-8086-exec-8] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:38:49.572+02:00 DEBUG 27828 --- [http-nio-8086-exec-8] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:50.735+02:00 DEBUG 27828 --- [http-nio-8086-exec-5] o.s.security.web.FilterChainProxy        : Securing GET /actuator/health
+2026-04-17T22:38:50.735+02:00 DEBUG 27828 --- [http-nio-8086-exec-5] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:50.735+02:00 DEBUG 27828 --- [http-nio-8086-exec-5] o.s.security.web.FilterChainProxy        : Secured GET /actuator/health
+2026-04-17T22:38:50.735+02:00 DEBUG 27828 --- [http-nio-8086-exec-5] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:38:50.735+02:00 DEBUG 27828 --- [http-nio-8086-exec-5] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:38:50.735+02:00 DEBUG 27828 --- [http-nio-8086-exec-5] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:51.566+02:00 DEBUG 27828 --- [http-nio-8086-exec-6] o.s.security.web.FilterChainProxy        : Securing POST /api/auth/test
+2026-04-17T22:38:51.566+02:00 DEBUG 27828 --- [http-nio-8086-exec-6] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:51.566+02:00 DEBUG 27828 --- [http-nio-8086-exec-6] o.s.security.web.FilterChainProxy        : Secured POST /api/auth/test
+2026-04-17T22:38:51.566+02:00 DEBUG 27828 --- [http-nio-8086-exec-6] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:38:51.569+02:00 DEBUG 27828 --- [http-nio-8086-exec-6] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:38:51.570+02:00 DEBUG 27828 --- [http-nio-8086-exec-6] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:52.812+02:00 DEBUG 27828 --- [http-nio-8086-exec-10] o.s.security.web.FilterChainProxy        : Securing GET /actuator/health
+2026-04-17T22:38:52.812+02:00 DEBUG 27828 --- [http-nio-8086-exec-10] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:52.812+02:00 DEBUG 27828 --- [http-nio-8086-exec-10] o.s.security.web.FilterChainProxy        : Secured GET /actuator/health
+2026-04-17T22:38:52.818+02:00 DEBUG 27828 --- [http-nio-8086-exec-10] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:38:52.818+02:00 DEBUG 27828 --- [http-nio-8086-exec-10] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:38:52.820+02:00 DEBUG 27828 --- [http-nio-8086-exec-10] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:52.948+02:00 DEBUG 27828 --- [http-nio-8086-exec-9] o.s.security.web.FilterChainProxy        : Securing GET /actuator/health
+2026-04-17T22:38:52.948+02:00 DEBUG 27828 --- [http-nio-8086-exec-9] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:52.950+02:00 DEBUG 27828 --- [http-nio-8086-exec-9] o.s.security.web.FilterChainProxy        : Secured GET /actuator/health
+2026-04-17T22:38:52.952+02:00 DEBUG 27828 --- [http-nio-8086-exec-9] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:38:52.952+02:00 DEBUG 27828 --- [http-nio-8086-exec-9] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:38:52.954+02:00 DEBUG 27828 --- [http-nio-8086-exec-9] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:53.790+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.security.web.FilterChainProxy        : Securing POST /api/auth/test
+2026-04-17T22:38:53.790+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:53.790+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.security.web.FilterChainProxy        : Secured POST /api/auth/test
+2026-04-17T22:38:53.792+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:38:53.792+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:38:53.794+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:55.191+02:00 DEBUG 27828 --- [http-nio-8086-exec-8] o.s.security.web.FilterChainProxy        : Securing GET /actuator/health
+2026-04-17T22:38:55.191+02:00 DEBUG 27828 --- [http-nio-8086-exec-8] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:55.191+02:00 DEBUG 27828 --- [http-nio-8086-exec-8] o.s.security.web.FilterChainProxy        : Secured GET /actuator/health
+2026-04-17T22:38:55.193+02:00 DEBUG 27828 --- [http-nio-8086-exec-8] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:38:55.193+02:00 DEBUG 27828 --- [http-nio-8086-exec-8] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:38:55.197+02:00 DEBUG 27828 --- [http-nio-8086-exec-8] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:56.040+02:00 DEBUG 27828 --- [http-nio-8086-exec-2] o.s.security.web.FilterChainProxy        : Securing POST /api/auth/test
+2026-04-17T22:38:56.040+02:00 DEBUG 27828 --- [http-nio-8086-exec-2] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:56.040+02:00 DEBUG 27828 --- [http-nio-8086-exec-2] o.s.security.web.FilterChainProxy        : Secured POST /api/auth/test
+2026-04-17T22:38:56.043+02:00 DEBUG 27828 --- [http-nio-8086-exec-2] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:38:56.043+02:00 DEBUG 27828 --- [http-nio-8086-exec-2] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:38:56.045+02:00 DEBUG 27828 --- [http-nio-8086-exec-2] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:56.047+02:00 DEBUG 27828 --- [http-nio-8086-exec-3] o.s.security.web.FilterChainProxy        : Securing GET /actuator/health
+2026-04-17T22:38:56.047+02:00 DEBUG 27828 --- [http-nio-8086-exec-3] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:56.047+02:00 DEBUG 27828 --- [http-nio-8086-exec-3] o.s.security.web.FilterChainProxy        : Secured GET /actuator/health
+2026-04-17T22:38:56.052+02:00 DEBUG 27828 --- [http-nio-8086-exec-3] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:38:56.052+02:00 DEBUG 27828 --- [http-nio-8086-exec-3] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:38:56.054+02:00 DEBUG 27828 --- [http-nio-8086-exec-3] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:57.423+02:00 DEBUG 27828 --- [http-nio-8086-exec-9] o.s.security.web.FilterChainProxy        : Securing GET /actuator/health
+2026-04-17T22:38:57.423+02:00 DEBUG 27828 --- [http-nio-8086-exec-9] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:57.423+02:00 DEBUG 27828 --- [http-nio-8086-exec-9] o.s.security.web.FilterChainProxy        : Secured GET /actuator/health
+2026-04-17T22:38:57.428+02:00 DEBUG 27828 --- [http-nio-8086-exec-9] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:38:57.428+02:00 DEBUG 27828 --- [http-nio-8086-exec-9] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:38:57.431+02:00 DEBUG 27828 --- [http-nio-8086-exec-9] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:58.279+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.security.web.FilterChainProxy        : Securing POST /api/auth/test
+2026-04-17T22:38:58.279+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:58.280+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.security.web.FilterChainProxy        : Secured POST /api/auth/test
+2026-04-17T22:38:58.280+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:38:58.280+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:38:58.282+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:59.255+02:00 DEBUG 27828 --- [http-nio-8086-exec-8] o.s.security.web.FilterChainProxy        : Securing GET /actuator/health
+2026-04-17T22:38:59.255+02:00 DEBUG 27828 --- [http-nio-8086-exec-8] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:59.255+02:00 DEBUG 27828 --- [http-nio-8086-exec-8] o.s.security.web.FilterChainProxy        : Secured GET /actuator/health
+2026-04-17T22:38:59.259+02:00 DEBUG 27828 --- [http-nio-8086-exec-8] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:38:59.259+02:00 DEBUG 27828 --- [http-nio-8086-exec-8] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:38:59.259+02:00 DEBUG 27828 --- [http-nio-8086-exec-8] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:59.619+02:00 DEBUG 27828 --- [http-nio-8086-exec-2] o.s.security.web.FilterChainProxy        : Securing GET /actuator/health
+2026-04-17T22:38:59.619+02:00 DEBUG 27828 --- [http-nio-8086-exec-2] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:38:59.619+02:00 DEBUG 27828 --- [http-nio-8086-exec-2] o.s.security.web.FilterChainProxy        : Secured GET /actuator/health
+2026-04-17T22:38:59.627+02:00 DEBUG 27828 --- [http-nio-8086-exec-2] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:38:59.627+02:00 DEBUG 27828 --- [http-nio-8086-exec-2] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:38:59.628+02:00 DEBUG 27828 --- [http-nio-8086-exec-2] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:39:00.478+02:00 DEBUG 27828 --- [http-nio-8086-exec-3] o.s.security.web.FilterChainProxy        : Securing POST /api/auth/test
+2026-04-17T22:39:00.478+02:00 DEBUG 27828 --- [http-nio-8086-exec-3] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:39:00.478+02:00 DEBUG 27828 --- [http-nio-8086-exec-3] o.s.security.web.FilterChainProxy        : Secured POST /api/auth/test
+2026-04-17T22:39:00.481+02:00 DEBUG 27828 --- [http-nio-8086-exec-3] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:39:00.481+02:00 DEBUG 27828 --- [http-nio-8086-exec-3] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:39:00.483+02:00 DEBUG 27828 --- [http-nio-8086-exec-3] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:39:01.855+02:00 DEBUG 27828 --- [http-nio-8086-exec-9] o.s.security.web.FilterChainProxy        : Securing GET /actuator/health
+2026-04-17T22:39:01.855+02:00 DEBUG 27828 --- [http-nio-8086-exec-9] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:39:01.855+02:00 DEBUG 27828 --- [http-nio-8086-exec-9] o.s.security.web.FilterChainProxy        : Secured GET /actuator/health
+2026-04-17T22:39:01.858+02:00 DEBUG 27828 --- [http-nio-8086-exec-9] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:39:01.859+02:00 DEBUG 27828 --- [http-nio-8086-exec-9] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:39:01.859+02:00 DEBUG 27828 --- [http-nio-8086-exec-9] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:39:02.481+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.security.web.FilterChainProxy        : Securing GET /actuator/health
+2026-04-17T22:39:02.481+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:39:02.481+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.security.web.FilterChainProxy        : Secured GET /actuator/health
+2026-04-17T22:39:02.491+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:39:02.491+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:39:02.495+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:39:02.678+02:00 DEBUG 27828 --- [http-nio-8086-exec-4] o.s.security.web.FilterChainProxy        : Securing POST /api/auth/test
+2026-04-17T22:39:02.678+02:00 DEBUG 27828 --- [http-nio-8086-exec-4] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:39:02.678+02:00 DEBUG 27828 --- [http-nio-8086-exec-4] o.s.security.web.FilterChainProxy        : Secured POST /api/auth/test
+2026-04-17T22:39:02.683+02:00 DEBUG 27828 --- [http-nio-8086-exec-4] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:39:02.683+02:00 DEBUG 27828 --- [http-nio-8086-exec-4] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:39:02.685+02:00 DEBUG 27828 --- [http-nio-8086-exec-4] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:39:04.077+02:00 DEBUG 27828 --- [http-nio-8086-exec-5] o.s.security.web.FilterChainProxy        : Securing GET /actuator/health
+2026-04-17T22:39:04.077+02:00 DEBUG 27828 --- [http-nio-8086-exec-5] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:39:04.078+02:00 DEBUG 27828 --- [http-nio-8086-exec-5] o.s.security.web.FilterChainProxy        : Secured GET /actuator/health
+2026-04-17T22:39:04.079+02:00 DEBUG 27828 --- [http-nio-8086-exec-5] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:39:04.079+02:00 DEBUG 27828 --- [http-nio-8086-exec-5] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:39:04.081+02:00 DEBUG 27828 --- [http-nio-8086-exec-5] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:39:04.904+02:00 DEBUG 27828 --- [http-nio-8086-exec-6] o.s.security.web.FilterChainProxy        : Securing POST /api/auth/test
+2026-04-17T22:39:04.904+02:00 DEBUG 27828 --- [http-nio-8086-exec-6] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:39:04.904+02:00 DEBUG 27828 --- [http-nio-8086-exec-6] o.s.security.web.FilterChainProxy        : Secured POST /api/auth/test
+2026-04-17T22:39:04.909+02:00 DEBUG 27828 --- [http-nio-8086-exec-6] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:39:04.909+02:00 DEBUG 27828 --- [http-nio-8086-exec-6] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:39:04.912+02:00 DEBUG 27828 --- [http-nio-8086-exec-6] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:39:05.730+02:00 DEBUG 27828 --- [http-nio-8086-exec-10] o.s.security.web.FilterChainProxy        : Securing GET /actuator/health
+2026-04-17T22:39:05.732+02:00 DEBUG 27828 --- [http-nio-8086-exec-10] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:39:05.732+02:00 DEBUG 27828 --- [http-nio-8086-exec-10] o.s.security.web.FilterChainProxy        : Secured GET /actuator/health
+2026-04-17T22:39:05.736+02:00 DEBUG 27828 --- [http-nio-8086-exec-10] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:39:05.736+02:00 DEBUG 27828 --- [http-nio-8086-exec-10] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:39:05.739+02:00 DEBUG 27828 --- [http-nio-8086-exec-10] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:39:06.308+02:00 DEBUG 27828 --- [http-nio-8086-exec-7] o.s.security.web.FilterChainProxy        : Securing GET /actuator/health
+2026-04-17T22:39:06.308+02:00 DEBUG 27828 --- [http-nio-8086-exec-7] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:39:06.308+02:00 DEBUG 27828 --- [http-nio-8086-exec-7] o.s.security.web.FilterChainProxy        : Secured GET /actuator/health
+2026-04-17T22:39:06.309+02:00 DEBUG 27828 --- [http-nio-8086-exec-7] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:39:06.311+02:00 DEBUG 27828 --- [http-nio-8086-exec-7] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:39:06.311+02:00 DEBUG 27828 --- [http-nio-8086-exec-7] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:39:07.122+02:00 DEBUG 27828 --- [http-nio-8086-exec-4] o.s.security.web.FilterChainProxy        : Securing POST /api/auth/test
+2026-04-17T22:39:07.122+02:00 DEBUG 27828 --- [http-nio-8086-exec-4] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:39:07.122+02:00 DEBUG 27828 --- [http-nio-8086-exec-4] o.s.security.web.FilterChainProxy        : Secured POST /api/auth/test
+2026-04-17T22:39:07.124+02:00 DEBUG 27828 --- [http-nio-8086-exec-4] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:39:07.124+02:00 DEBUG 27828 --- [http-nio-8086-exec-4] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:39:07.126+02:00 DEBUG 27828 --- [http-nio-8086-exec-4] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:39:08.550+02:00 DEBUG 27828 --- [http-nio-8086-exec-8] o.s.security.web.FilterChainProxy        : Securing GET /actuator/health
+2026-04-17T22:39:08.550+02:00 DEBUG 27828 --- [http-nio-8086-exec-8] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:39:08.550+02:00 DEBUG 27828 --- [http-nio-8086-exec-8] o.s.security.web.FilterChainProxy        : Secured GET /actuator/health
+2026-04-17T22:39:08.553+02:00 DEBUG 27828 --- [http-nio-8086-exec-8] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:39:08.553+02:00 DEBUG 27828 --- [http-nio-8086-exec-8] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:39:08.556+02:00 DEBUG 27828 --- [http-nio-8086-exec-8] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:39:08.953+02:00 DEBUG 27828 --- [http-nio-8086-exec-2] o.s.security.web.FilterChainProxy        : Securing GET /actuator/health
+2026-04-17T22:39:08.953+02:00 DEBUG 27828 --- [http-nio-8086-exec-2] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:39:08.953+02:00 DEBUG 27828 --- [http-nio-8086-exec-2] o.s.security.web.FilterChainProxy        : Secured GET /actuator/health
+2026-04-17T22:39:08.953+02:00 DEBUG 27828 --- [http-nio-8086-exec-2] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:39:08.953+02:00 DEBUG 27828 --- [http-nio-8086-exec-2] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:39:08.957+02:00 DEBUG 27828 --- [http-nio-8086-exec-2] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:39:09.330+02:00 DEBUG 27828 --- [http-nio-8086-exec-3] o.s.security.web.FilterChainProxy        : Securing POST /api/auth/test
+2026-04-17T22:39:09.330+02:00 DEBUG 27828 --- [http-nio-8086-exec-3] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:39:09.330+02:00 DEBUG 27828 --- [http-nio-8086-exec-3] o.s.security.web.FilterChainProxy        : Secured POST /api/auth/test
+2026-04-17T22:39:09.331+02:00 DEBUG 27828 --- [http-nio-8086-exec-3] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:39:09.331+02:00 DEBUG 27828 --- [http-nio-8086-exec-3] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:39:09.331+02:00 DEBUG 27828 --- [http-nio-8086-exec-3] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:39:09.835+02:00 DEBUG 27828 --- [http-nio-8086-exec-9] o.s.security.web.FilterChainProxy        : Securing GET /actuator/health
+2026-04-17T22:39:09.835+02:00 DEBUG 27828 --- [http-nio-8086-exec-9] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:39:09.835+02:00 DEBUG 27828 --- [http-nio-8086-exec-9] o.s.security.web.FilterChainProxy        : Secured GET /actuator/health
+2026-04-17T22:39:09.836+02:00 DEBUG 27828 --- [http-nio-8086-exec-9] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:39:09.836+02:00 DEBUG 27828 --- [http-nio-8086-exec-9] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:39:09.838+02:00 DEBUG 27828 --- [http-nio-8086-exec-9] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:39:10.773+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.security.web.FilterChainProxy        : Securing GET /actuator/health
+2026-04-17T22:39:10.773+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:39:10.776+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.security.web.FilterChainProxy        : Secured GET /actuator/health
+2026-04-17T22:39:10.779+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:39:10.779+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:39:10.783+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:39:11.535+02:00 DEBUG 27828 --- [http-nio-8086-exec-8] o.s.security.web.FilterChainProxy        : Securing POST /api/auth/test
+2026-04-17T22:39:11.535+02:00 DEBUG 27828 --- [http-nio-8086-exec-8] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:39:11.535+02:00 DEBUG 27828 --- [http-nio-8086-exec-8] o.s.security.web.FilterChainProxy        : Secured POST /api/auth/test
+2026-04-17T22:39:11.536+02:00 DEBUG 27828 --- [http-nio-8086-exec-8] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:39:11.538+02:00 DEBUG 27828 --- [http-nio-8086-exec-8] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:39:11.540+02:00 DEBUG 27828 --- [http-nio-8086-exec-8] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:39:12.056+02:00 DEBUG 27828 --- [http-nio-8086-exec-2] o.s.security.web.FilterChainProxy        : Securing GET /actuator/health
+2026-04-17T22:39:12.063+02:00 DEBUG 27828 --- [http-nio-8086-exec-2] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:39:12.063+02:00 DEBUG 27828 --- [http-nio-8086-exec-2] o.s.security.web.FilterChainProxy        : Secured GET /actuator/health
+2026-04-17T22:39:12.063+02:00 DEBUG 27828 --- [http-nio-8086-exec-2] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:39:12.063+02:00 DEBUG 27828 --- [http-nio-8086-exec-2] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:39:12.063+02:00 DEBUG 27828 --- [http-nio-8086-exec-2] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:39:12.187+02:00 DEBUG 27828 --- [http-nio-8086-exec-3] o.s.security.web.FilterChainProxy        : Securing GET /actuator/health
+2026-04-17T22:39:12.187+02:00 DEBUG 27828 --- [http-nio-8086-exec-3] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:39:12.187+02:00 DEBUG 27828 --- [http-nio-8086-exec-3] o.s.security.web.FilterChainProxy        : Secured GET /actuator/health
+2026-04-17T22:39:12.187+02:00 DEBUG 27828 --- [http-nio-8086-exec-3] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:39:12.187+02:00 DEBUG 27828 --- [http-nio-8086-exec-3] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:39:12.187+02:00 DEBUG 27828 --- [http-nio-8086-exec-3] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:39:13.010+02:00 DEBUG 27828 --- [http-nio-8086-exec-9] o.s.security.web.FilterChainProxy        : Securing GET /actuator/health
+2026-04-17T22:39:13.012+02:00 DEBUG 27828 --- [http-nio-8086-exec-9] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:39:13.012+02:00 DEBUG 27828 --- [http-nio-8086-exec-9] o.s.security.web.FilterChainProxy        : Secured GET /actuator/health
+2026-04-17T22:39:13.014+02:00 DEBUG 27828 --- [http-nio-8086-exec-9] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:39:13.014+02:00 DEBUG 27828 --- [http-nio-8086-exec-9] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:39:13.018+02:00 DEBUG 27828 --- [http-nio-8086-exec-9] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:39:13.183+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.security.web.FilterChainProxy        : Securing POST /api/auth/login
+2026-04-17T22:39:13.183+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:39:13.183+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.security.web.FilterChainProxy        : Secured POST /api/auth/login
+2026-04-17T22:39:13.183+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] org.hibernate.SQL                        : 
+    select
+        ue1_0.id,
+        ue1_0.email,
+        ue1_0.password,
+        ue1_0.role 
+    from
+        cash_organizer.users ue1_0 
+    where
+        ue1_0.email=?
+2026-04-17T22:39:13.752+02:00 DEBUG 27828 --- [http-nio-8086-exec-8] o.s.security.web.FilterChainProxy        : Securing POST /api/auth/test
+2026-04-17T22:39:13.752+02:00 DEBUG 27828 --- [http-nio-8086-exec-8] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:39:13.752+02:00 DEBUG 27828 --- [http-nio-8086-exec-8] o.s.security.web.FilterChainProxy        : Secured POST /api/auth/test
+2026-04-17T22:39:13.754+02:00 DEBUG 27828 --- [http-nio-8086-exec-8] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:39:13.754+02:00 DEBUG 27828 --- [http-nio-8086-exec-8] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:39:13.754+02:00 DEBUG 27828 --- [http-nio-8086-exec-8] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:39:14.291+02:00 DEBUG 27828 --- [http-nio-8086-exec-2] o.s.security.web.FilterChainProxy        : Securing GET /actuator/health
+2026-04-17T22:39:14.291+02:00 DEBUG 27828 --- [http-nio-8086-exec-2] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:39:14.291+02:00 DEBUG 27828 --- [http-nio-8086-exec-2] o.s.security.web.FilterChainProxy        : Secured GET /actuator/health
+2026-04-17T22:39:14.298+02:00 DEBUG 27828 --- [http-nio-8086-exec-2] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:39:14.298+02:00 DEBUG 27828 --- [http-nio-8086-exec-2] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:39:14.300+02:00 DEBUG 27828 --- [http-nio-8086-exec-2] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:39:15.231+02:00 DEBUG 27828 --- [http-nio-8086-exec-3] o.s.security.web.FilterChainProxy        : Securing GET /actuator/health
+2026-04-17T22:39:15.231+02:00 DEBUG 27828 --- [http-nio-8086-exec-3] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:39:15.231+02:00 DEBUG 27828 --- [http-nio-8086-exec-3] o.s.security.web.FilterChainProxy        : Secured GET /actuator/health
+2026-04-17T22:39:15.233+02:00 DEBUG 27828 --- [http-nio-8086-exec-3] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:39:15.233+02:00 DEBUG 27828 --- [http-nio-8086-exec-3] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:39:15.236+02:00 DEBUG 27828 --- [http-nio-8086-exec-3] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:39:15.405+02:00 DEBUG 27828 --- [http-nio-8086-exec-9] o.s.security.web.FilterChainProxy        : Securing GET /actuator/health
+2026-04-17T22:39:15.405+02:00 DEBUG 27828 --- [http-nio-8086-exec-9] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:39:15.405+02:00 DEBUG 27828 --- [http-nio-8086-exec-9] o.s.security.web.FilterChainProxy        : Secured GET /actuator/health
+2026-04-17T22:39:15.407+02:00 DEBUG 27828 --- [http-nio-8086-exec-9] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:39:15.407+02:00 DEBUG 27828 --- [http-nio-8086-exec-9] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:39:15.410+02:00 DEBUG 27828 --- [http-nio-8086-exec-9] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:39:15.962+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.security.web.FilterChainProxy        : Securing POST /api/auth/test
+2026-04-17T22:39:15.962+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:39:15.962+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.security.web.FilterChainProxy        : Secured POST /api/auth/test
+2026-04-17T22:39:15.965+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:39:15.965+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:39:15.965+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:39:16.521+02:00 DEBUG 27828 --- [http-nio-8086-exec-8] o.s.security.web.FilterChainProxy        : Securing GET /actuator/health
+2026-04-17T22:39:16.521+02:00 DEBUG 27828 --- [http-nio-8086-exec-8] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:39:16.521+02:00 DEBUG 27828 --- [http-nio-8086-exec-8] o.s.security.web.FilterChainProxy        : Secured GET /actuator/health
+2026-04-17T22:39:16.525+02:00 DEBUG 27828 --- [http-nio-8086-exec-8] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:39:16.525+02:00 DEBUG 27828 --- [http-nio-8086-exec-8] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:39:16.526+02:00 DEBUG 27828 --- [http-nio-8086-exec-8] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:39:17.456+02:00 DEBUG 27828 --- [http-nio-8086-exec-2] o.s.security.web.FilterChainProxy        : Securing GET /actuator/health
+2026-04-17T22:39:17.456+02:00 DEBUG 27828 --- [http-nio-8086-exec-2] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:39:17.456+02:00 DEBUG 27828 --- [http-nio-8086-exec-2] o.s.security.web.FilterChainProxy        : Secured GET /actuator/health
+2026-04-17T22:39:17.457+02:00 DEBUG 27828 --- [http-nio-8086-exec-2] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:39:17.457+02:00 DEBUG 27828 --- [http-nio-8086-exec-2] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:39:17.459+02:00 DEBUG 27828 --- [http-nio-8086-exec-2] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:39:18.188+02:00 DEBUG 27828 --- [http-nio-8086-exec-3] o.s.security.web.FilterChainProxy        : Securing POST /api/auth/test
+2026-04-17T22:39:18.188+02:00 DEBUG 27828 --- [http-nio-8086-exec-3] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:39:18.188+02:00 DEBUG 27828 --- [http-nio-8086-exec-3] o.s.security.web.FilterChainProxy        : Secured POST /api/auth/test
+2026-04-17T22:39:18.191+02:00 DEBUG 27828 --- [http-nio-8086-exec-3] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:39:18.191+02:00 DEBUG 27828 --- [http-nio-8086-exec-3] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:39:18.192+02:00 DEBUG 27828 --- [http-nio-8086-exec-3] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:39:18.631+02:00 DEBUG 27828 --- [http-nio-8086-exec-9] o.s.security.web.FilterChainProxy        : Securing GET /actuator/health
+2026-04-17T22:39:18.631+02:00 DEBUG 27828 --- [http-nio-8086-exec-9] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:39:18.631+02:00 DEBUG 27828 --- [http-nio-8086-exec-9] o.s.security.web.FilterChainProxy        : Secured GET /actuator/health
+2026-04-17T22:39:18.634+02:00 DEBUG 27828 --- [http-nio-8086-exec-9] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:39:18.634+02:00 DEBUG 27828 --- [http-nio-8086-exec-9] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:39:18.634+02:00 DEBUG 27828 --- [http-nio-8086-exec-9] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:39:18.844+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.security.web.FilterChainProxy        : Securing GET /actuator/health
+2026-04-17T22:39:18.845+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:39:18.845+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.security.web.FilterChainProxy        : Secured GET /actuator/health
+2026-04-17T22:39:18.845+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:39:18.845+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:39:18.848+02:00 DEBUG 27828 --- [http-nio-8086-exec-1] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:39:19.662+02:00 DEBUG 27828 --- [http-nio-8086-exec-8] o.s.security.web.FilterChainProxy        : Securing GET /actuator/health
+2026-04-17T22:39:19.664+02:00 DEBUG 27828 --- [http-nio-8086-exec-8] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:39:19.664+02:00 DEBUG 27828 --- [http-nio-8086-exec-8] o.s.security.web.FilterChainProxy        : Secured GET /actuator/health
+2026-04-17T22:39:19.666+02:00 DEBUG 27828 --- [http-nio-8086-exec-8] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:39:19.666+02:00 DEBUG 27828 --- [http-nio-8086-exec-8] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:39:19.666+02:00 DEBUG 27828 --- [http-nio-8086-exec-8] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:39:20.392+02:00 DEBUG 27828 --- [http-nio-8086-exec-2] o.s.security.web.FilterChainProxy        : Securing POST /api/auth/test
+2026-04-17T22:39:20.393+02:00 DEBUG 27828 --- [http-nio-8086-exec-2] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:39:20.393+02:00 DEBUG 27828 --- [http-nio-8086-exec-2] o.s.security.web.FilterChainProxy        : Secured POST /api/auth/test
+2026-04-17T22:39:20.394+02:00 DEBUG 27828 --- [http-nio-8086-exec-2] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:39:20.394+02:00 DEBUG 27828 --- [http-nio-8086-exec-2] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:39:20.397+02:00 DEBUG 27828 --- [http-nio-8086-exec-2] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:39:21.059+02:00 DEBUG 27828 --- [http-nio-8086-exec-6] o.s.security.web.FilterChainProxy        : Securing GET /actuator/health
+2026-04-17T22:39:21.059+02:00 DEBUG 27828 --- [http-nio-8086-exec-6] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:39:21.059+02:00 DEBUG 27828 --- [http-nio-8086-exec-6] o.s.security.web.FilterChainProxy        : Secured GET /actuator/health
+2026-04-17T22:39:21.065+02:00 DEBUG 27828 --- [http-nio-8086-exec-6] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:39:21.065+02:00 DEBUG 27828 --- [http-nio-8086-exec-6] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:39:21.067+02:00 DEBUG 27828 --- [http-nio-8086-exec-6] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:39:21.887+02:00 DEBUG 27828 --- [http-nio-8086-exec-10] o.s.security.web.FilterChainProxy        : Securing GET /actuator/health
+2026-04-17T22:39:21.887+02:00 DEBUG 27828 --- [http-nio-8086-exec-10] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:39:21.887+02:00 DEBUG 27828 --- [http-nio-8086-exec-10] o.s.security.web.FilterChainProxy        : Secured GET /actuator/health
+2026-04-17T22:39:21.890+02:00 DEBUG 27828 --- [http-nio-8086-exec-10] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:39:21.890+02:00 DEBUG 27828 --- [http-nio-8086-exec-10] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:39:21.892+02:00 DEBUG 27828 --- [http-nio-8086-exec-10] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:39:22.613+02:00 DEBUG 27828 --- [http-nio-8086-exec-7] o.s.security.web.FilterChainProxy        : Securing POST /api/auth/test
+2026-04-17T22:39:22.613+02:00 DEBUG 27828 --- [http-nio-8086-exec-7] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:39:22.613+02:00 DEBUG 27828 --- [http-nio-8086-exec-7] o.s.security.web.FilterChainProxy        : Secured POST /api/auth/test
+2026-04-17T22:39:22.616+02:00 DEBUG 27828 --- [http-nio-8086-exec-7] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:39:22.616+02:00 DEBUG 27828 --- [http-nio-8086-exec-7] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:39:22.619+02:00 DEBUG 27828 --- [http-nio-8086-exec-7] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:39:23.283+02:00 DEBUG 27828 --- [http-nio-8086-exec-4] o.s.security.web.FilterChainProxy        : Securing GET /actuator/health
+2026-04-17T22:39:23.283+02:00 DEBUG 27828 --- [http-nio-8086-exec-4] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:39:23.283+02:00 DEBUG 27828 --- [http-nio-8086-exec-4] o.s.security.web.FilterChainProxy        : Secured GET /actuator/health
+2026-04-17T22:39:23.284+02:00 DEBUG 27828 --- [http-nio-8086-exec-4] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:39:23.284+02:00 DEBUG 27828 --- [http-nio-8086-exec-4] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:39:23.284+02:00 DEBUG 27828 --- [http-nio-8086-exec-4] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:39:24.104+02:00 DEBUG 27828 --- [http-nio-8086-exec-5] o.s.security.web.FilterChainProxy        : Securing GET /actuator/health
+2026-04-17T22:39:24.104+02:00 DEBUG 27828 --- [http-nio-8086-exec-5] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:39:24.104+02:00 DEBUG 27828 --- [http-nio-8086-exec-5] o.s.security.web.FilterChainProxy        : Secured GET /actuator/health
+2026-04-17T22:39:24.106+02:00 DEBUG 27828 --- [http-nio-8086-exec-5] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:39:24.106+02:00 DEBUG 27828 --- [http-nio-8086-exec-5] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:39:24.106+02:00 DEBUG 27828 --- [http-nio-8086-exec-5] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:39:24.853+02:00 DEBUG 27828 --- [http-nio-8086-exec-6] o.s.security.web.FilterChainProxy        : Securing POST /api/auth/test
+2026-04-17T22:39:24.855+02:00 DEBUG 27828 --- [http-nio-8086-exec-6] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:39:24.855+02:00 DEBUG 27828 --- [http-nio-8086-exec-6] o.s.security.web.FilterChainProxy        : Secured POST /api/auth/test
+2026-04-17T22:39:24.857+02:00 DEBUG 27828 --- [http-nio-8086-exec-6] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:39:24.857+02:00 DEBUG 27828 --- [http-nio-8086-exec-6] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:39:24.859+02:00 DEBUG 27828 --- [http-nio-8086-exec-6] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:39:25.504+02:00 DEBUG 27828 --- [http-nio-8086-exec-10] o.s.security.web.FilterChainProxy        : Securing GET /actuator/health
+2026-04-17T22:39:25.504+02:00 DEBUG 27828 --- [http-nio-8086-exec-10] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:39:25.504+02:00 DEBUG 27828 --- [http-nio-8086-exec-10] o.s.security.web.FilterChainProxy        : Secured GET /actuator/health
+2026-04-17T22:39:25.506+02:00 DEBUG 27828 --- [http-nio-8086-exec-10] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:39:25.506+02:00 DEBUG 27828 --- [http-nio-8086-exec-10] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:39:25.509+02:00 DEBUG 27828 --- [http-nio-8086-exec-10] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:39:26.304+02:00 DEBUG 27828 --- [http-nio-8086-exec-7] o.s.security.web.FilterChainProxy        : Securing GET /actuator/health
+2026-04-17T22:39:26.304+02:00 DEBUG 27828 --- [http-nio-8086-exec-7] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:39:26.304+02:00 DEBUG 27828 --- [http-nio-8086-exec-7] o.s.security.web.FilterChainProxy        : Secured GET /actuator/health
+2026-04-17T22:39:26.311+02:00 DEBUG 27828 --- [http-nio-8086-exec-7] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:39:26.311+02:00 DEBUG 27828 --- [http-nio-8086-exec-7] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:39:26.311+02:00 DEBUG 27828 --- [http-nio-8086-exec-7] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:39:27.077+02:00 DEBUG 27828 --- [http-nio-8086-exec-4] o.s.security.web.FilterChainProxy        : Securing POST /api/auth/test
+2026-04-17T22:39:27.077+02:00 DEBUG 27828 --- [http-nio-8086-exec-4] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:39:27.077+02:00 DEBUG 27828 --- [http-nio-8086-exec-4] o.s.security.web.FilterChainProxy        : Secured POST /api/auth/test
+2026-04-17T22:39:27.081+02:00 DEBUG 27828 --- [http-nio-8086-exec-4] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:39:27.081+02:00 DEBUG 27828 --- [http-nio-8086-exec-4] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:39:27.081+02:00 DEBUG 27828 --- [http-nio-8086-exec-4] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:39:27.715+02:00 DEBUG 27828 --- [http-nio-8086-exec-5] o.s.security.web.FilterChainProxy        : Securing GET /actuator/health
+2026-04-17T22:39:27.715+02:00 DEBUG 27828 --- [http-nio-8086-exec-5] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:39:27.715+02:00 DEBUG 27828 --- [http-nio-8086-exec-5] o.s.security.web.FilterChainProxy        : Secured GET /actuator/health
+2026-04-17T22:39:27.718+02:00 DEBUG 27828 --- [http-nio-8086-exec-5] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:39:27.718+02:00 DEBUG 27828 --- [http-nio-8086-exec-5] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:39:27.720+02:00 DEBUG 27828 --- [http-nio-8086-exec-5] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:39:28.533+02:00 DEBUG 27828 --- [http-nio-8086-exec-6] o.s.security.web.FilterChainProxy        : Securing GET /actuator/health
+2026-04-17T22:39:28.534+02:00 DEBUG 27828 --- [http-nio-8086-exec-6] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-04-17T22:39:28.534+02:00 DEBUG 27828 --- [http-nio-8086-exec-6] o.s.security.web.FilterChainProxy        : Secured GET /actuator/health
+2026-04-17T22:39:28.536+02:00 DEBUG 27828 --- [http-nio-8086-exec-6] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-17T22:39:28.536+02:00 DEBUG 27828 --- [http-nio-8086-exec-6] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-17T22:39:28.538+02:00 DEBUG 27828 --- [http-nio-8086-exec-6] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
