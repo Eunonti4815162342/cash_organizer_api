@@ -68,6 +68,18 @@ pipeline {
             steps {
                 sh '''
                     echo "Deploying new backend container..."
+
+                    # Load environment variables from .env if it exists
+                    if [ -f /root/.env ]; then
+                        set -a
+                        source /root/.env
+                        set +a
+                    fi
+
+                    # Use environment variables or defaults
+                    DB_PASSWORD=${DB_PASSWORD:-postgres}
+                    JWT_SECRET=${JWT_SECRET:-your_secure_jwt_key_change_in_production}
+
                     docker run -d \
                         --name ${DOCKER_CONTAINER} \
                         --network llama_net \
@@ -75,8 +87,8 @@ pipeline {
                         -e SPRING_PROFILES_ACTIVE=prod \
                         -e SPRING_DATASOURCE_URL=jdbc:postgresql://llama_db:5432/cash_organizer \
                         -e SPRING_DATASOURCE_USERNAME=postgres \
-                        -e SPRING_DATASOURCE_PASSWORD=postgres \
-                        -e JWT_SECRET_KEY=your_secure_jwt_key_change_in_production \
+                        -e SPRING_DATASOURCE_PASSWORD="${DB_PASSWORD}" \
+                        -e JWT_SECRET_KEY="${JWT_SECRET}" \
                         --health-cmd="curl -f http://localhost:8085/actuator/health || exit 1" \
                         --health-interval=30s \
                         --health-timeout=10s \
