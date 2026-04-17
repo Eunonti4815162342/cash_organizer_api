@@ -1,8 +1,20 @@
+# Cash Organizer Backend - Default Configuration
+# Use Spring profiles to override: spring.profiles.active=dev|staging|prod
+#
+# Development:  ./gradlew bootRun --args='--spring.profiles.active=dev'
+# Staging:      ./gradlew bootRun --args='--spring.profiles.active=staging'
+# Production:   ./gradlew bootRun --args='--spring.profiles.active=prod'
+#
+# Or via environment variable: export SPRING_PROFILES_ACTIVE=prod
+
 spring:
+  profiles:
+    active: ${SPRING_PROFILES_ACTIVE:dev}
+
   datasource:
-    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://192.168.1.145:5432/llama_finanzas}
-    username: ${SPRING_DATASOURCE_USERNAME:llama_user}
-    password: ${SPRING_DATASOURCE_PASSWORD:llama_password}
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/cash_organizer_dev}
+    username: ${SPRING_DATASOURCE_USERNAME:postgres}
+    password: ${SPRING_DATASOURCE_PASSWORD:postgres}
     driver-class-name: org.postgresql.Driver
 
   jpa:
@@ -19,20 +31,23 @@ spring:
     default-schema: cash_organizer
 
 application:
+  name: cash-organizer-api
+  version: 1.0.0
   security:
     jwt:
-      # Valor por defecto solo para desarrollo local. En producción se inyectará vía variable de entorno.
-      secret-key: ${JWT_SECRET_KEY:dev_secret_key_must_be_changed_in_production_404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970}
-      expiration: 86400000
+      # IMPORTANT: In production, ALWAYS use environment variable JWT_SECRET_KEY
+      # Never commit actual secret keys to version control
+      secret-key: ${JWT_SECRET_KEY:default_dev_key_change_in_non_dev_environments}
+      expiration: ${JWT_EXPIRATION:86400000}
     cors:
-      # Permitimos localhost, tu IP de PC y todo el rango de Tailscale (100.*)
-      allowed-origins: http://localhost:8080,http://localhost:8085,http://localhost,http://192.168.1.192,http://100.*.*.*
-
+      # Default: localhost only. Override per environment in application-{profile}.yml
+      allowed-origins: http://localhost:8080,http://localhost:8085
 
 server:
   port: ${SERVER_PORT:8085}
   error:
     include-message: always
+    include-stacktrace: always
 
 logging:
   level:
@@ -42,4 +57,4 @@ logging:
   pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
   file:
-    name: logs/cash-organizer-audit.log
+    name: logs/cash-organizer.log

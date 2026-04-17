@@ -1,0 +1,54 @@
+spring:
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://staging-db:5432/cash_organizer_staging}
+    username: ${SPRING_DATASOURCE_USERNAME:postgres}
+    password: ${SPRING_DATASOURCE_PASSWORD:changeme}
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 5
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        jdbc:
+          batch_size: 20
+          fetch_size: 50
+
+  liquibase:
+    enabled: true
+    change-log: classpath:db/changelog/db.changelog-master.xml
+    default-schema: cash_organizer
+
+application:
+  security:
+    jwt:
+      secret-key: ${JWT_SECRET_KEY:staging_secret_key_must_be_changed}
+      expiration: 86400000
+    cors:
+      allowed-origins: https://staging.cashorganizer.com,https://app-staging.cashorganizer.com
+
+server:
+  port: 8085
+  error:
+    include-message: always
+    include-stacktrace: on-param
+  compression:
+    enabled: true
+    min-response-size: 1024
+
+logging:
+  level:
+    root: WARN
+    org.springframework.security: INFO
+    com.tritit.cashorganizer.api: INFO
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+  file:
+    name: /var/log/cash-organizer/staging.log
+    max-size: 100MB
+    max-history: 30

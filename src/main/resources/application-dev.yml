@@ -1,0 +1,45 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/cash_organizer_dev
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+
+  liquibase:
+    enabled: true
+    change-log: classpath:db/changelog/db.changelog-master.xml
+    default-schema: cash_organizer
+
+application:
+  security:
+    jwt:
+      secret-key: dev_secret_key_must_be_changed_in_production_404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970
+      expiration: 86400000
+    cors:
+      allowed-origins: http://localhost:8080,http://localhost:8085,http://localhost:3000,http://127.0.0.1:3000
+
+server:
+  port: 8085
+  error:
+    include-message: always
+    include-stacktrace: always
+
+logging:
+  level:
+    root: INFO
+    org.springframework.security: DEBUG
+    com.tritit.cashorganizer.api: DEBUG
+    org.hibernate.SQL: DEBUG
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+  file:
+    name: logs/cash-organizer-dev.log
