@@ -17,8 +17,11 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody AuthRequest request) {
         try {
+            System.out.println("[AuthController] Login attempt: " + request.getEmail());
             return ResponseEntity.ok(authService.login(request.getEmail(), request.getPassword(), request.isRememberMe()));
         } catch (Exception e) {
+            System.err.println("[AuthController] Login error: " + e.getClass().getName() + " - " + e.getMessage());
+            e.printStackTrace();
             return ResponseEntity.status(401).body(e.getMessage());
         }
     }
