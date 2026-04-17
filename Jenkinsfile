@@ -114,7 +114,8 @@ pipeline {
                     # Wait a bit and check health
                     sleep 30
                     for i in {1..30}; do
-                        HEALTH=$(curl -s http://localhost:${APP_PORT}/actuator/health 2>/dev/null)
+                        # Use Docker container name in llama_net network for health check
+                        HEALTH=$(docker exec ${DOCKER_CONTAINER} sh -c 'wget -q -O- http://localhost:8085/actuator/health 2>/dev/null' 2>/dev/null)
                         if echo "$HEALTH" | grep -q "UP"; then
                             kill $LOGS_PID 2>/dev/null || true
                             echo "================================================================"
@@ -131,8 +132,8 @@ pipeline {
                     kill $LOGS_PID 2>/dev/null || true
                     echo "================================================================"
                     echo "✗ Backend health check failed after 5 minutes"
-                    HEALTH=$(curl -s http://localhost:${APP_PORT}/actuator/health 2>/dev/null)
-                    echo "Health response: $HEALTH"
+                    echo "Checking container logs for errors..."
+                    docker logs --tail=20 ${DOCKER_CONTAINER}
                     exit 1
                 '''
             }
