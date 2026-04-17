@@ -82,7 +82,7 @@ pipeline {
                         --name ${DOCKER_CONTAINER} \
                         --network llama_net \
                         -p ${APP_PORT}:8085 \
-                        -e SPRING_PROFILES_ACTIVE=prod \
+                        -e SPRING_PROFILES_ACTIVE=dev \
                         -e SPRING_DATASOURCE_URL="jdbc:postgresql://${DB_HOST}:${DB_PORT}/${DB_NAME}" \
                         -e SPRING_DATASOURCE_USERNAME="${DB_USER}" \
                         -e SPRING_DATASOURCE_PASSWORD="${DB_PASSWORD}" \

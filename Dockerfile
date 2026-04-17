@@ -22,13 +22,17 @@ FROM bellsoft/liberica-openjre-alpine-musl:17
 
 WORKDIR /app
 
+# Install curl for health checks
+RUN apk add --no-cache curl
+
 # Copy built JAR from build stage
 COPY --from=build /app/build/libs/*.jar app.jar
 
-# Health check
-HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
-    CMD java -jar /app/app.jar --spring.boot.admin.server.enabled=false || exit 1
+# Health check - verify Spring Boot is responsive
+HEALTHCHECK --interval=10s --timeout=5s --start-period=60s --retries=5 \
+    CMD curl -f http://localhost:8085/actuator/health || exit 1
 
-EXPOSE 8080
+EXPOSE 8085
 
-ENTRYPOINT ["java", "-jar", "app.jar"]
+# Run with optimized JVM settings for ARM64
+ENTRYPOINT ["java", "-XX:+UseStringDeduplication", "-jar", "app.jar"]
