@@ -104,26 +104,36 @@ pipeline {
             steps {
                 sh '''
                     echo "Waiting for backend to fully start (Liquibase migrations + Spring Boot)..."
-                    echo "This may take up to 5 minutes..."
-                    sleep 300
+                    echo "Showing container logs in real-time:"
+                    echo "================================================================"
 
-                    echo "Checking backend health..."
+                    # Show logs with timeout of 5 minutes
+                    timeout 300 docker logs -f ${DOCKER_CONTAINER} &
+                    LOGS_PID=$!
+
+                    # Wait a bit and check health
+                    sleep 30
+                    for i in {1..30}; do
+                        HEALTH=$(curl -s http://localhost:${APP_PORT}/actuator/health 2>/dev/null)
+                        if echo "$HEALTH" | grep -q "UP"; then
+                            kill $LOGS_PID 2>/dev/null || true
+                            echo "================================================================"
+                            echo "✅ Backend is healthy!"
+                            echo "Health: $HEALTH"
+                            echo ""
+                            docker ps -f name=${DOCKER_CONTAINER} --format "Container: {{.Names}} | Status: {{.Status}} | Ports: {{.Ports}}"
+                            exit 0
+                        fi
+                        echo "Waiting... ($((i*10)) seconds elapsed)"
+                        sleep 10
+                    done
+
+                    kill $LOGS_PID 2>/dev/null || true
+                    echo "================================================================"
+                    echo "✗ Backend health check failed after 5 minutes"
                     HEALTH=$(curl -s http://localhost:${APP_PORT}/actuator/health 2>/dev/null)
-
-                    if echo "$HEALTH" | grep -q "UP"; then
-                        echo "✅ Backend is healthy!"
-                        echo "Health: $HEALTH"
-                        echo ""
-                        docker ps -f name=${DOCKER_CONTAINER} --format "Container: {{.Names}} | Status: {{.Status}} | Ports: {{.Ports}}"
-                        exit 0
-                    else
-                        echo "✗ Backend health check failed"
-                        echo "Health response: $HEALTH"
-                        echo ""
-                        echo "Container logs:"
-                        docker logs --tail=50 ${DOCKER_CONTAINER}
-                        exit 1
-                    fi
+                    echo "Health response: $HEALTH"
+                    exit 1
                 '''
             }
         }
