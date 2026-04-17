@@ -71,8 +71,13 @@ pipeline {
                     docker run -d \
                         --name ${DOCKER_CONTAINER} \
                         --network llama_net \
-                        -p ${APP_PORT}:8080 \
-                        --health-cmd="curl -f http://localhost:8080/actuator/health || exit 1" \
+                        -p ${APP_PORT}:8085 \
+                        -e SPRING_PROFILES_ACTIVE=prod \
+                        -e SPRING_DATASOURCE_URL=jdbc:postgresql://llama_db:5432/cash_organizer \
+                        -e SPRING_DATASOURCE_USERNAME=postgres \
+                        -e SPRING_DATASOURCE_PASSWORD=postgres \
+                        -e JWT_SECRET_KEY=your_secure_jwt_key_change_in_production \
+                        --health-cmd="curl -f http://localhost:8085/actuator/health || exit 1" \
                         --health-interval=30s \
                         --health-timeout=10s \
                         --health-retries=3 \
@@ -93,7 +98,7 @@ pipeline {
                     ATTEMPT=0
 
                     while [ $ATTEMPT -lt $MAX_ATTEMPTS ]; do
-                        if docker exec ${DOCKER_CONTAINER} curl -s http://localhost:8080/actuator/health 2>/dev/null | grep -q "UP"; then
+                        if docker exec ${DOCKER_CONTAINER} curl -s http://localhost:8085/actuator/health 2>/dev/null | grep -q "UP"; then
                             echo "✓ Backend is healthy and responding"
                             docker exec ${DOCKER_CONTAINER} java -version 2>&1 | grep -i openjdk
                             exit 0
