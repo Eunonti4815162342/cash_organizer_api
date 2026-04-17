@@ -104,7 +104,8 @@ pipeline {
             steps {
                 sh '''
                     echo "Waiting for backend to fully start (Liquibase migrations + Spring Boot)..."
-                    sleep 60
+                    echo "This may take up to 5 minutes..."
+                    sleep 300
 
                     echo "Checking backend health..."
                     HEALTH=$(curl -s http://localhost:${APP_PORT}/actuator/health 2>/dev/null)
