@@ -69,16 +69,21 @@ pipeline {
                 sh '''
                     echo "Deploying new backend container..."
 
-                    # Load environment variables from .env if it exists
-                    if [ -f /root/.env ]; then
+                    # Load environment variables from docker.env
+                    ENV_FILE="/home/eunonti/docker-services/llama_finance/docker.env"
+                    if [ -f "$ENV_FILE" ]; then
                         set -a
-                        source /root/.env
+                        source "$ENV_FILE"
                         set +a
+                        echo "✓ Loaded environment from $ENV_FILE"
+                    else
+                        echo "Warning: $ENV_FILE not found, using defaults"
                     fi
 
-                    # Use environment variables or defaults
-                    DB_PASSWORD=${DB_PASSWORD:-postgres}
-                    JWT_SECRET=${JWT_SECRET:-your_secure_jwt_key_change_in_production}
+                    # Extract database credentials from environment
+                    # These should be defined in docker.env as POSTGRES_PASSWORD, etc.
+                    DB_PASSWORD=${POSTGRES_PASSWORD:-postgres}
+                    DB_USER=${POSTGRES_USER:-postgres}
 
                     docker run -d \
                         --name ${DOCKER_CONTAINER} \
@@ -86,9 +91,9 @@ pipeline {
                         -p ${APP_PORT}:8085 \
                         -e SPRING_PROFILES_ACTIVE=prod \
                         -e SPRING_DATASOURCE_URL=jdbc:postgresql://llama_db:5432/cash_organizer \
-                        -e SPRING_DATASOURCE_USERNAME=postgres \
+                        -e SPRING_DATASOURCE_USERNAME="${DB_USER}" \
                         -e SPRING_DATASOURCE_PASSWORD="${DB_PASSWORD}" \
-                        -e JWT_SECRET_KEY="${JWT_SECRET}" \
+                        -e JWT_SECRET_KEY=secure_jwt_key_from_env \
                         --health-cmd="curl -f http://localhost:8085/actuator/health || exit 1" \
                         --health-interval=30s \
                         --health-timeout=10s \
