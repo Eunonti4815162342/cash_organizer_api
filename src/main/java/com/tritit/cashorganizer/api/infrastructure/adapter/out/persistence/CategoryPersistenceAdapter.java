@@ -1,6 +1,7 @@
 package com.tritit.cashorganizer.api.infrastructure.adapter.out.persistence;
 
 import com.tritit.cashorganizer.api.domain.model.Category;
+import com.tritit.cashorganizer.api.domain.model.Subcategory;
 import com.tritit.cashorganizer.api.domain.model.User;
 import com.tritit.cashorganizer.api.domain.port.out.CategoryPersistencePort;
 import com.tritit.cashorganizer.api.infrastructure.adapter.out.persistence.entity.UserEntity;
@@ -41,6 +42,18 @@ public class CategoryPersistenceAdapter implements CategoryPersistencePort {
     @Override
     public void delete(Long id) {
         categoryRepository.deleteById(id);
+    }
+
+    @Override
+    public Subcategory saveSubcategory(Subcategory subcategory) {
+        var entity = mapper.toEntity(subcategory);
+        return mapper.toDomain(subcategoryRepository.save(entity));
+    }
+
+    @Override
+    public Optional<Subcategory> findSubcategoryById(Long id) {
+        return subcategoryRepository.findById(id)
+                .map(mapper::toDomain);
     }
 
     @Override

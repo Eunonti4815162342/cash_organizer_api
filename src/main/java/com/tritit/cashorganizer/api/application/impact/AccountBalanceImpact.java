@@ -15,7 +15,7 @@ abstract class AccountBalanceImpact implements TransactionImpact {
 
     protected AccountItem resolveOwned(Long id, User user) {
         return accountPort.findById(id)
-                .filter(a -> a.getUser().getId().equals(user.getId()))
+                .filter(a -> a.belongsTo(user))
                 .orElseThrow(() -> new ResourceNotFoundException("Account not found"));
     }
 }

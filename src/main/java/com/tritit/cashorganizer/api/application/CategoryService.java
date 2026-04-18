@@ -3,6 +3,7 @@ package com.tritit.cashorganizer.api.application;
 import com.tritit.cashorganizer.api.domain.exception.InvalidTransactionException;
 import com.tritit.cashorganizer.api.domain.exception.ResourceNotFoundException;
 import com.tritit.cashorganizer.api.domain.model.Category;
+import com.tritit.cashorganizer.api.domain.model.Subcategory;
 import com.tritit.cashorganizer.api.domain.model.TransactionItem;
 import com.tritit.cashorganizer.api.domain.model.User;
 import com.tritit.cashorganizer.api.domain.port.in.CategoryUseCase;
@@ -38,6 +39,24 @@ public class CategoryService implements CategoryUseCase {
         User user = userContextPort.getCurrentUser();
         category.setUser(user);
         return categoryPersistencePort.save(category);
+    }
+
+    @Override
+    @Transactional
+    public Subcategory createSubcategory(Long categoryId, Subcategory subcategory) {
+        Category parent = categoryPersistencePort.findById(categoryId)
+                .orElseThrow(() -> new ResourceNotFoundException("Parent category not found"));
+        subcategory.setCategory(parent);
+        return categoryPersistencePort.saveSubcategory(subcategory);
+    }
+
+    @Override
+    @Transactional
+    public Subcategory updateSubcategory(Long id, Subcategory subcategoryDetails) {
+        Subcategory existing = categoryPersistencePort.findSubcategoryById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Subcategory not found"));
+        existing.setName(subcategoryDetails.getName());
+        return categoryPersistencePort.saveSubcategory(existing);
     }
 
     @Override

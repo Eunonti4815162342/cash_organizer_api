@@ -3,6 +3,7 @@ package com.tritit.cashorganizer.api.application;
 import com.tritit.cashorganizer.api.domain.exception.ResourceNotFoundException;
 import com.tritit.cashorganizer.api.domain.model.FinancialEntity;
 import com.tritit.cashorganizer.api.domain.port.out.UserContextPort;
+import com.tritit.cashorganizer.api.domain.port.out.AccountPersistencePort;
 import com.tritit.cashorganizer.api.infrastructure.adapter.out.persistence.FinancialEntityRepository;
 import com.tritit.cashorganizer.api.infrastructure.adapter.out.persistence.PersistenceMapper;
 import com.tritit.cashorganizer.api.infrastructure.adapter.out.persistence.entity.FinancialEntityEntity;
@@ -19,6 +20,7 @@ import java.util.stream.Collectors;
 public class FinancialEntityService {
 
     private final FinancialEntityRepository financialEntityRepository;
+    private final AccountPersistencePort accountPersistencePort;
     private final UserContextPort userContextPort;
     private final PersistenceMapper mapper;
 
@@ -40,10 +42,19 @@ public class FinancialEntityService {
 
     @Transactional
     public void deleteEntity(Long id) {
-        UserEntity user = mapper.toEntity(userContextPort.getCurrentUser());
+        com.tritit.cashorganizer.api.domain.model.User user = userContextPort.getCurrentUser();
         FinancialEntityEntity entity = financialEntityRepository.findById(id)
                 .filter(e -> e.getUser().getId().equals(user.getId()))
                 .orElseThrow(() -> new ResourceNotFoundException("Entity not found"));
+        
+        // Desvincular de todas las cuentas que usen esta entidad
+        accountPersistencePort.findAllByUser(user).stream()
+                .filter(a -> a.getEntity() != null && a.getEntity().getId().equals(id))
+                .forEach(a -> {
+                    a.setEntity(null);
+                    accountPersistencePort.save(a);
+                });
+
         financialEntityRepository.delete(entity);
     }
 }

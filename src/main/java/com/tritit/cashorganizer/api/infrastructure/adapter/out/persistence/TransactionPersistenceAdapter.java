@@ -56,9 +56,9 @@ public class TransactionPersistenceAdapter implements TransactionPersistencePort
     }
 
     @Override
-    public Page<TransactionItem> findAllByUserAndAccountAndDateRange(User user, Long accountId, String startDate, String endDate, Pageable pageable) {
+    public Page<TransactionItem> findAllByUserAndAccountAndDateRange(User user, java.util.List<Long> accountIds, String startDate, String endDate, Pageable pageable) {
         UserEntity userEntity = mapper.toEntity(user);
-        return transactionRepository.findAllByUserAndAccountAndDateRange(userEntity, accountId, startDate, endDate, pageable)
+        return transactionRepository.findAllByUserAndAccountAndDateRange(userEntity, accountIds, startDate, endDate, pageable)
                 .map(mapper::toDomain);
     }
 

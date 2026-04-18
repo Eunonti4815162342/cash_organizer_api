@@ -114,11 +114,11 @@ public class PersistenceMapper {
                 .iconName(entity.getIconName())
                 .type(entity.getType())
                 .subcategories(entity.getSubcategories() != null ? 
-                    entity.getSubcategories().stream().map(this::toSimpleDomain).collect(Collectors.toList()) : new ArrayList<>())
+                    entity.getSubcategories().stream().map(this::toDomain).collect(Collectors.toList()) : new ArrayList<>())
                 .build();
     }
 
-    private Subcategory toSimpleDomain(SubcategoryEntity entity) {
+    public Subcategory toDomain(SubcategoryEntity entity) {
         if (entity == null) return null;
         return Subcategory.builder()
                 .id(entity.getId())
@@ -149,7 +149,7 @@ public class PersistenceMapper {
                 .amount(toDomain(entity.getAmount()))
                 .account(toDomain(entity.getAccount()))
                 .category(toDomain(entity.getCategory()))
-                .subcategory(toSimpleDomain(entity.getSubcategory()))
+                .subcategory(toDomain(entity.getSubcategory()))
                 .toAccount(toDomain(entity.getToAccount()))
                 .type(entity.getType())
                 .notes(entity.getNotes())

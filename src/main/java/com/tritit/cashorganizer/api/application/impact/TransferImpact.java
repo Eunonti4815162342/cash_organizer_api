@@ -27,8 +27,8 @@ class TransferImpact extends AccountBalanceImpact {
         AccountItem from = resolveOwned(transaction.getAccount().getId(), user);
         AccountItem to = resolveOwned(transaction.getToAccount().getId(), user);
         long val = transaction.getAmount().getValue();
-        from.setAmount(from.getAmount().subtract(val));
-        to.setAmount(to.getAmount().add(val));
+        from.withdraw(val);
+        to.deposit(val);
         accountPort.save(from);
         accountPort.save(to);
     }
@@ -39,8 +39,8 @@ class TransferImpact extends AccountBalanceImpact {
         AccountItem from = resolveOwned(transaction.getAccount().getId(), user);
         AccountItem to = resolveOwned(transaction.getToAccount().getId(), user);
         long val = transaction.getAmount().getValue();
-        from.setAmount(from.getAmount().add(val));
-        to.setAmount(to.getAmount().subtract(val));
+        from.deposit(val);
+        to.withdraw(val);
         accountPort.save(from);
         accountPort.save(to);
     }

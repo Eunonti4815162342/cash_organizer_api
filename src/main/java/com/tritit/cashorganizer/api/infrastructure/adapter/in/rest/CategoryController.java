@@ -30,6 +30,16 @@ public class CategoryController {
         return service.createCategory(category);
     }
 
+    @PostMapping("/{categoryId}/subcategories")
+    public Subcategory createSubcategory(@PathVariable Long categoryId, @RequestBody Subcategory subcategory) {
+        return service.createSubcategory(categoryId, subcategory);
+    }
+
+    @PutMapping("/subcategories/{id}")
+    public Subcategory updateSubcategory(@PathVariable Long id, @RequestBody Subcategory subcategory) {
+        return service.updateSubcategory(id, subcategory);
+    }
+
     @DeleteMapping("/subcategories/{id}")
     public void deleteSubcategory(@PathVariable Long id) {
         service.deleteSubcategory(id);

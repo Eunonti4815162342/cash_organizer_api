@@ -9,6 +9,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/transactions")
 @RequiredArgsConstructor
@@ -20,15 +22,15 @@ public class TransactionController {
     public Page<TransactionItem> getAllTransactions(
             @RequestParam(required = false) String startDate,
             @RequestParam(required = false) String endDate,
-            @RequestParam(required = false) Long accountId,
+            @RequestParam(required = false) List<Long> accountIds,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "20") int size) {
         
         Pageable pageable = PageRequest.of(page, size, Sort.by("date").descending());
         
         if (startDate != null && endDate != null) {
-            if (accountId != null) {
-                return service.getTransactionsByAccountAndDateRange(accountId, startDate, endDate, pageable);
+            if (accountIds != null && !accountIds.isEmpty()) {
+                return service.getTransactionsByAccountAndDateRange(accountIds, startDate, endDate, pageable);
             }
             return service.getTransactionsByDateRange(startDate, endDate, pageable);
         }

@@ -21,14 +21,14 @@ class IncomeImpact extends AccountBalanceImpact {
     @Override
     public void apply(TransactionItem transaction, User user) {
         AccountItem from = resolveOwned(transaction.getAccount().getId(), user);
-        from.setAmount(from.getAmount().add(transaction.getAmount().getValue()));
+        from.deposit(transaction.getAmount().getValue());
         accountPort.save(from);
     }
 
     @Override
     public void revert(TransactionItem transaction, User user) {
         AccountItem from = resolveOwned(transaction.getAccount().getId(), user);
-        from.setAmount(from.getAmount().subtract(transaction.getAmount().getValue()));
+        from.withdraw(transaction.getAmount().getValue());
         accountPort.save(from);
     }
 }

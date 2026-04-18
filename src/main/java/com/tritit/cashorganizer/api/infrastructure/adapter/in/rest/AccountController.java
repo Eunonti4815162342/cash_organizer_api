@@ -37,4 +37,9 @@ public class AccountController {
             service.closeAccount(id);
         }
     }
+
+    @DeleteMapping("/{id}/permanent")
+    public void permanentlyDeleteAccount(@PathVariable Long id) {
+        service.permanentlyDeleteAccount(id);
+    }
 }

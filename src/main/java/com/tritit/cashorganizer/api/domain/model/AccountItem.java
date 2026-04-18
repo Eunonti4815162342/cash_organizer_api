@@ -21,4 +21,18 @@ public class AccountItem {
     private Boolean active;
     private Amount amount;
     private FinancialEntity entity;
+
+    public void withdraw(long value) {
+        if (this.amount == null) return;
+        this.amount = this.amount.subtract(value);
+    }
+
+    public void deposit(long value) {
+        if (this.amount == null) return;
+        this.amount = this.amount.add(value);
+    }
+
+    public boolean belongsTo(User user) {
+        return this.user != null && this.user.getId().equals(user.getId());
+    }
 }

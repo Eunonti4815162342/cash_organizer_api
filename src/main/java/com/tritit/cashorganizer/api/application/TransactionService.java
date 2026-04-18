@@ -38,9 +38,9 @@ public class TransactionService implements TransactionUseCase {
 
     @Override
     @Transactional(readOnly = true)
-    public Page<TransactionItem> getTransactionsByAccountAndDateRange(Long accountId, String startDate, String endDate, Pageable pageable) {
+    public Page<TransactionItem> getTransactionsByAccountAndDateRange(java.util.List<Long> accountIds, String startDate, String endDate, Pageable pageable) {
         User user = userContextPort.getCurrentUser();
-        return transactionPersistencePort.findAllByUserAndAccountAndDateRange(user, accountId, startDate, endDate, pageable);
+        return transactionPersistencePort.findAllByUserAndAccountAndDateRange(user, accountIds, startDate, endDate, pageable);
     }
 
     @Override
@@ -48,7 +48,7 @@ public class TransactionService implements TransactionUseCase {
     public TransactionItem createTransaction(TransactionItem transaction) {
         User user = userContextPort.getCurrentUser();
         transaction.setUser(user);
-        validateSourceAccount(transaction);
+        transaction.validate();
 
         impactResolver.forType(transaction.getType()).apply(transaction, user);
         return transactionPersistencePort.save(transaction);
@@ -60,14 +60,14 @@ public class TransactionService implements TransactionUseCase {
         User user = userContextPort.getCurrentUser();
 
         TransactionItem oldTransaction = transactionPersistencePort.findById(id)
-                .filter(t -> t.getUser().getId().equals(user.getId()))
+                .filter(t -> t.belongsTo(user))
                 .orElseThrow(() -> new ResourceNotFoundException("Transaction not found"));
 
         impactResolver.forType(oldTransaction.getType()).revert(oldTransaction, user);
 
         newTransaction.setUser(user);
         newTransaction.setId(id);
-        validateSourceAccount(newTransaction);
+        newTransaction.validate();
         impactResolver.forType(newTransaction.getType()).apply(newTransaction, user);
 
         return transactionPersistencePort.save(newTransaction);
@@ -79,16 +79,10 @@ public class TransactionService implements TransactionUseCase {
         User user = userContextPort.getCurrentUser();
 
         TransactionItem transaction = transactionPersistencePort.findById(id)
-                .filter(t -> t.getUser().getId().equals(user.getId()))
+                .filter(t -> t.belongsTo(user))
                 .orElseThrow(() -> new ResourceNotFoundException("Transaction not found"));
 
         impactResolver.forType(transaction.getType()).revert(transaction, user);
         transactionPersistencePort.deleteById(id);
-    }
-
-    private void validateSourceAccount(TransactionItem transaction) {
-        if (transaction.getAccount() == null) {
-            throw new InvalidTransactionException("Source account is mandatory");
-        }
     }
 }

@@ -18,8 +18,8 @@ public interface TransactionRepository extends JpaRepository<TransactionItemEnti
     @Query("SELECT t FROM TransactionItemEntity t WHERE t.user = :user AND t.date >= :startDate AND t.date <= :endDate ORDER BY t.date DESC")
     Page<TransactionItemEntity> findAllByUserAndDateRange(@Param("user") UserEntity user, @Param("startDate") String startDate, @Param("endDate") String endDate, Pageable pageable);
 
-    @Query("SELECT t FROM TransactionItemEntity t WHERE t.user = :user AND (t.account.id = :accountId OR t.toAccount.id = :accountId) AND t.date >= :startDate AND t.date <= :endDate ORDER BY t.date DESC")
-    Page<TransactionItemEntity> findAllByUserAndAccountAndDateRange(@Param("user") UserEntity user, @Param("accountId") Long accountId, @Param("startDate") String startDate, @Param("endDate") String endDate, Pageable pageable);
+    @Query("SELECT t FROM TransactionItemEntity t WHERE t.user = :user AND (t.account.id IN :accountIds OR t.toAccount.id IN :accountIds) AND t.date >= :startDate AND t.date <= :endDate ORDER BY t.date DESC")
+    Page<TransactionItemEntity> findAllByUserAndAccountAndDateRange(@Param("user") UserEntity user, @Param("accountIds") java.util.List<Long> accountIds, @Param("startDate") String startDate, @Param("endDate") String endDate, Pageable pageable);
 
     @Query("SELECT t FROM TransactionItemEntity t WHERE t.user = :user AND t.category.id = :categoryId ORDER BY t.date DESC")
     Page<TransactionItemEntity> findAllByUserAndCategory(@Param("user") UserEntity user, @Param("categoryId") Long categoryId, Pageable pageable);
