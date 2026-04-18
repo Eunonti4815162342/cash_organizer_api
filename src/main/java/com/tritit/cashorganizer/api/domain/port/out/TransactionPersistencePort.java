@@ -14,4 +14,7 @@ public interface TransactionPersistencePort {
     Optional<TransactionItem> findById(Long id);
     Page<TransactionItem> findAllByUserAndDateRange(User user, String startDate, String endDate, Pageable pageable);
     Page<TransactionItem> findAllByUserAndAccountAndDateRange(User user, Long accountId, String startDate, String endDate, Pageable pageable);
+    Page<TransactionItem> findAllByUserAndCategory(User user, Long categoryId, Pageable pageable);
+    long countByUserAndCategory(User user, Long categoryId);
+    void unlinkSubcategoryFromTransactions(User user, Long subcategoryId);
 }

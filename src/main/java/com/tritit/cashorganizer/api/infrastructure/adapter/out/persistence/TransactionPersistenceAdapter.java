@@ -61,4 +61,23 @@ public class TransactionPersistenceAdapter implements TransactionPersistencePort
         return transactionRepository.findAllByUserAndAccountAndDateRange(userEntity, accountId, startDate, endDate, pageable)
                 .map(mapper::toDomain);
     }
+
+    @Override
+    public Page<TransactionItem> findAllByUserAndCategory(User user, Long categoryId, Pageable pageable) {
+        UserEntity userEntity = mapper.toEntity(user);
+        return transactionRepository.findAllByUserAndCategory(userEntity, categoryId, pageable)
+                .map(mapper::toDomain);
+    }
+
+    @Override
+    public long countByUserAndCategory(User user, Long categoryId) {
+        UserEntity userEntity = mapper.toEntity(user);
+        return transactionRepository.countByUserAndCategory(userEntity, categoryId);
+    }
+
+    @Override
+    public void unlinkSubcategoryFromTransactions(User user, Long subcategoryId) {
+        UserEntity userEntity = mapper.toEntity(user);
+        transactionRepository.unlinkSubcategoryFromTransactions(userEntity, subcategoryId);
+    }
 }

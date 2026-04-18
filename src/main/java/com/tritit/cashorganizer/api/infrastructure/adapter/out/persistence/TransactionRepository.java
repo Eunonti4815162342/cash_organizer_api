@@ -5,6 +5,7 @@ import com.tritit.cashorganizer.api.infrastructure.adapter.out.persistence.entit
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -19,4 +20,14 @@ public interface TransactionRepository extends JpaRepository<TransactionItemEnti
 
     @Query("SELECT t FROM TransactionItemEntity t WHERE t.user = :user AND (t.account.id = :accountId OR t.toAccount.id = :accountId) AND t.date >= :startDate AND t.date <= :endDate ORDER BY t.date DESC")
     Page<TransactionItemEntity> findAllByUserAndAccountAndDateRange(@Param("user") UserEntity user, @Param("accountId") Long accountId, @Param("startDate") String startDate, @Param("endDate") String endDate, Pageable pageable);
+
+    @Query("SELECT t FROM TransactionItemEntity t WHERE t.user = :user AND t.category.id = :categoryId ORDER BY t.date DESC")
+    Page<TransactionItemEntity> findAllByUserAndCategory(@Param("user") UserEntity user, @Param("categoryId") Long categoryId, Pageable pageable);
+
+    @Query("SELECT COUNT(t) FROM TransactionItemEntity t WHERE t.user = :user AND t.category.id = :categoryId")
+    long countByUserAndCategory(@Param("user") UserEntity user, @Param("categoryId") Long categoryId);
+
+    @Modifying
+    @Query("UPDATE TransactionItemEntity t SET t.subcategory = null WHERE t.user = :user AND t.subcategory.id = :subcategoryId")
+    int unlinkSubcategoryFromTransactions(@Param("user") UserEntity user, @Param("subcategoryId") Long subcategoryId);
 }

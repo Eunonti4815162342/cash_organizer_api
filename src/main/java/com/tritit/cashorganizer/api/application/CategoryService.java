@@ -10,6 +10,7 @@ import com.tritit.cashorganizer.api.domain.port.out.CategoryPersistencePort;
 import com.tritit.cashorganizer.api.domain.port.out.TransactionPersistencePort;
 import com.tritit.cashorganizer.api.domain.port.out.UserContextPort;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,23 +41,20 @@ public class CategoryService implements CategoryUseCase {
     }
 
     @Override
-    public List<TransactionItem> getTransactionsByCategory(Long categoryId) {
+    @Transactional(readOnly = true)
+    public Page<TransactionItem> getTransactionsByCategory(Long categoryId, Pageable pageable) {
         User user = userContextPort.getCurrentUser();
-
-        return transactionPersistencePort.findAllByUser(user, Pageable.unpaged()).getContent().stream()
-                .filter(t -> t.getCategory() != null && t.getCategory().getId().equals(categoryId))
-                .toList();
+        return transactionPersistencePort.findAllByUserAndCategory(user, categoryId, pageable);
     }
 
     @Override
     @Transactional
     public void deleteCategory(Long id) {
         User user = userContextPort.getCurrentUser();
-        Category category = categoryPersistencePort.findById(id)
+        categoryPersistencePort.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Category not found"));
 
-        List<TransactionItem> linkedTransactions = getTransactionsByCategory(id);
-        if (!linkedTransactions.isEmpty()) {
+        if (transactionPersistencePort.countByUserAndCategory(user, id) > 0) {
             throw new InvalidTransactionException("Cannot delete category with linked transactions. Please reassign them first.");
         }
 

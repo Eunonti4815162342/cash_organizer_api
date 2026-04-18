@@ -3,7 +3,12 @@ package com.tritit.cashorganizer.api.infrastructure.adapter.in.rest;
 import com.tritit.cashorganizer.api.application.CategoryService;
 import com.tritit.cashorganizer.api.domain.model.Category;
 import com.tritit.cashorganizer.api.domain.model.Subcategory;
+import com.tritit.cashorganizer.api.domain.model.TransactionItem;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,8 +36,12 @@ public class CategoryController {
     }
 
     @GetMapping("/{id}/transactions")
-    public List<com.tritit.cashorganizer.api.domain.model.TransactionItem> getTransactionsByCategory(@PathVariable Long id) {
-        return service.getTransactionsByCategory(id);
+    public Page<TransactionItem> getTransactionsByCategory(
+            @PathVariable Long id,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "20") int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("date").descending());
+        return service.getTransactionsByCategory(id, pageable);
     }
 
     @DeleteMapping("/{id}")
