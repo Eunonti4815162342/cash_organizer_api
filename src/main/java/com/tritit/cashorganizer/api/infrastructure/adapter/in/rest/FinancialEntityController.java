@@ -9,7 +9,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/entities")
-@CrossOrigin(origins = "*")
 @RequiredArgsConstructor
 public class FinancialEntityController {
 

@@ -1,5 +1,7 @@
 package com.tritit.cashorganizer.api.application;
 
+import com.tritit.cashorganizer.api.domain.exception.DuplicateResourceException;
+import com.tritit.cashorganizer.api.domain.exception.ResourceNotFoundException;
 import com.tritit.cashorganizer.api.domain.model.AccountItem;
 import com.tritit.cashorganizer.api.domain.model.TransactionItem;
 import com.tritit.cashorganizer.api.domain.model.Amount;
@@ -39,13 +41,13 @@ public class AccountService implements AccountUseCase {
         User user = userContextPort.getCurrentUser();
 
         AccountItem account = accountPersistencePort.findById(id)
-                .orElseThrow(() -> new RuntimeException("Account not found or access denied"));
+                .orElseThrow(() -> new ResourceNotFoundException("Account not found"));
 
         boolean nameExists = accountPersistencePort.findAllByUser(user).stream()
                 .anyMatch(a -> !a.getId().equals(id) && a.getName().equalsIgnoreCase(accountDetails.getName()));
 
         if (nameExists) {
-            throw new RuntimeException("An account with this name already exists.");
+            throw new DuplicateResourceException("An account with this name already exists.");
         }
 
         account.setName(accountDetails.getName());
@@ -64,7 +66,7 @@ public class AccountService implements AccountUseCase {
     public void closeAccount(Long id) {
         User user = userContextPort.getCurrentUser();
         AccountItem account = accountPersistencePort.findById(id)
-                .orElseThrow(() -> new RuntimeException("Account not found or access denied"));
+                .orElseThrow(() -> new ResourceNotFoundException("Account not found"));
 
         if (account.getActive() != null && !account.getActive()) return;
 
@@ -90,7 +92,7 @@ public class AccountService implements AccountUseCase {
     public void permanentlyDeleteAccount(Long id) {
         User user = userContextPort.getCurrentUser();
         AccountItem account = accountPersistencePort.findById(id)
-                .orElseThrow(() -> new RuntimeException("Account not found or access denied"));
+                .orElseThrow(() -> new ResourceNotFoundException("Account not found"));
 
         transactionPersistencePort.findAllByUser(user, Pageable.unpaged()).getContent().stream()
                 .filter(t -> (t.getAccount() != null && t.getAccount().getId().equals(id)) ||

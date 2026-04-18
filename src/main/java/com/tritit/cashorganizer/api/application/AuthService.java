@@ -1,5 +1,7 @@
 package com.tritit.cashorganizer.api.application;
 
+import com.tritit.cashorganizer.api.domain.exception.AuthenticationFailedException;
+import com.tritit.cashorganizer.api.domain.exception.DuplicateResourceException;
 import com.tritit.cashorganizer.api.domain.model.User;
 import com.tritit.cashorganizer.api.infrastructure.adapter.out.persistence.PersistenceMapper;
 import com.tritit.cashorganizer.api.infrastructure.adapter.out.persistence.UserRepository;
@@ -24,7 +26,7 @@ public class AuthService {
 
     public void register(String email, String password) {
         if (userRepository.findByEmail(email).isPresent()) {
-            throw new RuntimeException("El usuario ya existe");
+            throw new DuplicateResourceException("El usuario ya existe");
         }
         UserEntity userEntity = UserEntity.builder()
                 .email(email)
@@ -36,10 +38,10 @@ public class AuthService {
 
     public Map<String, String> login(String email, String password, boolean rememberMe) {
         UserEntity userEntity = userRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+                .orElseThrow(() -> new AuthenticationFailedException("Credenciales inválidas"));
 
         if (!passwordEncoder.matches(password, userEntity.getPassword())) {
-            throw new RuntimeException("Credenciales inválidas");
+            throw new AuthenticationFailedException("Credenciales inválidas");
         }
 
         User user = mapper.toDomain(userEntity);
@@ -50,5 +52,9 @@ public class AuthService {
         response.put("token", token);
         response.put("email", user.getEmail());
         return response;
+    }
+
+    public String loginTest() {
+        return "Test: Secret key is configured";
     }
 }

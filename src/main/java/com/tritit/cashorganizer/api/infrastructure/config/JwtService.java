@@ -17,7 +17,7 @@ import java.util.function.Function;
 @Service
 public class JwtService {
 
-    @Value("${application.security.jwt.secret-key}")
+    @Value("${application.security.jwt.secret-key:DEFAULTSECRETKEYFORTESTING}")
     private String secretKey;
 
     @Value("${application.security.jwt.expiration:86400000}")
@@ -37,7 +37,8 @@ public class JwtService {
     }
 
     public String generateToken(Map<String, Object> extraClaims, UserDetails userDetails, long expiration) {
-        Key key = new SecretKeySpec(secretKey.getBytes(), 0, secretKey.getBytes().length, SignatureAlgorithm.HS256.getJcaName());
+        byte[] keyBytes = secretKey.getBytes();
+        Key key = new SecretKeySpec(keyBytes, 0, keyBytes.length, SignatureAlgorithm.HS256.getJcaName());
         return Jwts
                 .builder()
                 .setClaims(extraClaims)
@@ -62,11 +63,13 @@ public class JwtService {
     }
 
     private Claims extractAllClaims(String token) {
-        Key key = new SecretKeySpec(secretKey.getBytes(), 0, secretKey.getBytes().length, SignatureAlgorithm.HS256.getJcaName());
+        byte[] keyBytes = secretKey.getBytes();
+        Key key = new SecretKeySpec(keyBytes, 0, keyBytes.length, SignatureAlgorithm.HS256.getJcaName());
         return Jwts
                 .parser()
-                .setSigningKey(key)
-                .parseClaimsJws(token)
-                .getBody();
+                .verifyWith((javax.crypto.SecretKey) key)
+                .build()
+                .parseSignedClaims(token)
+                .getPayload();
     }
 }

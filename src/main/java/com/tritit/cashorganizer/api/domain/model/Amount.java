@@ -1,14 +1,38 @@
 package com.tritit.cashorganizer.api.domain.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.ToString;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+@Getter
+@EqualsAndHashCode
+@ToString
 public class Amount {
-    private Long value;
-    private String currency;
-    private boolean isNegative;
+    private final Long value;
+    private final String currency;
+    private final boolean isNegative;
+
+    @JsonCreator
+    public Amount(
+            @JsonProperty("value") Long value,
+            @JsonProperty("currency") String currency,
+            @JsonProperty("isNegative") boolean isNegative) {
+        this.value = value;
+        this.currency = currency;
+        this.isNegative = isNegative;
+    }
+
+    public Amount add(long delta) {
+        return new Amount(this.value + delta, this.currency, this.isNegative);
+    }
+
+    public Amount subtract(long delta) {
+        return new Amount(this.value - delta, this.currency, this.isNegative);
+    }
+
+    public Amount negate() {
+        return new Amount(-this.value, this.currency, this.isNegative);
+    }
 }

@@ -1,5 +1,7 @@
 package com.tritit.cashorganizer.api.application;
 
+import com.tritit.cashorganizer.api.domain.exception.InvalidTransactionException;
+import com.tritit.cashorganizer.api.domain.exception.ResourceNotFoundException;
 import com.tritit.cashorganizer.api.domain.model.Category;
 import com.tritit.cashorganizer.api.domain.model.TransactionItem;
 import com.tritit.cashorganizer.api.domain.model.User;
@@ -51,11 +53,11 @@ public class CategoryService implements CategoryUseCase {
     public void deleteCategory(Long id) {
         User user = userContextPort.getCurrentUser();
         Category category = categoryPersistencePort.findById(id)
-                .orElseThrow(() -> new RuntimeException("Category not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Category not found"));
 
         List<TransactionItem> linkedTransactions = getTransactionsByCategory(id);
         if (!linkedTransactions.isEmpty()) {
-            throw new RuntimeException("Cannot delete category with linked transactions. Please reassign them first.");
+            throw new InvalidTransactionException("Cannot delete category with linked transactions. Please reassign them first.");
         }
 
         categoryPersistencePort.delete(id);
