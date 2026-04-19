@@ -30,6 +30,21 @@ spring:
     change-log: classpath:db/changelog/db.changelog-master.xml
     default-schema: cash_organizer
 
+# spring.mail is intentionally absent from this base config.
+# When MAIL_HOST is not set, Spring Boot skips MailSenderAutoConfiguration
+# entirely — no JavaMailSender bean, no MailHealthIndicator failure.
+# Configure via environment variables (MAIL_HOST, MAIL_PORT, MAIL_USERNAME,
+# MAIL_PASSWORD) or in application-prod.yml for production.
+
+app:
+  mail:
+    from: ${MAIL_FROM:noreply@cashkeep.com}
+
+management:
+  health:
+    mail:
+      enabled: false
+
 application:
   name: cash-organizer-api
   version: 1.0.0

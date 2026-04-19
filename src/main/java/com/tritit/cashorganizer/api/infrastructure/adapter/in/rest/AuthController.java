@@ -30,6 +30,21 @@ public class AuthController {
         return ResponseEntity.ok("Usuario registrado correctamente");
     }
 
+    @PostMapping("/forgot-password")
+    public ResponseEntity<String> forgotPassword(@RequestBody ForgotPasswordRequest request) {
+        log.info("Password reset requested for: {}", request.getEmail());
+        authService.forgotPassword(request.getEmail());
+        // Always return 200 to avoid user enumeration attacks
+        return ResponseEntity.ok("Si el email está registrado, recibirás un código de restablecimiento");
+    }
+
+    @PostMapping("/reset-password")
+    public ResponseEntity<String> resetPassword(@RequestBody ResetPasswordRequest request) {
+        log.info("Password reset attempt with token");
+        authService.resetPassword(request.getToken(), request.getNewPassword());
+        return ResponseEntity.ok("Contraseña actualizada correctamente");
+    }
+
     @PostMapping("/test")
     public String test(@RequestBody AuthRequest request) {
         log.info("Test endpoint received: {}", request.getEmail());
@@ -41,5 +56,16 @@ public class AuthController {
         private String email;
         private String password;
         private boolean rememberMe;
+    }
+
+    @Data
+    public static class ForgotPasswordRequest {
+        private String email;
+    }
+
+    @Data
+    public static class ResetPasswordRequest {
+        private String token;
+        private String newPassword;
     }
 }

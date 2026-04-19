@@ -22,4 +22,8 @@
         <sqlFile path="db/changelog/changes/04-add-user-relationship.sql" />
     </changeSet>
 
+    <changeSet id="9" author="alvaro">
+        <sqlFile path="db/changelog/changes/05-password-reset-tokens.sql" />
+    </changeSet>
+
 </databaseChangeLog>
