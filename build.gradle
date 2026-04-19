@@ -35,6 +35,7 @@ dependencies {
 	implementation 'org.liquibase:liquibase-core'
 	implementation 'com.github.librepdf:openpdf:2.0.3'
 	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.5'
+	implementation 'org.springframework.boot:spring-boot-starter-mail'
 	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'org.postgresql:postgresql'
 	annotationProcessor 'org.projectlombok:lombok'
@@ -42,6 +43,56 @@ dependencies {
 	testImplementation 'org.springframework.security:spring-security-test'
 }
 
+// ─── Test tasks ────────────────────────────────────────────────────────────────
+// Full test run (default)
 tasks.named('test') {
 	useJUnitPlatform()
+	testLogging {
+		events "passed", "skipped", "failed"
+		exceptionFormat "full"
+	}
+}
+
+// Unit tests: Mockito + @WebMvcTest — NO real database required.
+// Covers: domain models, application services, REST controller slices.
+tasks.register('unitTest', Test) {
+	description = 'Runs unit and controller-slice tests (no DB required).'
+	group = 'verification'
+	useJUnitPlatform()
+	filter {
+		includeTestsMatching 'com.tritit.cashorganizer.api.domain.**'
+		includeTestsMatching 'com.tritit.cashorganizer.api.application.**'
+		includeTestsMatching 'com.tritit.cashorganizer.api.infrastructure.adapter.in.rest.**'
+	}
+	testLogging {
+		events "passed", "skipped", "failed"
+		exceptionFormat "full"
+	}
+	// Fail the build immediately on first test failure for faster CI feedback
+	failFast = true
+}
+
+// Integration tests: @SpringBootTest — requires a running PostgreSQL instance.
+// Provided via CI service container or docker-compose.ci.yml locally.
+tasks.register('integrationTest', Test) {
+	description = 'Runs integration tests that require a real database.'
+	group = 'verification'
+	useJUnitPlatform()
+	filter {
+		includeTestsMatching 'com.tritit.cashorganizer.api.CashOrganizerApiApplicationTests'
+	}
+	testLogging {
+		events "passed", "skipped", "failed"
+		exceptionFormat "full"
+	}
+	// Integration tests must run after unit tests
+	mustRunAfter unitTest
+}
+
+// Exclude the context-load test from the default unitTest task
+// (it needs a real DB and belongs to integrationTest)
+unitTest.configure {
+	filter {
+		excludeTestsMatching 'com.tritit.cashorganizer.api.CashOrganizerApiApplicationTests'
+	}
 }

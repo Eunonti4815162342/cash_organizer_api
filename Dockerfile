@@ -13,7 +13,8 @@ COPY build.gradle build.gradle
 # Copy source code
 COPY src src
 
-# Build application (skip tests for faster deployment)
+# Build application — tests are run in the CI pipeline before this stage.
+# The image is only built after all tests have passed (unit + integration + E2E).
 RUN chmod +x gradlew && \
     ./gradlew clean bootJar -x test --no-daemon
 
