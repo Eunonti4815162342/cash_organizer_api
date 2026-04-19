@@ -84,17 +84,7 @@ public class CategoryService implements CategoryUseCase {
     @Transactional
     public void deleteSubcategory(Long subcategoryId) {
         User user = userContextPort.getCurrentUser();
-
-        List<TransactionItem> transactions = transactionPersistencePort.findAllByUser(user, Pageable.unpaged()).getContent();
-
-        List<TransactionItem> linkedTransactions = transactions.stream()
-                .filter(t -> t.getSubcategory() != null && t.getSubcategory().getId().equals(subcategoryId))
-                .toList();
-
-        for (TransactionItem tx : linkedTransactions) {
-            transactionPersistencePort.save(tx);
-        }
-
+        transactionPersistencePort.unlinkSubcategoryFromTransactions(user, subcategoryId);
         categoryPersistencePort.deleteSubcategoryById(subcategoryId);
     }
 }
