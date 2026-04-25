@@ -12,5 +12,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class TransactionSuggestion {
     private Long categoryId;
+    private Long subcategoryId;
     private TransactionType transactionType;
 }

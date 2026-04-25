@@ -34,6 +34,6 @@ public interface TransactionRepository extends JpaRepository<TransactionItemEnti
     @Query("UPDATE TransactionItemEntity t SET t.subcategory = null WHERE t.user = :user AND t.subcategory.id = :subcategoryId")
     int unlinkSubcategoryFromTransactions(@Param("user") UserEntity user, @Param("subcategoryId") Long subcategoryId);
 
-    @Query("SELECT t.category.id, t.type FROM TransactionItemEntity t WHERE t.user.id = :userId AND t.beneficiary.id = :beneficiaryId GROUP BY t.category.id, t.type ORDER BY COUNT(t) DESC")
+    @Query("SELECT t.category.id, t.subcategory.id, t.type FROM TransactionItemEntity t WHERE t.user.id = :userId AND t.beneficiary.id = :beneficiaryId GROUP BY t.category.id, t.subcategory.id, t.type ORDER BY COUNT(t) DESC")
     List<Object[]> findMostFrequentCategoryAndType(@Param("userId") UUID userId, @Param("beneficiaryId") Long beneficiaryId, Pageable pageable);
 }

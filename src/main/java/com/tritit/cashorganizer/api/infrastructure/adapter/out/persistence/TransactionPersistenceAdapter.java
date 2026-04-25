@@ -95,7 +95,8 @@ public class TransactionPersistenceAdapter implements TransactionPersistencePort
         Object[] firstResult = results.get(0);
         return Optional.of(TransactionSuggestion.builder()
                 .categoryId((Long) firstResult[0])
-                .transactionType((TransactionType) firstResult[1])
+                .subcategoryId((Long) firstResult[1])
+                .transactionType((TransactionType) firstResult[2])
                 .build());
     }
 }
