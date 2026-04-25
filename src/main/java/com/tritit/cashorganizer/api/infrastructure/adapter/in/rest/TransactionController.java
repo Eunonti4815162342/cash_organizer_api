@@ -23,14 +23,24 @@ public class TransactionController {
             @RequestParam(required = false) String startDate,
             @RequestParam(required = false) String endDate,
             @RequestParam(required = false) List<Long> accountIds,
+            @RequestParam(required = false) Long accountId, // Añadido soporte singular
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "20") int size) {
         
         Pageable pageable = PageRequest.of(page, size, Sort.by("date").descending());
+
+        // Unificar accountId en la lista si viene informado
+        List<Long> finalAccountIds = accountIds;
+        if (accountId != null) {
+            finalAccountIds = (accountIds == null) ? new java.util.ArrayList<>() : new java.util.ArrayList<>(accountIds);
+            if (!finalAccountIds.contains(accountId)) {
+                finalAccountIds.add(accountId);
+            }
+        }
         
         if (startDate != null && endDate != null) {
-            if (accountIds != null && !accountIds.isEmpty()) {
-                return service.getTransactionsByAccountAndDateRange(accountIds, startDate, endDate, pageable);
+            if (finalAccountIds != null && !finalAccountIds.isEmpty()) {
+                return service.getTransactionsByAccountAndDateRange(finalAccountIds, startDate, endDate, pageable);
             }
             return service.getTransactionsByDateRange(startDate, endDate, pageable);
         }
