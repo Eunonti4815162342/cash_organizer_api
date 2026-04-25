@@ -34,4 +34,8 @@
         <sqlFile path="db/changelog/changes/07-add-beneficiaries-table.sql" />
     </changeSet>
 
+    <changeSet id="12" author="Veiga">
+        <sqlFile path="db/changelog/changes/08-add-role-to-users.sql" />
+    </changeSet>
+
 </databaseChangeLog>
