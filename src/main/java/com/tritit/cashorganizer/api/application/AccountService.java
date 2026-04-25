@@ -52,7 +52,6 @@ public class AccountService implements AccountUseCase {
             throw new DuplicateResourceException("An account with this name already exists.");
         }
 
-        // VALIDACIÓN Y ASOCIACIÓN DE ENTIDAD
         if (accountDetails.getEntity() != null && accountDetails.getEntity().getId() != null) {
             var entity = financialEntityPersistencePort.findById(accountDetails.getEntity().getId())
                     .filter(e -> e.getUser().getId().equals(user.getId()))

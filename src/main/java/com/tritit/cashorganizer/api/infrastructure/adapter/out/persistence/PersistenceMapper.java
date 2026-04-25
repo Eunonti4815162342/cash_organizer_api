@@ -14,7 +14,6 @@ public class PersistenceMapper {
         return (id != null && id != 0) ? id : null;
     }
 
-    // --- USER ---
     public User toDomain(UserEntity entity) {
         if (entity == null) return null;
         return User.builder()

@@ -36,7 +36,6 @@ public class PdfReportGenerator {
         User user = userContextPort.getCurrentUser();
         String type = (reportType != null) ? reportType.toUpperCase() : "CATEGORY";
 
-        // 1. Obtener estadísticas agrupadas según el tipo explícito
         Map<String, Long> stats;
         if ("ENTITY".equals(type)) {
             stats = reportDataService.getEntityGroupedData(startDate, endDate, accountIds);
