@@ -41,6 +41,10 @@ public class TransactionItemEntity {
     @JoinColumn(name = "subcategory_id")
     private SubcategoryEntity subcategory;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "beneficiary_id")
+    private BeneficiaryEntity beneficiary;
+
     @ManyToOne
     @JoinColumn(name = "to_account_id")
     private AccountEntity toAccount;

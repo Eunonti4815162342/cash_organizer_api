@@ -30,4 +30,8 @@
         <sqlFile path="db/changelog/changes/06-add-financial-entity-to-categories.sql" />
     </changeSet>
 
+    <changeSet id="11" author="Veiga">
+        <sqlFile path="db/changelog/changes/07-add-beneficiaries-table.sql" />
+    </changeSet>
+
 </databaseChangeLog>

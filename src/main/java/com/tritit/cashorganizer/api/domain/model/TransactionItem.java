@@ -19,6 +19,7 @@ public class TransactionItem {
     private AccountItem account;
     private Category category;
     private Subcategory subcategory;
+    private Beneficiary beneficiary;
     private AccountItem toAccount;
     private TransactionType type;
     private String notes;

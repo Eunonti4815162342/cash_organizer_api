@@ -104,6 +104,29 @@ public class PersistenceMapper {
                 .build();
     }
 
+    // --- BENEFICIARY ---
+    public Beneficiary toDomain(BeneficiaryEntity entity) {
+        if (entity == null) return null;
+        return Beneficiary.builder()
+                .id(entity.getId())
+                .user(toDomain(entity.getUser()))
+                .name(entity.getName())
+                .description(entity.getDescription())
+                .financialEntity(toDomain(entity.getFinancialEntity()))
+                .build();
+    }
+
+    public BeneficiaryEntity toEntity(Beneficiary domain) {
+        if (domain == null) return null;
+        return BeneficiaryEntity.builder()
+                .id(domain.getId())
+                .user(toEntity(domain.getUser()))
+                .name(domain.getName())
+                .description(domain.getDescription())
+                .financialEntity(toEntity(domain.getFinancialEntity()))
+                .build();
+    }
+
     // --- CATEGORY ---
     public Category toDomain(CategoryEntity entity) {
         if (entity == null) return null;
@@ -152,6 +175,7 @@ public class PersistenceMapper {
                 .account(toDomain(entity.getAccount()))
                 .category(toDomain(entity.getCategory()))
                 .subcategory(toDomain(entity.getSubcategory()))
+                .beneficiary(toDomain(entity.getBeneficiary()))
                 .toAccount(toDomain(entity.getToAccount()))
                 .type(entity.getType())
                 .notes(entity.getNotes())
@@ -173,6 +197,7 @@ public class PersistenceMapper {
                 .account(toEntity(domain.getAccount()))
                 .category(toEntity(domain.getCategory()))
                 .subcategory(toEntity(domain.getSubcategory()))
+                .beneficiary(toEntity(domain.getBeneficiary()))
                 .toAccount(toEntity(domain.getToAccount()))
                 .type(domain.getType())
                 .notes(domain.getNotes())
