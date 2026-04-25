@@ -15,6 +15,14 @@ public class ReportService {
         return reportDataService.getCategoryGroupedData(startDate, endDate, accountIds, groupBySubcategory);
     }
 
+    public Map<String, Long> getEntityGroupedData(String startDate, String endDate, List<Long> accountIds) {
+        return reportDataService.getEntityGroupedData(startDate, endDate, accountIds);
+    }
+
+    public Map<String, Long> getBeneficiaryGroupedData(String startDate, String endDate, List<Long> accountIds) {
+        return reportDataService.getBeneficiaryGroupedData(startDate, endDate, accountIds);
+    }
+
     public byte[] generatePdfReport(String title, String chartType, String startDate, String endDate, List<Long> accountIds, List<Long> categoryIds, String lang) {
         return pdfReportGenerator.generatePdfReport(title, chartType, startDate, endDate, accountIds, categoryIds, lang);
     }

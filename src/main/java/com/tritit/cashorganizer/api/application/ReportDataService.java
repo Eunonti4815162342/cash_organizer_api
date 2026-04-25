@@ -34,4 +34,40 @@ public class ReportDataService {
                         Collectors.summingLong(t -> t.getAmount().getValue())
                 ));
     }
+
+    /**
+     * @author Veiga <alvaroveigavazquez@gmail.com>
+     */
+    public Map<String, Long> getEntityGroupedData(String startDate, String endDate, List<Long> accountIds) {
+        User user = userContextPort.getCurrentUser();
+        var transactions = (startDate != null && endDate != null)
+                ? transactionPersistencePort.findAllByUserAndDateRange(user, startDate, endDate, Pageable.unpaged()).getContent()
+                : transactionPersistencePort.findAllByUser(user, Pageable.unpaged()).getContent();
+
+        return transactions.stream()
+                .filter(t -> accountIds == null || accountIds.isEmpty() || (t.getAccount() != null && accountIds.contains(t.getAccount().getId())))
+                .filter(t -> t.getCategory() != null && t.getCategory().getFinancialEntity() != null)
+                .collect(Collectors.groupingBy(
+                        t -> t.getCategory().getFinancialEntity().getName(),
+                        Collectors.summingLong(t -> t.getAmount().getValue())
+                ));
+    }
+
+    /**
+     * @author Veiga <alvaroveigavazquez@gmail.com>
+     */
+    public Map<String, Long> getBeneficiaryGroupedData(String startDate, String endDate, List<Long> accountIds) {
+        User user = userContextPort.getCurrentUser();
+        var transactions = (startDate != null && endDate != null)
+                ? transactionPersistencePort.findAllByUserAndDateRange(user, startDate, endDate, Pageable.unpaged()).getContent()
+                : transactionPersistencePort.findAllByUser(user, Pageable.unpaged()).getContent();
+
+        return transactions.stream()
+                .filter(t -> accountIds == null || accountIds.isEmpty() || (t.getAccount() != null && accountIds.contains(t.getAccount().getId())))
+                .filter(t -> t.getBeneficiary() != null)
+                .collect(Collectors.groupingBy(
+                        t -> t.getBeneficiary().getName(),
+                        Collectors.summingLong(t -> t.getAmount().getValue())
+                ));
+    }
 }
