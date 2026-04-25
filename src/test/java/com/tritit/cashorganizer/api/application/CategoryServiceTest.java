@@ -61,16 +61,46 @@ class CategoryServiceTest {
             Category cat2 = Category.builder().id(2L).name("Transporte").build();
             when(categoryPersistencePort.findAllByUser(currentUser)).thenReturn(List.of(cat1, cat2));
 
-            List<Category> result = service.getCategories();
+            List<Category> result = service.getCategories(null);
 
             assertThat(result).containsExactly(cat1, cat2);
+        }
+
+        @Test
+        @DisplayName("getCategories: should filter by financial entity when provided")
+        void returnsFilteredCategoriesForUser() {
+            when(userContextPort.getCurrentUser()).thenReturn(currentUser);
+            FinancialEntity entity = FinancialEntity.builder().id(10L).user(currentUser).build();
+            Category cat1 = Category.builder().id(1L).name("Empresa 1").financialEntity(entity).build();
+            
+            when(financialEntityPersistencePort.findById(10L)).thenReturn(Optional.of(entity));
+            when(categoryPersistencePort.findAllByUserAndFinancialEntity(currentUser, entity)).thenReturn(List.of(cat1));
+
+            List<Category> result = service.getCategories(10L);
+
+            assertThat(result).containsExactly(cat1);
+            verify(categoryPersistencePort).findAllByUserAndFinancialEntity(currentUser, entity);
+        }
+
+        @Test
+        @DisplayName("getCategories: should throw exception when entity belongs to another user")
+        void throwsWhenEntityIsUnauthorized() {
+            when(userContextPort.getCurrentUser()).thenReturn(currentUser);
+            User otherUser = User.builder().id(UUID.randomUUID()).build();
+            FinancialEntity entity = FinancialEntity.builder().id(10L).user(otherUser).build();
+            
+            when(financialEntityPersistencePort.findById(10L)).thenReturn(Optional.of(entity));
+
+            assertThatThrownBy(() -> service.getCategories(10L))
+                    .isInstanceOf(ResourceNotFoundException.class)
+                    .hasMessageContaining("not belong to user");
         }
 
         @Test
         void returnsEmptyWhenNone() {
             when(userContextPort.getCurrentUser()).thenReturn(currentUser);
             when(categoryPersistencePort.findAllByUser(currentUser)).thenReturn(List.of());
-            assertThat(service.getCategories()).isEmpty();
+            assertThat(service.getCategories(null)).isEmpty();
         }
     }
 

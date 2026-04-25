@@ -1,6 +1,6 @@
 -- liquibase formatted sql
 
--- changeset gemini:06-add-financial-entity-to-categories splitStatements:true endDelimiter:;
+-- changeset Veiga:06-add-financial-entity-to-categories splitStatements:true endDelimiter:;
 -- Desc: Asociar categorías a entidades financieras (CAT-001)
 
 ALTER TABLE cash_organizer.categories ADD COLUMN IF NOT EXISTS financial_entity_id BIGINT;

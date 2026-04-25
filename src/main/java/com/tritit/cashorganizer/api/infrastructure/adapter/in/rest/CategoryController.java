@@ -21,8 +21,8 @@ public class CategoryController {
     private final CategoryService service;
 
     @GetMapping
-    public List<Category> getCategories() {
-        return service.getCategories();
+    public List<Category> getCategories(@RequestParam(required = false) Long financialEntityId) {
+        return service.getCategories(financialEntityId);
     }
 
     @PostMapping

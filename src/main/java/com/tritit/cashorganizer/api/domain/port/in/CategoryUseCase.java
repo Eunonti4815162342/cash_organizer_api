@@ -8,7 +8,7 @@ import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 public interface CategoryUseCase {
-    List<Category> getCategories();
+    List<Category> getCategories(Long financialEntityId);
     Category createCategory(Category category);
     Subcategory createSubcategory(Long categoryId, Subcategory subcategory);
     Subcategory updateSubcategory(Long id, Subcategory subcategory);

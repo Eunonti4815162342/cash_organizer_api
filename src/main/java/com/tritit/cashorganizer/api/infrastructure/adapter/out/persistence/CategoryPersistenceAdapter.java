@@ -1,6 +1,7 @@
 package com.tritit.cashorganizer.api.infrastructure.adapter.out.persistence;
 
 import com.tritit.cashorganizer.api.domain.model.Category;
+import com.tritit.cashorganizer.api.domain.model.FinancialEntity;
 import com.tritit.cashorganizer.api.domain.model.Subcategory;
 import com.tritit.cashorganizer.api.domain.model.User;
 import com.tritit.cashorganizer.api.domain.port.out.CategoryPersistencePort;
@@ -23,6 +24,15 @@ public class CategoryPersistenceAdapter implements CategoryPersistencePort {
     public List<Category> findAllByUser(User user) {
         UserEntity userEntity = mapper.toEntity(user);
         return categoryRepository.findAllByUser(userEntity).stream()
+                .map(mapper::toDomain)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Category> findAllByUserAndFinancialEntity(User user, FinancialEntity entity) {
+        UserEntity userEntity = mapper.toEntity(user);
+        var financialEntity = mapper.toEntity(entity);
+        return categoryRepository.findAllByUserAndFinancialEntity(userEntity, financialEntity).stream()
                 .map(mapper::toDomain)
                 .collect(Collectors.toList());
     }

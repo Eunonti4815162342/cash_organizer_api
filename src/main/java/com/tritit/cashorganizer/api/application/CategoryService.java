@@ -30,8 +30,16 @@ public class CategoryService implements CategoryUseCase {
 
     @Override
     @Transactional(readOnly = true)
-    public List<Category> getCategories() {
+    public List<Category> getCategories(Long financialEntityId) {
         User user = userContextPort.getCurrentUser();
+        
+        if (financialEntityId != null) {
+            var financialEntity = financialEntityPersistencePort.findById(financialEntityId)
+                    .filter(e -> e.getUser().getId().equals(user.getId()))
+                    .orElseThrow(() -> new ResourceNotFoundException("Financial Entity not found or does not belong to user"));
+            return categoryPersistencePort.findAllByUserAndFinancialEntity(user, financialEntity);
+        }
+        
         return categoryPersistencePort.findAllByUser(user);
     }
 
