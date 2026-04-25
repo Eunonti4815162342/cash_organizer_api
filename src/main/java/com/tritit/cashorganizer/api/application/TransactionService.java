@@ -14,6 +14,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -54,7 +55,7 @@ public class TransactionService implements TransactionUseCase {
 
     @Override
     @Transactional(readOnly = true)
-    public Page<TransactionItem> getTransactionsByAccountAndDateRange(java.util.List<Long> accountIds, String startDate, String endDate, Pageable pageable) {
+    public Page<TransactionItem> getTransactionsByAccountAndDateRange(List<Long> accountIds, String startDate, String endDate, Pageable pageable) {
         User user = userContextPort.getCurrentUser();
         return transactionPersistencePort.findAllByUserAndAccountAndDateRange(user, accountIds, startDate, endDate, pageable);
     }

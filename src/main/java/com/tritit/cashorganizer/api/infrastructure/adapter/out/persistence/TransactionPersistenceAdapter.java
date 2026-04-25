@@ -1,6 +1,7 @@
 package com.tritit.cashorganizer.api.infrastructure.adapter.out.persistence;
 
 import com.tritit.cashorganizer.api.domain.model.TransactionItem;
+import com.tritit.cashorganizer.api.domain.model.TransactionItem.TransactionType;
 import com.tritit.cashorganizer.api.domain.model.TransactionSuggestion;
 import com.tritit.cashorganizer.api.domain.model.User;
 import com.tritit.cashorganizer.api.domain.port.out.TransactionPersistencePort;
@@ -11,7 +12,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
+import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Component
 @RequiredArgsConstructor
@@ -58,7 +61,7 @@ public class TransactionPersistenceAdapter implements TransactionPersistencePort
     }
 
     @Override
-    public Page<TransactionItem> findAllByUserAndAccountAndDateRange(User user, java.util.List<Long> accountIds, String startDate, String endDate, Pageable pageable) {
+    public Page<TransactionItem> findAllByUserAndAccountAndDateRange(User user, List<Long> accountIds, String startDate, String endDate, Pageable pageable) {
         UserEntity userEntity = mapper.toEntity(user);
         return transactionRepository.findAllByUserAndAccountAndDateRange(userEntity, accountIds, startDate, endDate, pageable)
                 .map(mapper::toDomain);
@@ -84,15 +87,15 @@ public class TransactionPersistenceAdapter implements TransactionPersistencePort
     }
 
     @Override
-    public Optional<TransactionSuggestion> findMostFrequentCategoryAndType(java.util.UUID userId, Long beneficiaryId) {
-        java.util.List<Object[]> results = transactionRepository.findMostFrequentCategoryAndType(userId, beneficiaryId, PageRequest.of(0, 1));
+    public Optional<TransactionSuggestion> findMostFrequentCategoryAndType(UUID userId, Long beneficiaryId) {
+        List<Object[]> results = transactionRepository.findMostFrequentCategoryAndType(userId, beneficiaryId, PageRequest.of(0, 1));
         if (results.isEmpty()) {
             return Optional.empty();
         }
         Object[] firstResult = results.get(0);
         return Optional.of(TransactionSuggestion.builder()
                 .categoryId((Long) firstResult[0])
-                .transactionType((com.tritit.cashorganizer.api.domain.model.TransactionItem.TransactionType) firstResult[1])
+                .transactionType((TransactionType) firstResult[1])
                 .build());
     }
 }

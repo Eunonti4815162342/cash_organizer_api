@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 public interface TransactionPersistencePort {
     TransactionItem save(TransactionItem transaction);
@@ -19,5 +20,5 @@ public interface TransactionPersistencePort {
     Page<TransactionItem> findAllByUserAndCategory(User user, Long categoryId, Pageable pageable);
     long countByUserAndCategory(User user, Long categoryId);
     void unlinkSubcategoryFromTransactions(User user, Long subcategoryId);
-    java.util.Optional<com.tritit.cashorganizer.api.domain.model.TransactionSuggestion> findMostFrequentCategoryAndType(java.util.UUID userId, Long beneficiaryId);
+    Optional<TransactionSuggestion> findMostFrequentCategoryAndType(UUID userId, Long beneficiaryId);
 }
