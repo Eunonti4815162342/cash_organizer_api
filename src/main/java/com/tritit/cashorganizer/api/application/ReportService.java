@@ -23,7 +23,7 @@ public class ReportService {
         return reportDataService.getBeneficiaryGroupedData(startDate, endDate, accountIds);
     }
 
-    public byte[] generatePdfReport(String title, String chartType, String startDate, String endDate, List<Long> accountIds, List<Long> categoryIds, String lang) {
-        return pdfReportGenerator.generatePdfReport(title, chartType, startDate, endDate, accountIds, categoryIds, lang);
+    public byte[] generatePdfReport(String title, String chartType, String reportType, String startDate, String endDate, List<Long> accountIds, List<Long> categoryIds, String lang) {
+        return pdfReportGenerator.generatePdfReport(title, chartType, reportType, startDate, endDate, accountIds, categoryIds, lang);
     }
 }

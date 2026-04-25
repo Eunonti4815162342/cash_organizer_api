@@ -32,15 +32,15 @@ public class PdfReportGenerator {
     private final ReportTranslationService translationService;
     private final ReportStyler styler;
 
-    public byte[] generatePdfReport(String title, String chartType, String startDate, String endDate, List<Long> accountIds, List<Long> categoryIds, String lang) {
+    public byte[] generatePdfReport(String title, String chartType, String reportType, String startDate, String endDate, List<Long> accountIds, List<Long> categoryIds, String lang) {
         User user = userContextPort.getCurrentUser();
+        String type = (reportType != null) ? reportType.toUpperCase() : "CATEGORY";
 
-        // 1. Obtener estadísticas agrupadas según el título (Categoría, Entidad o Beneficiario)
+        // 1. Obtener estadísticas agrupadas según el tipo explícito
         Map<String, Long> stats;
-        String normalizedTitle = title.toUpperCase();
-        if (normalizedTitle.contains("ENTITY")) {
+        if ("ENTITY".equals(type)) {
             stats = reportDataService.getEntityGroupedData(startDate, endDate, accountIds);
-        } else if (normalizedTitle.contains("BENEFICIARY")) {
+        } else if ("BENEFICIARY".equals(type)) {
             stats = reportDataService.getBeneficiaryGroupedData(startDate, endDate, accountIds);
         } else {
             stats = reportDataService.getCategoryGroupedData(startDate, endDate, accountIds, false);
@@ -74,7 +74,15 @@ public class PdfReportGenerator {
             addHeader(document, title, lang, colors, fonts);
             addStatsSummary(document, stats, colors, fonts, lang);
             addAccountsOverview(document, filteredAccounts, colors, fonts, lang);
-            addTransactionDetails(document, filteredTransactions, colors, fonts, lang);
+            
+            // AGRUPACIÓN DINÁMICA DE DETALLES
+            if ("ENTITY".equals(type)) {
+                addDetailsGroupedByEntity(document, filteredTransactions, colors, fonts, lang);
+            } else if ("BENEFICIARY".equals(type)) {
+                addDetailsGroupedByBeneficiary(document, filteredTransactions, colors, fonts, lang);
+            } else {
+                addDetailsGroupedByMonth(document, filteredTransactions, colors, fonts, lang);
+            }
 
             document.close();
             return out.toByteArray();
@@ -156,34 +164,50 @@ public class PdfReportGenerator {
         document.add(new Paragraph(" "));
     }
 
-    private void addTransactionDetails(Document document, List<TransactionItem> transactions, ReportStyler.ReportColors colors, ReportStyler.ReportFonts fonts, String lang) throws DocumentException {
+    private void addDetailsGroupedByMonth(Document document, List<TransactionItem> transactions, ReportStyler.ReportColors colors, ReportStyler.ReportFonts fonts, String lang) throws DocumentException {
+        Map<String, List<TransactionItem>> grouped = transactions.stream()
+                .collect(Collectors.groupingBy(t -> t.getDate().substring(0, 7), LinkedHashMap::new, Collectors.toList()));
+        renderGroupedDetails(document, grouped, colors, fonts, lang);
+    }
+
+    private void addDetailsGroupedByEntity(Document document, List<TransactionItem> transactions, ReportStyler.ReportColors colors, ReportStyler.ReportFonts fonts, String lang) throws DocumentException {
+        Map<String, List<TransactionItem>> grouped = transactions.stream()
+                .collect(Collectors.groupingBy(t -> (t.getCategory() != null && t.getCategory().getFinancialEntity() != null) 
+                    ? t.getCategory().getFinancialEntity().getName() : "Personal / Other", LinkedHashMap::new, Collectors.toList()));
+        renderGroupedDetails(document, grouped, colors, fonts, lang);
+    }
+
+    private void addDetailsGroupedByBeneficiary(Document document, List<TransactionItem> transactions, ReportStyler.ReportColors colors, ReportStyler.ReportFonts fonts, String lang) throws DocumentException {
+        Map<String, List<TransactionItem>> grouped = transactions.stream()
+                .collect(Collectors.groupingBy(t -> t.getBeneficiary() != null ? t.getBeneficiary().getName() : "No Beneficiary", LinkedHashMap::new, Collectors.toList()));
+        renderGroupedDetails(document, grouped, colors, fonts, lang);
+    }
+
+    private void renderGroupedDetails(Document document, Map<String, List<TransactionItem>> grouped, ReportStyler.ReportColors colors, ReportStyler.ReportFonts fonts, String lang) throws DocumentException {
         document.add(new Paragraph(translationService.getLabel("details", lang), fonts.fontSubtitle));
         document.add(new Paragraph(" ", fonts.fontBody));
 
-        Map<String, List<TransactionItem>> grouped = transactions.stream()
-                .collect(Collectors.groupingBy(t -> t.getDate().substring(0, 7), LinkedHashMap::new, Collectors.toList()));
+        for (Map.Entry<String, List<TransactionItem>> entry : grouped.entrySet()) {
+            String groupKey = entry.getKey();
+            List<TransactionItem> groupTxs = entry.getValue();
 
-        for (Map.Entry<String, List<TransactionItem>> monthEntry : grouped.entrySet()) {
-            String monthKey = monthEntry.getKey();
-            List<TransactionItem> monthTxs = monthEntry.getValue();
+            double income = groupTxs.stream().filter(t -> !t.getAmount().isNegative()).mapToDouble(t -> t.getAmount().getValue()).sum() / 100.0;
+            double expense = groupTxs.stream().filter(t -> t.getAmount().isNegative()).mapToDouble(t -> Math.abs(t.getAmount().getValue())).sum() / 100.0;
+            double net = income - expense;
 
-            double monthIncome = monthTxs.stream().filter(t -> !t.getAmount().isNegative()).mapToDouble(t -> t.getAmount().getValue()).sum() / 100.0;
-            double monthExpense = monthTxs.stream().filter(t -> t.getAmount().isNegative()).mapToDouble(t -> Math.abs(t.getAmount().getValue())).sum() / 100.0;
-            double monthNet = monthIncome - monthExpense;
+            PdfPTable groupHeader = new PdfPTable(4);
+            groupHeader.setWidthPercentage(100);
+            groupHeader.setSpacingBefore(10);
 
-            PdfPTable monthHeader = new PdfPTable(4);
-            monthHeader.setWidthPercentage(100);
-            monthHeader.setSpacingBefore(10);
+            PdfPCell gCell = new PdfPCell(new Phrase(groupKey, fonts.fontMonth));
+            gCell.setBorder(Rectangle.NO_BORDER);
+            gCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+            groupHeader.addCell(gCell);
 
-            PdfPCell mCell = new PdfPCell(new Phrase(monthKey, fonts.fontMonth));
-            mCell.setBorder(Rectangle.NO_BORDER);
-            mCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-            monthHeader.addCell(mCell);
-
-            styler.addSummaryMiniCard(monthHeader, translationService.getLabel("mo_inc", lang), monthIncome, colors.positiveGreen, fonts.fontLabel, fonts.fontSummaryVal);
-            styler.addSummaryMiniCard(monthHeader, translationService.getLabel("mo_exp", lang), monthExpense, Color.RED, fonts.fontLabel, fonts.fontSummaryVal);
-            styler.addSummaryMiniCard(monthHeader, translationService.getLabel("mo_net", lang), monthNet, monthNet >= 0 ? Color.BLUE : Color.RED, fonts.fontLabel, fonts.fontSummaryVal);
-            document.add(monthHeader);
+            styler.addSummaryMiniCard(groupHeader, translationService.getLabel("mo_inc", lang), income, colors.positiveGreen, fonts.fontLabel, fonts.fontSummaryVal);
+            styler.addSummaryMiniCard(groupHeader, translationService.getLabel("mo_exp", lang), expense, Color.RED, fonts.fontLabel, fonts.fontSummaryVal);
+            styler.addSummaryMiniCard(groupHeader, translationService.getLabel("mo_net", lang), net, net >= 0 ? Color.BLUE : Color.RED, fonts.fontLabel, fonts.fontSummaryVal);
+            document.add(groupHeader);
 
             document.add(new Paragraph(" ", fonts.fontBody));
 
@@ -197,7 +221,7 @@ public class PdfReportGenerator {
                     translationService.getLabel("tx_amt", lang)
             });
 
-            for (TransactionItem tx : monthTxs) {
+            for (TransactionItem tx : groupTxs) {
                 String catName = tx.getCategory() != null ? tx.getCategory().getName() : "General";
                 if (tx.getSubcategory() != null) catName += " > " + tx.getSubcategory().getName();
                 txTable.addCell(styler.createCell(tx.getDate().split("T")[0], fonts.fontBody, false));

@@ -42,17 +42,18 @@ public class ReportController {
         return ResponseEntity.ok(reportService.getBeneficiaryGroupedData(startDate, endDate, accountIds));
     }
 
-    @GetMapping("/pdf")
-    public ResponseEntity<byte[]> generatePdfReport(
-            @RequestParam String title, 
-            @RequestParam(defaultValue = "PIE") String chartType,
+    @GetMapping("/download")
+    public ResponseEntity<byte[]> downloadPdf(
+            @RequestParam String title,
+            @RequestParam String chartType,
+            @RequestParam(required = false) String reportType,
             @RequestParam(required = false) String startDate,
             @RequestParam(required = false) String endDate,
             @RequestParam(required = false) List<Long> accountIds,
             @RequestParam(required = false) List<Long> categoryIds,
             @RequestParam(defaultValue = "en") String lang) {
-        
-        byte[] pdfBytes = reportService.generatePdfReport(title, chartType, startDate, endDate, accountIds, categoryIds, lang);
+
+        byte[] pdfBytes = reportService.generatePdfReport(title, chartType, reportType, startDate, endDate, accountIds, categoryIds, lang);
 
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=report.pdf")
