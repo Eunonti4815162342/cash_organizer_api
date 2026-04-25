@@ -3,9 +3,12 @@ package com.tritit.cashorganizer.api.application;
 import com.tritit.cashorganizer.api.domain.exception.InvalidTransactionException;
 import com.tritit.cashorganizer.api.domain.exception.ResourceNotFoundException;
 import com.tritit.cashorganizer.api.domain.model.Category;
+import com.tritit.cashorganizer.api.domain.model.FinancialEntity;
 import com.tritit.cashorganizer.api.domain.model.Subcategory;
+import com.tritit.cashorganizer.api.domain.model.TransactionItem;
 import com.tritit.cashorganizer.api.domain.model.User;
 import com.tritit.cashorganizer.api.domain.port.out.CategoryPersistencePort;
+import com.tritit.cashorganizer.api.domain.port.out.FinancialEntityPersistencePort;
 import com.tritit.cashorganizer.api.domain.port.out.TransactionPersistencePort;
 import com.tritit.cashorganizer.api.domain.port.out.UserContextPort;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,6 +19,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.Optional;
@@ -31,6 +37,7 @@ class CategoryServiceTest {
 
     @Mock CategoryPersistencePort categoryPersistencePort;
     @Mock TransactionPersistencePort transactionPersistencePort;
+    @Mock FinancialEntityPersistencePort financialEntityPersistencePort;
     @Mock UserContextPort userContextPort;
 
     @InjectMocks
@@ -41,7 +48,6 @@ class CategoryServiceTest {
     @BeforeEach
     void setUp() {
         currentUser = User.builder().id(UUID.randomUUID()).email("user@test.com").build();
-        when(userContextPort.getCurrentUser()).thenReturn(currentUser);
     }
 
     @Nested
@@ -50,6 +56,7 @@ class CategoryServiceTest {
 
         @Test
         void returnsAllCategoriesForUser() {
+            when(userContextPort.getCurrentUser()).thenReturn(currentUser);
             Category cat1 = Category.builder().id(1L).name("Alimentación").build();
             Category cat2 = Category.builder().id(2L).name("Transporte").build();
             when(categoryPersistencePort.findAllByUser(currentUser)).thenReturn(List.of(cat1, cat2));
@@ -61,6 +68,7 @@ class CategoryServiceTest {
 
         @Test
         void returnsEmptyWhenNone() {
+            when(userContextPort.getCurrentUser()).thenReturn(currentUser);
             when(categoryPersistencePort.findAllByUser(currentUser)).thenReturn(List.of());
             assertThat(service.getCategories()).isEmpty();
         }
@@ -72,6 +80,7 @@ class CategoryServiceTest {
 
         @Test
         void setsUserAndSaves() {
+            when(userContextPort.getCurrentUser()).thenReturn(currentUser);
             Category input = Category.builder().name("Ocio").build();
             Category saved = Category.builder().id(5L).name("Ocio").user(currentUser).build();
             when(categoryPersistencePort.save(any())).thenReturn(saved);
@@ -80,6 +89,37 @@ class CategoryServiceTest {
 
             assertThat(input.getUser()).isEqualTo(currentUser);
             assertThat(result.getId()).isEqualTo(5L);
+        }
+
+        @Test
+        @DisplayName("createCategory: should link to financial entity when provided and valid")
+        void createCategoryWithFinancialEntity() {
+            when(userContextPort.getCurrentUser()).thenReturn(currentUser);
+            FinancialEntity entity = FinancialEntity.builder().id(10L).user(currentUser).build();
+            Category input = Category.builder().name("Empresa").financialEntity(entity).build();
+            
+            when(financialEntityPersistencePort.findById(10L)).thenReturn(Optional.of(entity));
+            when(categoryPersistencePort.save(any())).thenAnswer(inv -> inv.getArgument(0));
+
+            Category result = service.createCategory(input);
+
+            assertThat(result.getFinancialEntity()).isEqualTo(entity);
+            verify(financialEntityPersistencePort).findById(10L);
+        }
+
+        @Test
+        @DisplayName("createCategory: should throw exception when entity belongs to another user")
+        void createCategoryWithUnauthorizedEntity() {
+            when(userContextPort.getCurrentUser()).thenReturn(currentUser);
+            User otherUser = User.builder().id(UUID.randomUUID()).build();
+            FinancialEntity entity = FinancialEntity.builder().id(10L).user(otherUser).build();
+            Category input = Category.builder().name("Empresa").financialEntity(entity).build();
+            
+            when(financialEntityPersistencePort.findById(10L)).thenReturn(Optional.of(entity));
+
+            assertThatThrownBy(() -> service.createCategory(input))
+                    .isInstanceOf(ResourceNotFoundException.class)
+                    .hasMessageContaining("not belong to user");
         }
     }
 
@@ -136,6 +176,7 @@ class CategoryServiceTest {
 
         @Test
         void deletesWhenNoTransactionsLinked() {
+            when(userContextPort.getCurrentUser()).thenReturn(currentUser);
             when(categoryPersistencePort.findById(1L)).thenReturn(Optional.of(Category.builder().id(1L).build()));
             when(transactionPersistencePort.countByUserAndCategory(currentUser, 1L)).thenReturn(0L);
 
@@ -146,6 +187,7 @@ class CategoryServiceTest {
 
         @Test
         void throwsWhenTransactionsLinked() {
+            when(userContextPort.getCurrentUser()).thenReturn(currentUser);
             when(categoryPersistencePort.findById(1L)).thenReturn(Optional.of(Category.builder().id(1L).build()));
             when(transactionPersistencePort.countByUserAndCategory(currentUser, 1L)).thenReturn(3L);
 
@@ -158,6 +200,7 @@ class CategoryServiceTest {
 
         @Test
         void throwsWhenCategoryNotFound() {
+            when(userContextPort.getCurrentUser()).thenReturn(currentUser);
             when(categoryPersistencePort.findById(99L)).thenReturn(Optional.empty());
             assertThatThrownBy(() -> service.deleteCategory(99L))
                     .isInstanceOf(ResourceNotFoundException.class);
@@ -165,15 +208,19 @@ class CategoryServiceTest {
     }
 
     @Nested
-    @DisplayName("deleteSubcategory()")
-    class DeleteSubcategory {
+    @DisplayName("getTransactionsByCategory()")
+    class GetTransactionsByCategory {
 
         @Test
-        void unlinksFromTransactionsAndDeletes() {
-            service.deleteSubcategory(5L);
+        void returnsPagedTransactions() {
+            when(userContextPort.getCurrentUser()).thenReturn(currentUser);
+            Pageable pageable = mock(Pageable.class);
+            Page<TransactionItem> page = new PageImpl<>(List.of());
+            when(transactionPersistencePort.findAllByUserAndCategory(currentUser, 1L, pageable)).thenReturn(page);
 
-            verify(transactionPersistencePort).unlinkSubcategoryFromTransactions(currentUser, 5L);
-            verify(categoryPersistencePort).deleteSubcategoryById(5L);
+            Page<TransactionItem> result = service.getTransactionsByCategory(1L, pageable);
+
+            assertThat(result).isEqualTo(page);
         }
     }
 }

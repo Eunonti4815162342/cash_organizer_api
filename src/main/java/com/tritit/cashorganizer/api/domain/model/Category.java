@@ -17,6 +17,7 @@ public class Category {
     private String iconName;
     private CategoryType type;
     private List<Subcategory> subcategories;
+    private FinancialEntity financialEntity;
 
     public enum CategoryType {
         EXPENSE, INCOME

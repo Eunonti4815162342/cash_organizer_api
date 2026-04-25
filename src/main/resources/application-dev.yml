@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:postgresql://192.168.1.145:5432/llama_finanzas
+    url: jdbc:postgresql://100.86.48.34:5432/llama_finanzas
     username: llama_user
     password: llama_password
     driver-class-name: org.postgresql.Driver
@@ -25,7 +25,7 @@ application:
       secret-key: "MyVerySecureSecretKeyForJwtTokenGenerationAndValidation"
       expiration: 86400000
     cors:
-      allowed-origins: ${CORS_ALLOWED_ORIGINS:http://localhost:3000,http://localhost:8085,http://127.0.0.1:3000,http://localhost:8080,http://127.0.0.1:8080,http://localhost:5000,http://127.0.0.1:5000,http://localhost:60884}
+      allowed-origins: ${CORS_ALLOWED_ORIGINS:http://localhost:3000,http://localhost:8085,http://127.0.0.1:3000,http://localhost:8080,http://127.0.0.1:8080,http://localhost:5000,http://127.0.0.1:5000,http://localhost:60884,http://100.86.24.70:3000,http://100.86.24.70:8080,http://100.86.24.70:8085}
 
 server:
   port: 8085

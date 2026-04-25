@@ -29,6 +29,10 @@ public class CategoryEntity {
     @Enumerated(EnumType.STRING)
     private CategoryType type;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "financial_entity_id")
+    private FinancialEntityEntity financialEntity;
+
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
     @OrderBy("name ASC")
     private List<SubcategoryEntity> subcategories;

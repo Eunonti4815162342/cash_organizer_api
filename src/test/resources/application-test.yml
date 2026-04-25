@@ -18,6 +18,9 @@ spring:
     change-log: classpath:db/changelog/db.changelog-master.xml
     default-schema: cash_organizer
 
+  mail:
+    host: ""
+
 application:
   security:
     jwt:
@@ -28,10 +31,6 @@ application:
 
 server:
   port: 8085
-
-spring:
-  mail:
-    host: ""
 
 app:
   mail:

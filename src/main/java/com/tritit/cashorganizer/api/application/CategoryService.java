@@ -8,6 +8,7 @@ import com.tritit.cashorganizer.api.domain.model.TransactionItem;
 import com.tritit.cashorganizer.api.domain.model.User;
 import com.tritit.cashorganizer.api.domain.port.in.CategoryUseCase;
 import com.tritit.cashorganizer.api.domain.port.out.CategoryPersistencePort;
+import com.tritit.cashorganizer.api.domain.port.out.FinancialEntityPersistencePort;
 import com.tritit.cashorganizer.api.domain.port.out.TransactionPersistencePort;
 import com.tritit.cashorganizer.api.domain.port.out.UserContextPort;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +25,7 @@ public class CategoryService implements CategoryUseCase {
 
     private final CategoryPersistencePort categoryPersistencePort;
     private final TransactionPersistencePort transactionPersistencePort;
+    private final FinancialEntityPersistencePort financialEntityPersistencePort;
     private final UserContextPort userContextPort;
 
     @Override
@@ -38,6 +40,14 @@ public class CategoryService implements CategoryUseCase {
     public Category createCategory(Category category) {
         User user = userContextPort.getCurrentUser();
         category.setUser(user);
+
+        if (category.getFinancialEntity() != null && category.getFinancialEntity().getId() != null) {
+            var entity = financialEntityPersistencePort.findById(category.getFinancialEntity().getId())
+                    .filter(e -> e.getUser().getId().equals(user.getId()))
+                    .orElseThrow(() -> new ResourceNotFoundException("Financial Entity not found or does not belong to user"));
+            category.setFinancialEntity(entity);
+        }
+
         return categoryPersistencePort.save(category);
     }
 

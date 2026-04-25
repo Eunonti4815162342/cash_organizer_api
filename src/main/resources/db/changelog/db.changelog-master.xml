@@ -26,4 +26,8 @@
         <sqlFile path="db/changelog/changes/05-password-reset-tokens.sql" />
     </changeSet>
 
+    <changeSet id="10" author="gemini">
+        <sqlFile path="db/changelog/changes/06-add-financial-entity-to-categories.sql" />
+    </changeSet>
+
 </databaseChangeLog>

@@ -115,6 +115,7 @@ public class PersistenceMapper {
                 .type(entity.getType())
                 .subcategories(entity.getSubcategories() != null ? 
                     entity.getSubcategories().stream().map(this::toDomain).collect(Collectors.toList()) : new ArrayList<>())
+                .financialEntity(toDomain(entity.getFinancialEntity()))
                 .build();
     }
 
@@ -135,6 +136,7 @@ public class PersistenceMapper {
                 .name(domain.getName())
                 .iconName(domain.getIconName())
                 .type(domain.getType())
+                .financialEntity(toEntity(domain.getFinancialEntity()))
                 .build();
     }
 
