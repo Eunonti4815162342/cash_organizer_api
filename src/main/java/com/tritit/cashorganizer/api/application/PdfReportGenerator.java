@@ -221,7 +221,7 @@ public class PdfReportGenerator {
                     translationService.getLabel("tx_amt", lang)
             });
 
-            for (TransactionItem tx : monthTxs) {
+            for (TransactionItem tx : groupTxs) {
                 if (tx == null || tx.getAmount() == null) continue;
                 String catName = tx.getCategory() != null ? tx.getCategory().getName() : "General";
                 if (tx.getSubcategory() != null) catName += " > " + tx.getSubcategory().getName();

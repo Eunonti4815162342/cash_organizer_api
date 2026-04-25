@@ -10,6 +10,10 @@ import java.util.stream.Collectors;
 @Component
 public class PersistenceMapper {
 
+    private Long sanitizeId(Long id) {
+        return (id != null && id != 0) ? id : null;
+    }
+
     // --- USER ---
     public User toDomain(UserEntity entity) {
         if (entity == null) return null;
@@ -52,7 +56,7 @@ public class PersistenceMapper {
     public AccountEntity toEntity(AccountItem domain) {
         if (domain == null) return null;
         return AccountEntity.builder()
-                .id(domain.getId())
+                .id(sanitizeId(domain.getId()))
                 .user(toEntity(domain.getUser()))
                 .name(domain.getName())
                 .description(domain.getDescription())
@@ -94,7 +98,7 @@ public class PersistenceMapper {
     public FinancialEntityEntity toEntity(FinancialEntity domain) {
         if (domain == null) return null;
         return FinancialEntityEntity.builder()
-                .id(domain.getId())
+                .id(sanitizeId(domain.getId()))
                 .user(toEntity(domain.getUser()))
                 .name(domain.getName())
                 .description(domain.getDescription())
@@ -119,7 +123,7 @@ public class PersistenceMapper {
     public BeneficiaryEntity toEntity(Beneficiary domain) {
         if (domain == null) return null;
         return BeneficiaryEntity.builder()
-                .id(domain.getId())
+                .id(sanitizeId(domain.getId()))
                 .user(toEntity(domain.getUser()))
                 .name(domain.getName())
                 .description(domain.getDescription())
@@ -154,7 +158,7 @@ public class PersistenceMapper {
     public CategoryEntity toEntity(Category domain) {
         if (domain == null) return null;
         return CategoryEntity.builder()
-                .id(domain.getId())
+                .id(sanitizeId(domain.getId()))
                 .user(toEntity(domain.getUser()))
                 .name(domain.getName())
                 .iconName(domain.getIconName())
@@ -189,7 +193,7 @@ public class PersistenceMapper {
     public TransactionItemEntity toEntity(TransactionItem domain) {
         if (domain == null) return null;
         return TransactionItemEntity.builder()
-                .id(domain.getId())
+                .id(sanitizeId(domain.getId()))
                 .user(toEntity(domain.getUser()))
                 .date(domain.getDate())
                 .description(domain.getDescription())
@@ -211,7 +215,7 @@ public class PersistenceMapper {
     public SubcategoryEntity toEntity(Subcategory domain) {
         if (domain == null) return null;
         return SubcategoryEntity.builder()
-                .id(domain.getId())
+                .id(sanitizeId(domain.getId()))
                 .name(domain.getName())
                 .iconName(domain.getIconName())
                 .category(toEntity(domain.getCategory()))
