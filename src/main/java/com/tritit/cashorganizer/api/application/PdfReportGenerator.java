@@ -28,17 +28,31 @@ public class PdfReportGenerator {
     private final AccountPersistencePort accountPersistencePort;
     private final TransactionPersistencePort transactionPersistencePort;
     private final UserContextPort userContextPort;
+    private final ReportDataService reportDataService;
     private final ReportTranslationService translationService;
     private final ReportStyler styler;
 
     public byte[] generatePdfReport(String title, String chartType, String startDate, String endDate, List<Long> accountIds, List<Long> categoryIds, String lang) {
         User user = userContextPort.getCurrentUser();
 
+        // 1. Obtener estadísticas agrupadas según el título (Categoría, Entidad o Beneficiario)
+        Map<String, Long> stats;
+        String normalizedTitle = title.toUpperCase();
+        if (normalizedTitle.contains("ENTITY")) {
+            stats = reportDataService.getEntityGroupedData(startDate, endDate, accountIds);
+        } else if (normalizedTitle.contains("BENEFICIARY")) {
+            stats = reportDataService.getBeneficiaryGroupedData(startDate, endDate, accountIds);
+        } else {
+            stats = reportDataService.getCategoryGroupedData(startDate, endDate, accountIds, false);
+        }
+
+        // 2. Obtener cuentas filtradas
         List<AccountItem> allAccounts = accountPersistencePort.findAllByUser(user);
         List<AccountItem> filteredAccounts = (accountIds == null || accountIds.isEmpty())
                 ? allAccounts
                 : allAccounts.stream().filter(a -> accountIds.contains(a.getId())).collect(Collectors.toList());
 
+        // 3. Obtener transacciones detalladas
         var transactions = (startDate != null && endDate != null)
                 ? transactionPersistencePort.findAllByUserAndDateRange(user, startDate, endDate, Pageable.unpaged()).getContent()
                 : transactionPersistencePort.findAllByUser(user, Pageable.unpaged()).getContent();
@@ -58,13 +72,14 @@ public class PdfReportGenerator {
             ReportStyler.ReportFonts fonts = styler.getFonts(colors);
 
             addHeader(document, title, lang, colors, fonts);
+            addStatsSummary(document, stats, colors, fonts, lang);
             addAccountsOverview(document, filteredAccounts, colors, fonts, lang);
             addTransactionDetails(document, filteredTransactions, colors, fonts, lang);
 
             document.close();
             return out.toByteArray();
         } catch (Exception e) {
-            throw new RuntimeException("Error generating monthly summary PDF", e);
+            throw new RuntimeException("Error generating NATAVE report PDF", e);
         }
     }
 
@@ -72,18 +87,52 @@ public class PdfReportGenerator {
         PdfPTable headerTable = new PdfPTable(2);
         headerTable.setWidthPercentage(100);
         headerTable.setWidths(new float[]{2, 1});
-        PdfPCell titleCell = new PdfPCell(new Phrase("CASHKEEP", fonts.fontTitle));
+        
+        PdfPCell titleCell = new PdfPCell(new Phrase("NATAVE", fonts.fontTitle));
         titleCell.setBorder(Rectangle.NO_BORDER);
         headerTable.addCell(titleCell);
+        
         PdfPCell infoCell = new PdfPCell();
         infoCell.setBorder(Rectangle.NO_BORDER);
         infoCell.setHorizontalAlignment(Element.ALIGN_RIGHT);
         infoCell.addElement(new Paragraph(translationService.getLabel("title", lang), fonts.fontLabel));
         infoCell.addElement(new Paragraph(title.toUpperCase(), fonts.fontSubtitle));
         headerTable.addCell(infoCell);
+        
         document.add(headerTable);
         document.add(new Paragraph(" "));
         document.add(new LineSeparator(1f, 100, colors.primaryBlue, Element.ALIGN_CENTER, -2));
+        document.add(new Paragraph(" "));
+    }
+
+    private void addStatsSummary(Document document, Map<String, Long> stats, ReportStyler.ReportColors colors, ReportStyler.ReportFonts fonts, String lang) throws DocumentException {
+        if (stats == null || stats.isEmpty()) return;
+
+        document.add(new Paragraph(translationService.getLabel("stats_summary", lang), fonts.fontSubtitle));
+        document.add(new Paragraph(" ", fonts.fontBody));
+
+        PdfPTable table = new PdfPTable(3);
+        table.setWidthPercentage(100);
+        table.setWidths(new float[]{3, 1, 1});
+
+        styler.writeModernHeader(table, fonts.fontHeader, colors.primaryBlue, new String[]{
+                translationService.getLabel("item_name", lang),
+                translationService.getLabel("item_amt", lang),
+                "%"
+        });
+
+        long total = stats.values().stream().mapToLong(Long::longValue).sum();
+
+        for (Map.Entry<String, Long> entry : stats.entrySet()) {
+            double val = entry.getValue() / 100.0;
+            double pct = total == 0 ? 0 : (entry.getValue() * 100.0 / total);
+
+            table.addCell(styler.createCell(entry.getKey(), fonts.fontBody, false));
+            table.addCell(styler.createCell("€ " + String.format("%.2f", val), fonts.fontBody, true));
+            table.addCell(styler.createCell(String.format("%.1f", pct) + "%", fonts.fontBody, true));
+        }
+
+        document.add(table);
         document.add(new Paragraph(" "));
     }
 
