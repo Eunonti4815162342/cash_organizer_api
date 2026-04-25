@@ -8,6 +8,7 @@ import com.tritit.cashorganizer.api.domain.model.Amount;
 import com.tritit.cashorganizer.api.domain.model.User;
 import com.tritit.cashorganizer.api.domain.port.in.AccountUseCase;
 import com.tritit.cashorganizer.api.domain.port.out.AccountPersistencePort;
+import com.tritit.cashorganizer.api.domain.port.out.FinancialEntityPersistencePort;
 import com.tritit.cashorganizer.api.domain.port.out.TransactionPersistencePort;
 import com.tritit.cashorganizer.api.domain.port.out.UserContextPort;
 import com.tritit.cashorganizer.api.infrastructure.adapter.out.persistence.PersistenceMapper;
@@ -24,6 +25,7 @@ public class AccountService implements AccountUseCase {
 
     private final AccountPersistencePort accountPersistencePort;
     private final TransactionPersistencePort transactionPersistencePort;
+    private final FinancialEntityPersistencePort financialEntityPersistencePort;
     private final UserContextPort userContextPort;
     private final PersistenceMapper mapper;
 
@@ -50,12 +52,21 @@ public class AccountService implements AccountUseCase {
             throw new DuplicateResourceException("An account with this name already exists.");
         }
 
+        // VALIDACIÓN Y ASOCIACIÓN DE ENTIDAD
+        if (accountDetails.getEntity() != null && accountDetails.getEntity().getId() != null) {
+            var entity = financialEntityPersistencePort.findById(accountDetails.getEntity().getId())
+                    .filter(e -> e.getUser().getId().equals(user.getId()))
+                    .orElseThrow(() -> new ResourceNotFoundException("Financial Entity not found or unauthorized"));
+            account.setEntity(entity);
+        } else {
+            account.setEntity(null);
+        }
+
         account.setName(accountDetails.getName());
         account.setDescription(accountDetails.getDescription());
         account.setAccountType(accountDetails.getAccountType());
         account.setNotes(accountDetails.getNotes());
         account.setFlags(accountDetails.getFlags());
-        account.setEntity(accountDetails.getEntity());
         account.setAmount(accountDetails.getAmount());
 
         return accountPersistencePort.save(account);
@@ -108,7 +119,15 @@ public class AccountService implements AccountUseCase {
         User user = userContextPort.getCurrentUser();
         accountItem.setUser(user);
         accountItem.setActive(true);
+
+        // VALIDACIÓN Y ASOCIACIÓN DE ENTIDAD
+        if (accountItem.getEntity() != null && accountItem.getEntity().getId() != null) {
+            var entity = financialEntityPersistencePort.findById(accountItem.getEntity().getId())
+                    .filter(e -> e.getUser().getId().equals(user.getId()))
+                    .orElseThrow(() -> new ResourceNotFoundException("Financial Entity not found or unauthorized"));
+            accountItem.setEntity(entity);
+        }
+
         return accountPersistencePort.save(accountItem);
     }
 }
-
