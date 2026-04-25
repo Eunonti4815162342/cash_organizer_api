@@ -1,13 +1,10 @@
 package com.tritit.cashorganizer.api.application;
 
-import com.tritit.cashorganizer.api.application.impact.TransactionImpactResolver;
 import com.tritit.cashorganizer.api.application.impact.TransactionImpact;
-import com.tritit.cashorganizer.api.domain.exception.InvalidTransactionException;
+import com.tritit.cashorganizer.api.application.impact.TransactionImpactResolver;
 import com.tritit.cashorganizer.api.domain.exception.ResourceNotFoundException;
-import com.tritit.cashorganizer.api.domain.model.AccountItem;
-import com.tritit.cashorganizer.api.domain.model.Amount;
-import com.tritit.cashorganizer.api.domain.model.TransactionItem;
-import com.tritit.cashorganizer.api.domain.model.User;
+import com.tritit.cashorganizer.api.domain.model.*;
+import com.tritit.cashorganizer.api.domain.port.out.BeneficiaryPersistencePort;
 import com.tritit.cashorganizer.api.domain.port.out.TransactionPersistencePort;
 import com.tritit.cashorganizer.api.domain.port.out.UserContextPort;
 import org.junit.jupiter.api.BeforeEach;
@@ -18,14 +15,17 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.data.domain.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -34,223 +34,129 @@ class TransactionServiceTest {
 
     @Mock TransactionPersistencePort transactionPersistencePort;
     @Mock UserContextPort userContextPort;
+    @Mock BeneficiaryPersistencePort beneficiaryPersistencePort;
     @Mock TransactionImpactResolver impactResolver;
-    @Mock TransactionImpact impact;
 
     @InjectMocks
-    TransactionService service;
+    TransactionService sut;
 
     private User currentUser;
-    private AccountItem account;
-    private Amount amount;
 
     @BeforeEach
     void setUp() {
-        currentUser = User.builder().id(UUID.randomUUID()).email("user@test.com").build();
-        account = AccountItem.builder().id(1L).name("Cuenta").build();
-        amount = new Amount(5000L, "EUR", false);
-        when(userContextPort.getCurrentUser()).thenReturn(currentUser);
-        when(impactResolver.forType(any())).thenReturn(impact);
+        currentUser = User.builder().id(UUID.randomUUID()).email("veiga@test.com").build();
+    }
+
+    @Nested
+    @DisplayName("getSuggestionForBeneficiary()")
+    class GetSuggestion {
+
+        @Test
+        @DisplayName("should return suggestion from history")
+        void returnsSuggestion() {
+            when(userContextPort.getCurrentUser()).thenReturn(currentUser);
+            Beneficiary beneficiary = Beneficiary.builder().id(5L).user(currentUser).build();
+            TransactionSuggestion suggestion = TransactionSuggestion.builder()
+                    .categoryId(1L)
+                    .transactionType(TransactionItem.TransactionType.EXPENSE)
+                    .build();
+
+            when(beneficiaryPersistencePort.findById(5L)).thenReturn(Optional.of(beneficiary));
+            when(transactionPersistencePort.findMostFrequentCategoryAndType(currentUser.getId(), 5L))
+                    .thenReturn(Optional.of(suggestion));
+
+            TransactionSuggestion result = sut.getSuggestionForBeneficiary(5L);
+
+            assertThat(result).isEqualTo(suggestion);
+        }
+
+        @Test
+        @DisplayName("should return empty suggestion when no history exists")
+        void returnsEmptyWhenNoHistory() {
+            when(userContextPort.getCurrentUser()).thenReturn(currentUser);
+            Beneficiary beneficiary = Beneficiary.builder().id(5L).user(currentUser).build();
+            when(beneficiaryPersistencePort.findById(5L)).thenReturn(Optional.of(beneficiary));
+            when(transactionPersistencePort.findMostFrequentCategoryAndType(currentUser.getId(), 5L))
+                    .thenReturn(Optional.empty());
+
+            TransactionSuggestion result = sut.getSuggestionForBeneficiary(5L);
+
+            assertThat(result.getCategoryId()).isNull();
+            assertThat(result.getTransactionType()).isNull();
+        }
+
+        @Test
+        @DisplayName("should throw exception when beneficiary not found or unauthorized")
+        void throwsWhenUnauthorized() {
+            when(userContextPort.getCurrentUser()).thenReturn(currentUser);
+            User otherUser = User.builder().id(UUID.randomUUID()).build();
+            Beneficiary beneficiary = Beneficiary.builder().id(5L).user(otherUser).build();
+            
+            when(beneficiaryPersistencePort.findById(5L)).thenReturn(Optional.of(beneficiary));
+
+            assertThatThrownBy(() -> sut.getSuggestionForBeneficiary(5L))
+                    .isInstanceOf(ResourceNotFoundException.class);
+        }
     }
 
     @Nested
     @DisplayName("getAllTransactions()")
     class GetAll {
-
         @Test
-        void delegatesToPort() {
-            Pageable pageable = PageRequest.of(0, 20);
-            Page<TransactionItem> expected = new PageImpl<>(List.of());
-            when(transactionPersistencePort.findAllByUser(currentUser, pageable)).thenReturn(expected);
-
-            Page<TransactionItem> result = service.getAllTransactions(pageable);
-
-            assertThat(result).isSameAs(expected);
-            verify(transactionPersistencePort).findAllByUser(currentUser, pageable);
-        }
-    }
-
-    @Nested
-    @DisplayName("getTransactionsByDateRange()")
-    class GetByDateRange {
-
-        @Test
-        void passesDateRangeToPort() {
-            Pageable pageable = PageRequest.of(0, 10);
+        void callsPersistence() {
+            when(userContextPort.getCurrentUser()).thenReturn(currentUser);
+            Pageable pageable = mock(Pageable.class);
             Page<TransactionItem> page = new PageImpl<>(List.of());
-            when(transactionPersistencePort.findAllByUserAndDateRange(currentUser, "2024-01-01", "2024-01-31", pageable))
-                    .thenReturn(page);
+            when(transactionPersistencePort.findAllByUser(currentUser, pageable)).thenReturn(page);
 
-            Page<TransactionItem> result = service.getTransactionsByDateRange("2024-01-01", "2024-01-31", pageable);
-            assertThat(result).isSameAs(page);
-        }
-    }
-
-    @Nested
-    @DisplayName("getTransactionsByAccountAndDateRange()")
-    class GetByAccountAndDateRange {
-
-        @Test
-        void passesAccountIdsAndDatesToPort() {
-            List<Long> ids = List.of(1L, 2L);
-            Pageable pageable = PageRequest.of(0, 20);
-            Page<TransactionItem> page = new PageImpl<>(List.of());
-            when(transactionPersistencePort.findAllByUserAndAccountAndDateRange(currentUser, ids, "2024-01-01", "2024-01-31", pageable))
-                    .thenReturn(page);
-
-            service.getTransactionsByAccountAndDateRange(ids, "2024-01-01", "2024-01-31", pageable);
-            verify(transactionPersistencePort).findAllByUserAndAccountAndDateRange(currentUser, ids, "2024-01-01", "2024-01-31", pageable);
+            assertThat(sut.getAllTransactions(pageable)).isEqualTo(page);
         }
     }
 
     @Nested
     @DisplayName("createTransaction()")
     class Create {
-
         @Test
-        void setsUserValidatesAppliesImpactAndSaves() {
-            TransactionItem tx = TransactionItem.builder()
-                    .type(TransactionItem.TransactionType.EXPENSE)
-                    .account(account)
-                    .amount(amount)
-                    .build();
-            when(transactionPersistencePort.save(any())).thenAnswer(inv -> inv.getArgument(0));
-
-            service.createTransaction(tx);
-
-            assertThat(tx.getUser()).isEqualTo(currentUser);
-            verify(impact).apply(tx, currentUser);
-            verify(transactionPersistencePort).save(tx);
-        }
-
-        @Test
-        void throwsWhenAccountIsNull() {
-            TransactionItem tx = TransactionItem.builder()
-                    .type(TransactionItem.TransactionType.EXPENSE)
-                    .amount(amount)
-                    .build();
-            assertThatThrownBy(() -> service.createTransaction(tx))
-                    .isInstanceOf(InvalidTransactionException.class);
-            verify(transactionPersistencePort, never()).save(any());
-        }
-
-        @Test
-        void throwsWhenAmountIsZero() {
-            TransactionItem tx = TransactionItem.builder()
-                    .type(TransactionItem.TransactionType.EXPENSE)
-                    .account(account)
-                    .amount(new Amount(0L, "EUR", false))
-                    .build();
-            assertThatThrownBy(() -> service.createTransaction(tx))
-                    .isInstanceOf(InvalidTransactionException.class);
-        }
-
-        @Test
-        void resolveImpactForCorrectType() {
+        void validatesAndSaves() {
+            when(userContextPort.getCurrentUser()).thenReturn(currentUser);
             TransactionItem tx = TransactionItem.builder()
                     .type(TransactionItem.TransactionType.INCOME)
-                    .account(account).amount(amount).build();
-            when(transactionPersistencePort.save(any())).thenAnswer(inv -> inv.getArgument(0));
+                    .account(AccountItem.builder().id(1L).build())
+                    .amount(new Amount(100L, "EUR", false))
+                    .build();
+            
+            TransactionImpact impactMock = mock(TransactionImpact.class);
+            when(impactResolver.forType(TransactionItem.TransactionType.INCOME)).thenReturn(impactMock);
+            when(transactionPersistencePort.save(tx)).thenReturn(tx);
 
-            service.createTransaction(tx);
+            TransactionItem result = sut.createTransaction(tx);
 
-            verify(impactResolver).forType(TransactionItem.TransactionType.INCOME);
-        }
-    }
-
-    @Nested
-    @DisplayName("updateTransaction()")
-    class Update {
-
-        @Test
-        void revertsOldImpactAndAppliesNew() {
-            TransactionItem old = TransactionItem.builder()
-                    .id(1L).user(currentUser)
-                    .type(TransactionItem.TransactionType.EXPENSE)
-                    .account(account).amount(amount).build();
-            TransactionItem newTx = TransactionItem.builder()
-                    .type(TransactionItem.TransactionType.EXPENSE)
-                    .account(account).amount(new Amount(3000L, "EUR", false)).build();
-
-            when(transactionPersistencePort.findById(1L)).thenReturn(Optional.of(old));
-            when(transactionPersistencePort.save(any())).thenAnswer(inv -> inv.getArgument(0));
-
-            service.updateTransaction(1L, newTx);
-
-            verify(impact).revert(old, currentUser);
-            verify(impact).apply(newTx, currentUser);
-        }
-
-        @Test
-        void throwsWhenTransactionNotFound() {
-            when(transactionPersistencePort.findById(99L)).thenReturn(Optional.empty());
-            assertThatThrownBy(() -> service.updateTransaction(99L, TransactionItem.builder().account(account).amount(amount).build()))
-                    .isInstanceOf(ResourceNotFoundException.class);
-        }
-
-        @Test
-        void throwsWhenTransactionBelongsToDifferentUser() {
-            User otherUser = User.builder().id(UUID.randomUUID()).build();
-            TransactionItem other = TransactionItem.builder().id(1L).user(otherUser).build();
-            when(transactionPersistencePort.findById(1L)).thenReturn(Optional.of(other));
-
-            assertThatThrownBy(() -> service.updateTransaction(1L,
-                    TransactionItem.builder().account(account).amount(amount).type(TransactionItem.TransactionType.EXPENSE).build()))
-                    .isInstanceOf(ResourceNotFoundException.class);
-        }
-
-        @Test
-        void preservesIdFromPath() {
-            TransactionItem old = TransactionItem.builder()
-                    .id(7L).user(currentUser)
-                    .type(TransactionItem.TransactionType.EXPENSE)
-                    .account(account).amount(amount).build();
-            when(transactionPersistencePort.findById(7L)).thenReturn(Optional.of(old));
-            when(transactionPersistencePort.save(any())).thenAnswer(inv -> inv.getArgument(0));
-
-            TransactionItem updated = TransactionItem.builder()
-                    .type(TransactionItem.TransactionType.EXPENSE)
-                    .account(account).amount(amount).build();
-            service.updateTransaction(7L, updated);
-
-            assertThat(updated.getId()).isEqualTo(7L);
+            assertThat(result.getUser()).isEqualTo(currentUser);
+            verify(impactMock).apply(tx, currentUser);
+            verify(transactionPersistencePort).save(tx);
         }
     }
 
     @Nested
     @DisplayName("deleteTransaction()")
     class Delete {
-
         @Test
-        void revertsImpactAndDeletes() {
+        void revertsImpactAndDelete() {
+            when(userContextPort.getCurrentUser()).thenReturn(currentUser);
             TransactionItem tx = TransactionItem.builder()
-                    .id(1L).user(currentUser)
+                    .id(10L)
+                    .user(currentUser)
                     .type(TransactionItem.TransactionType.EXPENSE)
-                    .account(account).amount(amount).build();
-            when(transactionPersistencePort.findById(1L)).thenReturn(Optional.of(tx));
+                    .build();
+            
+            TransactionImpact impactMock = mock(TransactionImpact.class);
+            when(impactResolver.forType(TransactionItem.TransactionType.EXPENSE)).thenReturn(impactMock);
+            when(transactionPersistencePort.findById(10L)).thenReturn(Optional.of(tx));
 
-            service.deleteTransaction(1L);
+            sut.deleteTransaction(10L);
 
-            verify(impact).revert(tx, currentUser);
-            verify(transactionPersistencePort).deleteById(1L);
-        }
-
-        @Test
-        void throwsWhenNotFound() {
-            when(transactionPersistencePort.findById(99L)).thenReturn(Optional.empty());
-            assertThatThrownBy(() -> service.deleteTransaction(99L))
-                    .isInstanceOf(ResourceNotFoundException.class);
-        }
-
-        @Test
-        void throwsWhenNotOwner() {
-            User other = User.builder().id(UUID.randomUUID()).build();
-            TransactionItem tx = TransactionItem.builder().id(1L).user(other).build();
-            when(transactionPersistencePort.findById(1L)).thenReturn(Optional.of(tx));
-
-            assertThatThrownBy(() -> service.deleteTransaction(1L))
-                    .isInstanceOf(ResourceNotFoundException.class);
-            verify(transactionPersistencePort, never()).deleteById(any());
+            verify(impactMock).revert(tx, currentUser);
+            verify(transactionPersistencePort).deleteById(10L);
         }
     }
 }

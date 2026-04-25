@@ -1,11 +1,12 @@
 package com.tritit.cashorganizer.api.application;
 
 import com.tritit.cashorganizer.api.application.impact.TransactionImpactResolver;
-import com.tritit.cashorganizer.api.domain.exception.InvalidTransactionException;
 import com.tritit.cashorganizer.api.domain.exception.ResourceNotFoundException;
 import com.tritit.cashorganizer.api.domain.model.TransactionItem;
+import com.tritit.cashorganizer.api.domain.model.TransactionSuggestion;
 import com.tritit.cashorganizer.api.domain.model.User;
 import com.tritit.cashorganizer.api.domain.port.in.TransactionUseCase;
+import com.tritit.cashorganizer.api.domain.port.out.BeneficiaryPersistencePort;
 import com.tritit.cashorganizer.api.domain.port.out.TransactionPersistencePort;
 import com.tritit.cashorganizer.api.domain.port.out.UserContextPort;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +21,22 @@ public class TransactionService implements TransactionUseCase {
 
     private final TransactionPersistencePort transactionPersistencePort;
     private final UserContextPort userContextPort;
+    private final BeneficiaryPersistencePort beneficiaryPersistencePort;
     private final TransactionImpactResolver impactResolver;
+
+    @Override
+    @Transactional(readOnly = true)
+    public TransactionSuggestion getSuggestionForBeneficiary(Long beneficiaryId) {
+        User user = userContextPort.getCurrentUser();
+        
+        // Validar que el beneficiario existe y pertenece al usuario
+        beneficiaryPersistencePort.findById(beneficiaryId)
+                .filter(b -> b.getUser().getId().equals(user.getId()))
+                .orElseThrow(() -> new ResourceNotFoundException("Beneficiary not found or unauthorized"));
+
+        return transactionPersistencePort.findMostFrequentCategoryAndType(user.getId(), beneficiaryId)
+                .orElse(new TransactionSuggestion());
+    }
 
     @Override
     @Transactional(readOnly = true)

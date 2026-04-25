@@ -1,6 +1,7 @@
 package com.tritit.cashorganizer.api.domain.port.out;
 
 import com.tritit.cashorganizer.api.domain.model.TransactionItem;
+import com.tritit.cashorganizer.api.domain.model.TransactionSuggestion;
 import com.tritit.cashorganizer.api.domain.model.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,4 +19,5 @@ public interface TransactionPersistencePort {
     Page<TransactionItem> findAllByUserAndCategory(User user, Long categoryId, Pageable pageable);
     long countByUserAndCategory(User user, Long categoryId);
     void unlinkSubcategoryFromTransactions(User user, Long subcategoryId);
+    java.util.Optional<com.tritit.cashorganizer.api.domain.model.TransactionSuggestion> findMostFrequentCategoryAndType(java.util.UUID userId, Long beneficiaryId);
 }
