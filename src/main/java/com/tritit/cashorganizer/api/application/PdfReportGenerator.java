@@ -221,12 +221,14 @@ public class PdfReportGenerator {
                     translationService.getLabel("tx_amt", lang)
             });
 
-            for (TransactionItem tx : groupTxs) {
+            for (TransactionItem tx : monthTxs) {
+                if (tx == null || tx.getAmount() == null) continue;
                 String catName = tx.getCategory() != null ? tx.getCategory().getName() : "General";
                 if (tx.getSubcategory() != null) catName += " > " + tx.getSubcategory().getName();
-                txTable.addCell(styler.createCell(tx.getDate().split("T")[0], fonts.fontBody, false));
+                String txDate = tx.getDate() != null ? tx.getDate().split("T")[0] : "N/A";
+                txTable.addCell(styler.createCell(txDate, fonts.fontBody, false));
                 txTable.addCell(styler.createCell(catName, fonts.fontBody, false));
-                txTable.addCell(styler.createCell(tx.getDescription(), fonts.fontBody, false));
+                txTable.addCell(styler.createCell(tx.getDescription() != null ? tx.getDescription() : "", fonts.fontBody, false));
                 double val = tx.getAmount().getValue() / 100.0;
                 Font amountFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 9, tx.getAmount().isNegative() ? Color.RED : colors.positiveGreen);
                 txTable.addCell(styler.createCell((tx.getAmount().isNegative() ? "-" : "+") + " €" + String.format("%.2f", Math.abs(val)), amountFont, true));
