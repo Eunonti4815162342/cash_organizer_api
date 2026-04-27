@@ -17,31 +17,6 @@ public class ReportController {
 
     private final ReportService reportService;
 
-    @GetMapping("/category-stats")
-    public ResponseEntity<Map<String, Long>> getCategoryStats(
-            @RequestParam(required = false) String startDate,
-            @RequestParam(required = false) String endDate,
-            @RequestParam(required = false) List<Long> accountIds,
-            @RequestParam(defaultValue = "false") boolean groupBySubcategory) {
-        return ResponseEntity.ok(reportService.getCategoryGroupedData(startDate, endDate, accountIds, groupBySubcategory));
-    }
-
-    @GetMapping("/entity-stats")
-    public ResponseEntity<Map<String, Long>> getEntityStats(
-            @RequestParam(required = false) String startDate,
-            @RequestParam(required = false) String endDate,
-            @RequestParam(required = false) List<Long> accountIds) {
-        return ResponseEntity.ok(reportService.getEntityGroupedData(startDate, endDate, accountIds));
-    }
-
-    @GetMapping("/beneficiary-stats")
-    public ResponseEntity<Map<String, Long>> getBeneficiaryStats(
-            @RequestParam(required = false) String startDate,
-            @RequestParam(required = false) String endDate,
-            @RequestParam(required = false) List<Long> accountIds) {
-        return ResponseEntity.ok(reportService.getBeneficiaryGroupedData(startDate, endDate, accountIds));
-    }
-
     @GetMapping("/download")
     public ResponseEntity<byte[]> downloadPdf(
             @RequestParam String title,
@@ -51,13 +26,20 @@ public class ReportController {
             @RequestParam(required = false) String endDate,
             @RequestParam(required = false) List<Long> accountIds,
             @RequestParam(required = false) List<Long> categoryIds,
+            @RequestParam(required = false) List<Long> beneficiaryIds, // NUEVO
             @RequestParam(defaultValue = "en") String lang) {
 
-        byte[] pdfBytes = reportService.generatePdfReport(title, chartType, reportType, startDate, endDate, accountIds, categoryIds, lang);
+        byte[] pdfBytes = reportService.generatePdfReport(title, chartType, reportType, startDate, endDate, accountIds, categoryIds, beneficiaryIds, lang);
 
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=report.pdf")
                 .contentType(MediaType.APPLICATION_PDF)
                 .body(pdfBytes);
+    }
+
+    // Otros endpoints mantenidos por compatibilidad...
+    @GetMapping("/category-stats")
+    public ResponseEntity<Map<String, Long>> getCategoryStats(@RequestParam(required = false) String startDate, @RequestParam(required = false) String endDate, @RequestParam(required = false) List<Long> accountIds) {
+        return ResponseEntity.ok(reportService.getCategoryGroupedData(startDate, endDate, accountIds, false));
     }
 }

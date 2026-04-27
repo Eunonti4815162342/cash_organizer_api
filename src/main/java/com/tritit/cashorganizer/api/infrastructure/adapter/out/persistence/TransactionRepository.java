@@ -36,4 +36,14 @@ public interface TransactionRepository extends JpaRepository<TransactionItemEnti
 
     @Query("SELECT t.category.id, t.subcategory.id, t.type FROM TransactionItemEntity t WHERE t.user.id = :userId AND t.beneficiary.id = :beneficiaryId GROUP BY t.category.id, t.subcategory.id, t.type ORDER BY COUNT(t) DESC")
     List<Object[]> findMostFrequentCategoryAndType(@Param("userId") UUID userId, @Param("beneficiaryId") Long beneficiaryId, Pageable pageable);
+
+    // CONSULTA DE AUDITORÍA CORREGIDA: LEFT JOIN para no perder datos
+    @Query("SELECT t FROM TransactionItemEntity t " +
+           "LEFT JOIN FETCH t.account a " +
+           "LEFT JOIN FETCH a.financialEntity e " +
+           "LEFT JOIN FETCH t.category c " +
+           "LEFT JOIN FETCH t.subcategory s " +
+           "LEFT JOIN FETCH t.beneficiary b " +
+           "WHERE t.user = :user AND t.date BETWEEN :startDate AND :endDate")
+    List<TransactionItemEntity> findAllForReport(@Param("user") UserEntity user, @Param("startDate") String startDate, @Param("endDate") String endDate);
 }

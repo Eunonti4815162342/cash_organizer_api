@@ -1,8 +1,10 @@
 package com.tritit.cashorganizer.api.application;
 
+import com.tritit.cashorganizer.api.domain.model.DetailedReport;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import java.util.*;
+import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -23,7 +25,9 @@ public class ReportService {
         return reportDataService.getBeneficiaryGroupedData(startDate, endDate, accountIds);
     }
 
-    public byte[] generatePdfReport(String title, String chartType, String reportType, String startDate, String endDate, List<Long> accountIds, List<Long> categoryIds, String lang) {
-        return pdfReportGenerator.generatePdfReport(title, chartType, reportType, startDate, endDate, accountIds, categoryIds, lang);
+    public byte[] generatePdfReport(String title, String chartType, String reportType, String startDate, String endDate, 
+                                   List<Long> accountIds, List<Long> categoryIds, List<Long> beneficiaryIds, String lang) {
+        DetailedReport report = reportDataService.getSegregatedReport(startDate, endDate, accountIds, categoryIds, beneficiaryIds);
+        return pdfReportGenerator.generatePdfReport(report, title, lang);
     }
 }

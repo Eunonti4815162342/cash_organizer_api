@@ -9,34 +9,24 @@ import java.awt.Color;
 @Service
 public class ReportStyler {
 
-    public void addSummaryMiniCard(PdfPTable table, String label, double value, Color color, Font fontLabel, Font fontVal) {
-        PdfPCell cell = new PdfPCell();
-        cell.setBackgroundColor(new Color(250, 250, 250));
-        cell.setPadding(5);
-        cell.setBorderColor(new Color(230, 230, 230));
-        cell.addElement(new Phrase(label, fontLabel));
-        Font vFont = new Font(fontVal);
-        vFont.setColor(color);
-        cell.addElement(new Phrase("€ " + String.format("%.2f", value), vFont));
-        table.addCell(cell);
+    public PdfPCell createCell(String text, Font font, boolean alignRight) {
+        PdfPCell cell = new PdfPCell(new Phrase(text, font));
+        cell.setPadding(8);
+        cell.setBorderColor(new Color(230, 235, 240));
+        cell.setBorder(Rectangle.BOTTOM); // Estilo moderno: solo línea inferior
+        if (alignRight) cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+        return cell;
     }
 
     public void writeModernHeader(PdfPTable table, Font font, Color bgColor, String[] headers) {
         for (String h : headers) {
-            PdfPCell cell = new PdfPCell(new Phrase(h, font));
-            cell.setBackgroundColor(bgColor);
-            cell.setPadding(6);
-            cell.setBorder(Rectangle.NO_BORDER);
+            PdfPCell cell = new PdfPCell(new Phrase(h.toUpperCase(), font));
+            cell.setBackgroundColor(new Color(245, 248, 250)); // Fondo gris muy suave
+            cell.setPadding(10);
+            cell.setBorder(Rectangle.BOTTOM);
+            cell.setBorderColor(new Color(200, 210, 220));
             table.addCell(cell);
         }
-    }
-
-    public PdfPCell createCell(String text, Font font, boolean alignRight) {
-        PdfPCell cell = new PdfPCell(new Phrase(text, font));
-        cell.setPadding(5);
-        cell.setBorderColor(new Color(240, 240, 240));
-        if (alignRight) cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
-        return cell;
     }
 
     public ReportColors getColors() {
@@ -49,28 +39,25 @@ public class ReportStyler {
 
     public static class ReportColors {
         public final Color primaryBlue = new Color(0, 159, 251);
-        public final Color darkBlue = new Color(74, 99, 111);
-        public final Color softBg = new Color(245, 248, 250);
-        public final Color positiveGreen = new Color(39, 174, 96);
+        public final Color textMain = new Color(45, 55, 72);
+        public final Color textLight = new Color(113, 128, 150);
+        public final Color softBg = new Color(247, 250, 252);
+        public final Color border = new Color(226, 232, 240);
     }
 
     public static class ReportFonts {
         public final Font fontTitle;
         public final Font fontSubtitle;
-        public final Font fontLabel;
-        public final Font fontBody;
         public final Font fontHeader;
-        public final Font fontMonth;
-        public final Font fontSummaryVal;
+        public final Font fontBody;
+        public final Font fontSmall;
 
         public ReportFonts(ReportColors colors) {
-            this.fontTitle = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 22, colors.primaryBlue);
-            this.fontSubtitle = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 14, colors.darkBlue);
-            this.fontLabel = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 9, Color.GRAY);
-            this.fontBody = FontFactory.getFont(FontFactory.HELVETICA, 9, colors.darkBlue);
-            this.fontHeader = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 9, Color.WHITE);
-            this.fontMonth = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12, colors.primaryBlue);
-            this.fontSummaryVal = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 10, colors.darkBlue);
+            this.fontTitle = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 24, colors.primaryBlue);
+            this.fontSubtitle = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12, colors.textMain);
+            this.fontHeader = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 10, colors.textMain);
+            this.fontBody = FontFactory.getFont(FontFactory.HELVETICA, 9, colors.textMain);
+            this.fontSmall = FontFactory.getFont(FontFactory.HELVETICA, 8, colors.textLight);
         }
     }
 }

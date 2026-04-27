@@ -21,4 +21,6 @@ public interface TransactionPersistencePort {
     long countByUserAndCategory(User user, Long categoryId);
     void unlinkSubcategoryFromTransactions(User user, Long subcategoryId);
     Optional<TransactionSuggestion> findMostFrequentCategoryAndType(UUID userId, Long beneficiaryId);
+
+    List<TransactionItem> findAllForReport(User user, String startDate, String endDate);
 }

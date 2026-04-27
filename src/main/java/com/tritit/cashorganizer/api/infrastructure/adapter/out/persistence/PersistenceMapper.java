@@ -48,7 +48,7 @@ public class PersistenceMapper {
                 .accountOrder(entity.getAccountOrder())
                 .active(entity.getActive())
                 .amount(toDomain(entity.getAmount()))
-                .entity(toDomain(entity.getFinancialEntity()))
+                .entity(entity.getFinancialEntity() != null ? toDomain(entity.getFinancialEntity()) : null)
                 .build();
     }
 
