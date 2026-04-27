@@ -17,6 +17,7 @@ import java.util.Map;
 public class PdfReportGenerator {
 
     private final ReportStyler styler;
+    private final ReportTranslationService translationService;
 
     public byte[] generatePdfReport(DetailedReport report, String title, String lang) {
         try (ByteArrayOutputStream out = new ByteArrayOutputStream()) {
@@ -28,10 +29,10 @@ public class PdfReportGenerator {
             ReportStyler.ReportFonts fonts = styler.getFonts(colors);
 
             // 1. Cabecera Minimalista
-            addModernHeader(document, title, report.getPeriod(), fonts);
+            addModernHeader(document, title, report.getPeriod(), fonts, lang);
             
             // 2. Resumen General en Tabla Estilada
-            addModernSummary(document, report.getCategorySummary(), fonts, colors);
+            addModernSummary(document, report.getCategorySummary(), fonts, colors, lang);
             
             document.add(new Paragraph(" "));
             document.add(new LineSeparator(1f, 100, colors.border, Element.ALIGN_CENTER, -2));
@@ -39,9 +40,9 @@ public class PdfReportGenerator {
 
             // 3. Contenido Segregado
             if (report.getSegregatedData().isEmpty()) {
-                document.add(new Paragraph("Sin movimientos detectados.", fonts.fontBody));
+                document.add(new Paragraph(translationService.getLabel("no_data", lang), fonts.fontBody));
             } else {
-                renderModernSegregatedContent(document, report.getSegregatedData(), fonts, colors);
+                renderModernSegregatedContent(document, report.getSegregatedData(), fonts, colors, lang);
             }
 
             document.close();
@@ -51,7 +52,7 @@ public class PdfReportGenerator {
         }
     }
 
-    private void addModernHeader(Document document, String title, String period, ReportStyler.ReportFonts fonts) throws DocumentException {
+    private void addModernHeader(Document document, String title, String period, ReportStyler.ReportFonts fonts, String lang) throws DocumentException {
         Paragraph titleP = new Paragraph("NATAVE", fonts.fontTitle);
         titleP.setAlignment(Element.ALIGN_LEFT);
         document.add(titleP);
@@ -60,8 +61,7 @@ public class PdfReportGenerator {
         subtitleP.setAlignment(Element.ALIGN_LEFT);
         document.add(subtitleP);
 
-        // Periodo formateado con precisión
-        String displayPeriod = (period != null) ? period.replaceAll("T[0-9:.]*", "") : "Todo el histórico";
+        String displayPeriod = (period != null) ? period.replaceAll("T[0-9:.]*", "") : "";
         Paragraph periodP = new Paragraph("PERIODO: " + displayPeriod, fonts.fontSmall);
         periodP.setAlignment(Element.ALIGN_LEFT);
         document.add(periodP);
@@ -69,14 +69,14 @@ public class PdfReportGenerator {
         document.add(new Paragraph(" "));
     }
 
-    private void addModernSummary(Document document, Map<String, Long> summary, ReportStyler.ReportFonts fonts, ReportStyler.ReportColors colors) throws DocumentException {
+    private void addModernSummary(Document document, Map<String, Long> summary, ReportStyler.ReportFonts fonts, ReportStyler.ReportColors colors, String lang) throws DocumentException {
         if (summary.isEmpty()) return;
         
         PdfPTable table = new PdfPTable(2);
         table.setWidthPercentage(100);
         table.setSpacingBefore(10);
         
-        PdfPCell header = new PdfPCell(new Phrase("RESUMEN DE GASTOS POR CATEGORÍA", fonts.fontHeader));
+        PdfPCell header = new PdfPCell(new Phrase(translationService.getLabel("overview", lang).toUpperCase(), fonts.fontHeader));
         header.setColspan(2);
         header.setBorder(Rectangle.NO_BORDER);
         header.setPaddingBottom(10);
@@ -89,11 +89,10 @@ public class PdfReportGenerator {
         document.add(table);
     }
 
-    private void renderModernSegregatedContent(Document document, Map<String, Map<String, List<TransactionItem>>> data, ReportStyler.ReportFonts fonts, ReportStyler.ReportColors colors) throws DocumentException {
+    private void renderModernSegregatedContent(Document document, Map<String, Map<String, List<TransactionItem>>> data, ReportStyler.ReportFonts fonts, ReportStyler.ReportColors colors, String lang) throws DocumentException {
         for (var entityEntry : data.entrySet()) {
             String entityName = entityEntry.getKey();
             
-            // CABECERA EMPRESA MODERNA (Sin recuadros pesados)
             document.add(new Paragraph(" "));
             PdfPTable badge = new PdfPTable(1);
             badge.setWidthPercentage(100);
@@ -108,14 +107,19 @@ public class PdfReportGenerator {
             document.add(new Paragraph(" "));
 
             for (var accEntry : entityEntry.getValue().entrySet()) {
-                Paragraph accTitle = new Paragraph("CUENTA: " + accEntry.getKey(), fonts.fontHeader);
+                Paragraph accTitle = new Paragraph(translationService.getLabel("acc_name", lang).toUpperCase() + ": " + accEntry.getKey(), fonts.fontHeader);
                 accTitle.setSpacingAfter(8);
                 document.add(accTitle);
 
                 PdfPTable txTable = new PdfPTable(4);
                 txTable.setWidthPercentage(100);
                 txTable.setWidths(new float[]{1.2f, 2, 3, 1.2f});
-                styler.writeModernHeader(txTable, fonts.fontHeader, null, new String[]{"Fecha", "Categoría", "Descripción", "Importe"});
+                styler.writeModernHeader(txTable, fonts.fontHeader, null, new String[]{
+                    translationService.getLabel("tx_date", lang),
+                    translationService.getLabel("tx_cat", lang),
+                    translationService.getLabel("tx_desc", lang),
+                    translationService.getLabel("tx_amt", lang)
+                });
 
                 for (TransactionItem tx : accEntry.getValue()) {
                     String cat = (tx.getCategory() != null ? tx.getCategory().getName() : "Otros") + 
@@ -133,7 +137,7 @@ public class PdfReportGenerator {
                 document.add(txTable);
                 document.add(new Paragraph(" "));
             }
-            document.newPage(); // Salto de página para segregación absoluta
+            document.newPage(); 
         }
     }
 }
