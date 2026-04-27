@@ -54,4 +54,4 @@ logging:
   pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
   file:
-    name: logs/cash-organizer-dev.log
+    name: logs/natave-dev.log
