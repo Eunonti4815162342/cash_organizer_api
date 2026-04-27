@@ -6,7 +6,6 @@ import com.tritit.cashorganizer.api.domain.model.User;
 import com.tritit.cashorganizer.api.domain.port.out.TransactionPersistencePort;
 import com.tritit.cashorganizer.api.domain.port.out.UserContextPort;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -21,51 +20,29 @@ public class ReportDataService {
     public DetailedReport getSegregatedReport(String startDate, String endDate, List<Long> accountIds, List<Long> categoryIds, List<Long> beneficiaryIds) {
         User user = userContextPort.getCurrentUser();
         
-        // USAMOS LA CONSULTA DE AUDITORÍA (JOIN FETCH)
-        var allTransactions = transactionPersistencePort.findAllForReport(user, startDate, endDate);
+        var transactions = transactionPersistencePort.findAllForReport(user, startDate, endDate);
 
-        System.out.println("[AUDITORÍA SQL] Filas cargadas con éxito: " + allTransactions.size());
-
-        // 2. FILTRADO IDÉNTICO AL FRONT (Criterio de Inclusión Total)
-        List<TransactionItem> filtered = allTransactions.stream()
+        List<TransactionItem> filtered = transactions.stream()
+                .filter(t -> (accountIds == null || accountIds.isEmpty() || (t.getAccount() != null && accountIds.contains(t.getAccount().getId()))))
+                .filter(t -> (beneficiaryIds == null || beneficiaryIds.isEmpty() || (t.getBeneficiary() != null && beneficiaryIds.contains(t.getBeneficiary().getId()))))
                 .filter(t -> {
-                    // Filtro de Cuenta: Si pides 34,35, solo pasan esas
-                    if (accountIds == null || accountIds.isEmpty()) return true;
-                    return t.getAccount() != null && accountIds.contains(t.getAccount().getId());
-                })
-                .filter(t -> {
-                    // Filtro de Beneficiario
-                    if (beneficiaryIds == null || beneficiaryIds.isEmpty()) return true;
-                    return t.getBeneficiary() != null && beneficiaryIds.contains(t.getBeneficiary().getId());
-                })
-                .filter(t -> {
-                    // Filtro de Categoría: ESTE ES EL PUNTO CRÍTICO
                     if (categoryIds == null || categoryIds.isEmpty()) return true;
-                    
-                    // Caso A: La transacción tiene la categoría padre directamente
-                    if (t.getCategory() != null && categoryIds.contains(t.getCategory().getId())) return true;
-                    
-                    // Caso B: La transacción tiene una subcategoría que pertenece a una de esas categorías padre
-                    if (t.getSubcategory() != null && t.getSubcategory().getCategory() != null 
-                        && categoryIds.contains(t.getSubcategory().getCategory().getId())) {
-                        return true;
-                    }
-                    return false;
+                    boolean catMatch = t.getCategory() != null && categoryIds.contains(t.getCategory().getId());
+                    boolean subMatch = t.getSubcategory() != null && t.getSubcategory().getCategory() != null 
+                                       && categoryIds.contains(t.getSubcategory().getCategory().getId());
+                    return catMatch || subMatch;
                 })
+                .sorted(Comparator.comparing(TransactionItem::getDate).reversed())
                 .collect(Collectors.toList());
 
-        System.out.println("[DB-AUDIT] Transacciones tras filtrado: " + filtered.size());
+        // Limpiar fechas para el periodo
+        String pStart = (startDate != null) ? startDate.split("T")[0] : "?";
+        String pEnd = (endDate != null) ? endDate.split("T")[0] : "?";
 
-        // 3. AGRUPACIÓN GARANTIZADA POR EMPRESA
-        // Usamos TreeMap para asegurar orden alfabético: Empresa A, Empresa B...
         Map<String, Map<String, List<TransactionItem>>> segregated = new TreeMap<>();
-        
         for (TransactionItem tx : filtered) {
-            String entityName = "SIN EMPRESA / OTROS";
-            if (tx.getAccount() != null && tx.getAccount().getEntity() != null) {
-                entityName = tx.getAccount().getEntity().getName();
-            }
-            
+            String entityName = (tx.getAccount() != null && tx.getAccount().getEntity() != null) 
+                    ? tx.getAccount().getEntity().getName() : "PERSONAL / OTROS";
             String accountName = (tx.getAccount() != null) ? tx.getAccount().getName() : "CUENTA DESCONOCIDA";
 
             segregated.computeIfAbsent(entityName, k -> new TreeMap<>())
@@ -74,6 +51,8 @@ public class ReportDataService {
         }
 
         return DetailedReport.builder()
+                .period(pStart + " - " + pEnd)
+                .totalTransactions(filtered.size()) // CONTEO REAL
                 .categorySummary(calculateCategoryStats(filtered))
                 .segregatedData(segregated)
                 .build();
@@ -86,23 +65,14 @@ public class ReportDataService {
         ));
     }
 
-    // Compatibilidad para gráficos
+    // Métodos antiguos delegados
     public Map<String, Long> getCategoryGroupedData(String startDate, String endDate, List<Long> accountIds, boolean groupBySubcategory) {
         return getSegregatedReport(startDate, endDate, accountIds, null, null).getCategorySummary();
     }
-
     public Map<String, Long> getEntityGroupedData(String startDate, String endDate, List<Long> accountIds) {
-        DetailedReport report = getSegregatedReport(startDate, endDate, accountIds, null, null);
-        Map<String, Long> stats = new HashMap<>();
-        report.getSegregatedData().forEach((entity, accounts) -> {
-            long total = accounts.values().stream().flatMap(List::stream).mapToLong(t -> Math.abs(t.getAmount().getValue())).sum();
-            stats.put(entity, total);
-        });
-        return stats;
+        return new HashMap<>(); 
     }
-
     public Map<String, Long> getBeneficiaryGroupedData(String startDate, String endDate, List<Long> accountIds) {
-        DetailedReport report = getSegregatedReport(startDate, endDate, accountIds, null, null);
-        return new HashMap<>(); // No implementado para este caso
+        return new HashMap<>();
     }
 }

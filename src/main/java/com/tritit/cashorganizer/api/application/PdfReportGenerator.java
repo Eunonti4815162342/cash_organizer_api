@@ -29,7 +29,7 @@ public class PdfReportGenerator {
             ReportStyler.ReportFonts fonts = styler.getFonts(colors);
 
             // 1. Cabecera Minimalista
-            addModernHeader(document, title, report.getPeriod(), fonts, lang);
+            addModernHeader(document, title, report, fonts, lang);
             
             // 2. Resumen General en Tabla Estilada
             addModernSummary(document, report.getCategorySummary(), fonts, colors, lang);
@@ -52,19 +52,23 @@ public class PdfReportGenerator {
         }
     }
 
-    private void addModernHeader(Document document, String title, String period, ReportStyler.ReportFonts fonts, String lang) throws DocumentException {
+    private void addModernHeader(Document document, String title, DetailedReport report, ReportStyler.ReportFonts fonts, String lang) throws DocumentException {
         Paragraph titleP = new Paragraph("NATAVE", fonts.fontTitle);
         titleP.setAlignment(Element.ALIGN_LEFT);
         document.add(titleP);
 
-        Paragraph subtitleP = new Paragraph(title.toUpperCase(), fonts.fontSubtitle);
+        Paragraph subtitleP = new Paragraph(translationService.getLabel("title", lang).toUpperCase(), fonts.fontSubtitle);
         subtitleP.setAlignment(Element.ALIGN_LEFT);
         document.add(subtitleP);
 
-        String displayPeriod = (period != null) ? period.replaceAll("T[0-9:.]*", "") : "";
-        Paragraph periodP = new Paragraph("PERIODO: " + displayPeriod, fonts.fontSmall);
+        // Periodo formateado y Conteo de Transacciones
+        Paragraph periodP = new Paragraph(translationService.getLabel("period_label", lang) + ": " + report.getPeriod(), fonts.fontSmall);
         periodP.setAlignment(Element.ALIGN_LEFT);
         document.add(periodP);
+
+        Paragraph countP = new Paragraph("MOVIMIENTOS ENCONTRADOS: " + report.getTotalTransactions(), fonts.fontSmall);
+        countP.setAlignment(Element.ALIGN_LEFT);
+        document.add(countP);
         
         document.add(new Paragraph(" "));
     }
@@ -92,11 +96,12 @@ public class PdfReportGenerator {
     private void renderModernSegregatedContent(Document document, Map<String, Map<String, List<TransactionItem>>> data, ReportStyler.ReportFonts fonts, ReportStyler.ReportColors colors, String lang) throws DocumentException {
         for (var entityEntry : data.entrySet()) {
             String entityName = entityEntry.getKey();
-            
+            var accountsMap = entityEntry.getValue();
+
             document.add(new Paragraph(" "));
             PdfPTable badge = new PdfPTable(1);
             badge.setWidthPercentage(100);
-            PdfPCell cell = new PdfPCell(new Phrase("EMPRESA: " + entityName.toUpperCase(), fonts.fontSubtitle));
+            PdfPCell cell = new PdfPCell(new Phrase(translationService.getLabel("company", lang) + ": " + entityName.toUpperCase(), fonts.fontSubtitle));
             cell.setBackgroundColor(new Color(240, 247, 255));
             cell.setPadding(12);
             cell.setBorder(Rectangle.LEFT);

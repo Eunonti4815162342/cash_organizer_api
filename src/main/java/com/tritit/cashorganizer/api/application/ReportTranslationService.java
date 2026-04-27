@@ -11,13 +11,13 @@ public class ReportTranslationService {
         Map<String, Map<String, String>> translations = new HashMap<>();
 
         Map<String, String> es = new HashMap<>();
-        es.put("title", "INFORME FINANCIERO");
+        es.put("title", "INFORME DE AUDITORÍA NATAVE");
         es.put("balance", "SALDO ACTUAL");
         es.put("expenses", "GASTOS DEL PERIODO");
         es.put("date", "FECHA DEL INFORME");
-        es.put("overview", "VISTA GENERAL DE CUENTAS");
+        es.put("overview", "RESUMEN GENERAL DE GASTOS");
         es.put("details", "DETALLE DE TRANSACCIONES");
-        es.put("acc_name", "Nombre de Cuenta");
+        es.put("acc_name", "Cuenta");
         es.put("acc_type", "Tipo");
         es.put("acc_bal", "Saldo");
         es.put("tx_date", "Fecha");
@@ -27,16 +27,22 @@ public class ReportTranslationService {
         es.put("mo_inc", "Ingresos");
         es.put("mo_exp", "Gastos");
         es.put("mo_net", "Neto");
+        es.put("no_data", "No hay movimientos para los filtros seleccionados.");
+        es.put("period_label", "PERIODO");
+        es.put("company", "EMPRESA");
+        es.put("beneficiary", "Beneficiario");
+        es.put("total_income", "TOTAL INGRESOS EMPRESA");
+        es.put("total_expense", "TOTAL GASTOS EMPRESA");
         translations.put("es", es);
 
         Map<String, String> pt = new HashMap<>();
-        pt.put("title", "RELATÓRIO FINANCEIRO");
+        pt.put("title", "RELATÓRIO DE AUDITORIA NATAVE");
         pt.put("balance", "SALDO ATUAL");
         pt.put("expenses", "DESPESAS DO PERÍODO");
         pt.put("date", "DATA DO RELATÓRIO");
-        pt.put("overview", "VISÃO GERAL DAS CONTAS");
+        pt.put("overview", "RESUMO GERAL DE DESPESAS");
         pt.put("details", "DETALHES DAS TRANSAÇÕES");
-        pt.put("acc_name", "Nome da Conta");
+        pt.put("acc_name", "Conta");
         pt.put("acc_type", "Tipo");
         pt.put("acc_bal", "Saldo");
         pt.put("tx_date", "Data");
@@ -46,16 +52,22 @@ public class ReportTranslationService {
         pt.put("mo_inc", "Receitas");
         pt.put("mo_exp", "Despesas");
         pt.put("mo_net", "Líquido");
+        pt.put("no_data", "Não há movimentos para os filtros selecionados.");
+        pt.put("period_label", "PERÍODO");
+        pt.put("company", "EMPRESA");
+        pt.put("beneficiary", "Beneficiário");
+        pt.put("total_income", "TOTAL DE RECEITAS DA EMPRESA");
+        pt.put("total_expense", "TOTAL DE DESPESAS DA EMPRESA");
         translations.put("pt", pt);
 
         Map<String, String> en = new HashMap<>();
-        en.put("title", "FINANCIAL REPORT");
+        en.put("title", "NATAVE AUDIT REPORT");
         en.put("balance", "CURRENT BALANCE");
         en.put("expenses", "PERIOD EXPENSES");
         en.put("date", "REPORT DATE");
-        en.put("overview", "ACCOUNTS OVERVIEW");
+        en.put("overview", "GENERAL EXPENSE SUMMARY");
         en.put("details", "TRANSACTION DETAILS");
-        en.put("acc_name", "Account Name");
+        en.put("acc_name", "Account");
         en.put("acc_type", "Type");
         en.put("acc_bal", "Balance");
         en.put("tx_date", "Date");
@@ -65,6 +77,12 @@ public class ReportTranslationService {
         en.put("mo_inc", "Income");
         en.put("mo_exp", "Expenses");
         en.put("mo_net", "Net");
+        en.put("no_data", "No movements found for the selected filters.");
+        en.put("period_label", "PERIOD");
+        en.put("company", "COMPANY");
+        pt.put("beneficiary", "Beneficiary");
+        en.put("total_income", "TOTAL COMPANY INCOME");
+        en.put("total_expense", "TOTAL COMPANY EXPENSES");
         translations.put("en", en);
 
         return translations.getOrDefault(lang.toLowerCase(), translations.get("en")).getOrDefault(key, key);
