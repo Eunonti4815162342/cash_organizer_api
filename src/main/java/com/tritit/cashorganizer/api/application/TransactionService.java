@@ -67,6 +67,12 @@ public class TransactionService implements TransactionUseCase {
         transaction.setUser(user);
         transaction.validate();
 
+        // Handle on-the-fly beneficiary creation
+        if (transaction.getBeneficiary() != null && transaction.getBeneficiary().getId() == null) {
+            transaction.getBeneficiary().setUser(user);
+            transaction.setBeneficiary(beneficiaryPersistencePort.save(transaction.getBeneficiary()));
+        }
+
         impactResolver.forType(transaction.getType()).apply(transaction, user);
         return transactionPersistencePort.save(transaction);
     }
@@ -85,6 +91,13 @@ public class TransactionService implements TransactionUseCase {
         newTransaction.setUser(user);
         newTransaction.setId(id);
         newTransaction.validate();
+
+        // Handle on-the-fly beneficiary creation
+        if (newTransaction.getBeneficiary() != null && newTransaction.getBeneficiary().getId() == null) {
+            newTransaction.getBeneficiary().setUser(user);
+            newTransaction.setBeneficiary(beneficiaryPersistencePort.save(newTransaction.getBeneficiary()));
+        }
+
         impactResolver.forType(newTransaction.getType()).apply(newTransaction, user);
 
         return transactionPersistencePort.save(newTransaction);
