@@ -23,9 +23,13 @@ public class TransactionController {
             @RequestParam(required = false) String startDate,
             @RequestParam(required = false) String endDate,
             @RequestParam(required = false) List<Long> accountIds,
-            @RequestParam(required = false) Long accountId, // Añadido soporte singular
+            @RequestParam(required = false) Long accountId,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "100") int size) {
+        
+        // Sanitize dates: recorta formatos ISO largos (2025-09-01T00:00:00 -> 2025-09-01)
+        String sDate = (startDate != null && startDate.contains("T")) ? startDate.split("T")[0] : startDate;
+        String eDate = (endDate != null && endDate.contains("T")) ? endDate.split("T")[0] : endDate;
         
         Pageable pageable = PageRequest.of(page, size, Sort.by("date").descending());
 
@@ -38,11 +42,11 @@ public class TransactionController {
             }
         }
         
-        if (startDate != null && endDate != null) {
+        if (sDate != null && eDate != null) {
             if (finalAccountIds != null && !finalAccountIds.isEmpty()) {
-                return service.getTransactionsByAccountAndDateRange(finalAccountIds, startDate, endDate, pageable);
+                return service.getTransactionsByAccountAndDateRange(finalAccountIds, sDate, eDate, pageable);
             }
-            return service.getTransactionsByDateRange(startDate, endDate, pageable);
+            return service.getTransactionsByDateRange(sDate, eDate, pageable);
         }
         return service.getAllTransactions(pageable);
     }
