@@ -1,5 +1,6 @@
 package com.tritit.cashorganizer.api.infrastructure.adapter.out.persistence.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tritit.cashorganizer.api.domain.model.User.Role;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -24,6 +25,7 @@ public class UserEntity {
     @Column(unique = true, nullable = false)
     private String email;
 
+    @JsonIgnore
     @Column(nullable = false)
     private String password;
 

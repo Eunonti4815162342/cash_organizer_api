@@ -1,5 +1,6 @@
 package com.tritit.cashorganizer.api.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,6 +15,7 @@ import java.util.UUID;
 public class User {
     private UUID id;
     private String email;
+    @JsonIgnore
     private String password;
     private Role role;
 

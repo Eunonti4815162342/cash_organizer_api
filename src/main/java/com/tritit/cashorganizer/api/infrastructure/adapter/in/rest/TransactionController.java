@@ -27,28 +27,44 @@ public class TransactionController {
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "100") int size) {
         
-        // Sanitize dates: recorta formatos ISO largos (2025-09-01T00:00:00 -> 2025-09-01)
-        String sDate = (startDate != null && startDate.contains("T")) ? startDate.split("T")[0] : startDate;
-        String eDate = (endDate != null && endDate.contains("T")) ? endDate.split("T")[0] : endDate;
-        
-        Pageable pageable = PageRequest.of(page, size, Sort.by("date").descending());
+        try {
+            // Sanitize dates: robust truncation to YYYY-MM-DD
+            String sDate = startDate;
+            if (sDate != null) {
+                if (sDate.contains("T")) sDate = sDate.split("T")[0];
+                if (sDate.contains(" ")) sDate = sDate.split(" ")[0];
+                if (sDate.length() > 10) sDate = sDate.substring(0, 10);
+            }
 
-        // Unificar accountId en la lista si viene informado
-        List<Long> finalAccountIds = accountIds;
-        if (accountId != null) {
-            finalAccountIds = (accountIds == null) ? new java.util.ArrayList<>() : new java.util.ArrayList<>(accountIds);
-            if (!finalAccountIds.contains(accountId)) {
-                finalAccountIds.add(accountId);
+            String eDate = endDate;
+            if (eDate != null) {
+                if (eDate.contains("T")) eDate = eDate.split("T")[0];
+                if (eDate.contains(" ")) eDate = eDate.split(" ")[0];
+                if (eDate.length() > 10) eDate = eDate.substring(0, 10);
             }
-        }
-        
-        if (sDate != null && eDate != null) {
-            if (finalAccountIds != null && !finalAccountIds.isEmpty()) {
-                return service.getTransactionsByAccountAndDateRange(finalAccountIds, sDate, eDate, pageable);
+            
+            Pageable pageable = PageRequest.of(page, size, Sort.by("date").descending());
+
+            // Unificar accountId en la lista si viene informado
+            List<Long> finalAccountIds = accountIds;
+            if (accountId != null) {
+                finalAccountIds = (accountIds == null) ? new java.util.ArrayList<>() : new java.util.ArrayList<>(accountIds);
+                if (!finalAccountIds.contains(accountId)) {
+                    finalAccountIds.add(accountId);
+                }
             }
-            return service.getTransactionsByDateRange(sDate, eDate, pageable);
+            
+            if (sDate != null && eDate != null) {
+                if (finalAccountIds != null && !finalAccountIds.isEmpty()) {
+                    return service.getTransactionsByAccountAndDateRange(finalAccountIds, sDate, eDate, pageable);
+                }
+                return service.getTransactionsByDateRange(sDate, eDate, pageable);
+            }
+            return service.getAllTransactions(pageable);
+        } catch (Exception e) {
+            e.printStackTrace(); // Esto saldrá en la consola del servidor
+            throw e; // Volvemos a lanzar para que siga siendo un error pero ahora sepamos qué es
         }
-        return service.getAllTransactions(pageable);
     }
 
     @PostMapping
