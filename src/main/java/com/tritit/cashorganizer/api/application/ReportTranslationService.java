@@ -33,6 +33,8 @@ public class ReportTranslationService {
         es.put("beneficiary", "Beneficiario");
         es.put("total_income", "TOTAL INGRESOS EMPRESA");
         es.put("total_expense", "TOTAL GASTOS EMPRESA");
+        es.put("total_incomes", "TOTAL INGRESOS");
+        es.put("total_expenses", "TOTAL GASTOS");
         translations.put("es", es);
 
         Map<String, String> pt = new HashMap<>();
@@ -58,6 +60,8 @@ public class ReportTranslationService {
         pt.put("beneficiary", "Beneficiário");
         pt.put("total_income", "TOTAL DE RECEITAS DA EMPRESA");
         pt.put("total_expense", "TOTAL DE DESPESAS DA EMPRESA");
+        pt.put("total_incomes", "TOTAL RECEITAS");
+        pt.put("total_expenses", "TOTAL DESPESAS");
         translations.put("pt", pt);
 
         Map<String, String> en = new HashMap<>();
@@ -80,9 +84,11 @@ public class ReportTranslationService {
         en.put("no_data", "No movements found for the selected filters.");
         en.put("period_label", "PERIOD");
         en.put("company", "COMPANY");
-        pt.put("beneficiary", "Beneficiary");
+        en.put("beneficiary", "Beneficiary");
         en.put("total_income", "TOTAL COMPANY INCOME");
         en.put("total_expense", "TOTAL COMPANY EXPENSES");
+        en.put("total_incomes", "TOTAL INCOME");
+        en.put("total_expenses", "TOTAL EXPENSES");
         translations.put("en", en);
 
         return translations.getOrDefault(lang.toLowerCase(), translations.get("en")).getOrDefault(key, key);

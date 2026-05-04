@@ -52,7 +52,15 @@ public class ReportDataService {
 
         return DetailedReport.builder()
                 .period(pStart + " - " + pEnd)
-                .totalTransactions(filtered.size()) // CONTEO REAL
+                .totalTransactions(filtered.size())
+                .totalExpenses(filtered.stream()
+                        .filter(t -> t.getAmount().isNegative())
+                        .mapToLong(t -> Math.abs(t.getAmount().getValue()))
+                        .sum())
+                .totalIncomes(filtered.stream()
+                        .filter(t -> !t.getAmount().isNegative())
+                        .mapToLong(t -> t.getAmount().getValue())
+                        .sum())
                 .categorySummary(calculateCategoryStats(filtered))
                 .segregatedData(segregated)
                 .build();

@@ -21,24 +21,45 @@ public class PdfReportGenerator {
 
     public byte[] generatePdfReport(DetailedReport report, String title, String lang) {
         try (ByteArrayOutputStream out = new ByteArrayOutputStream()) {
-            Document document = new Document(PageSize.A4, 40, 40, 40, 40);
-            PdfWriter.getInstance(document, out);
+            Document document = new Document(PageSize.A4, 40, 40, 60, 60); 
+            PdfWriter writer = PdfWriter.getInstance(document, out);
+            
+            writer.setPageEvent(new PdfPageEventHelper() {
+                @Override
+                public void onEndPage(PdfWriter writer, Document document) {
+                    PdfContentByte cb = writer.getDirectContent();
+                    try {
+                        BaseFont bf = BaseFont.createFont(BaseFont.HELVETICA, BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
+                        Font footerFont = new Font(bf, 8, Font.NORMAL, new Color(150, 150, 150));
+                        Phrase footer = new Phrase("NATAVE - Página " + writer.getPageNumber(), footerFont);
+                        ColumnText.showTextAligned(cb, Element.ALIGN_CENTER, footer, 
+                            (document.right() - document.left()) / 2 + document.leftMargin(), 
+                            document.bottom() - 30, 0);
+                    } catch (Exception e) {}
+                }
+            });
+
             document.open();
 
             ReportStyler.ReportColors colors = styler.getColors();
             ReportStyler.ReportFonts fonts = styler.getFonts(colors);
 
-            // 1. Cabecera Minimalista
+            // 1. Cabecera
             addModernHeader(document, title, report, fonts, lang);
+            document.add(new Paragraph(" "));
+
+            // 2. RESUMEN DE SALDO (Muy visual al principio)
+            addBalanceSummary(document, report, fonts, colors, lang);
+            document.add(new Paragraph(" "));
             
-            // 2. Resumen General en Tabla Estilada
+            // 3. Resumen por Categorías
             addModernSummary(document, report.getCategorySummary(), fonts, colors, lang);
             
             document.add(new Paragraph(" "));
             document.add(new LineSeparator(1f, 100, colors.border, Element.ALIGN_CENTER, -2));
             document.add(new Paragraph(" "));
 
-            // 3. Contenido Segregado
+            // 4. Contenido Segregado
             if (report.getSegregatedData().isEmpty()) {
                 document.add(new Paragraph(translationService.getLabel("no_data", lang), fonts.fontBody));
             } else {
@@ -50,6 +71,66 @@ public class PdfReportGenerator {
         } catch (Exception e) {
             throw new RuntimeException("Error rendering modern PDF", e);
         }
+    }
+
+    private void addBalanceSummary(Document document, DetailedReport report, ReportStyler.ReportFonts fonts, ReportStyler.ReportColors colors, String lang) throws DocumentException {
+        PdfPTable table = new PdfPTable(3);
+        table.setWidthPercentage(100);
+        table.setSpacingBefore(15);
+        table.setSpacingAfter(15);
+
+        // Estilo de celdas de balance
+        PdfPCell cellInc = new PdfPCell(new Phrase(translationService.getLabel("mo_inc", lang).toUpperCase(), fonts.fontSmall));
+        cellInc.setBackgroundColor(new Color(232, 245, 233)); // Verde muy suave
+        cellInc.setBorder(Rectangle.NO_BORDER);
+        cellInc.setPadding(10);
+        table.addCell(cellInc);
+
+        PdfPCell cellExp = new PdfPCell(new Phrase(translationService.getLabel("mo_exp", lang).toUpperCase(), fonts.fontSmall));
+        cellExp.setBackgroundColor(new Color(255, 235, 238)); // Rojo muy suave
+        cellExp.setBorder(Rectangle.NO_BORDER);
+        cellExp.setPadding(10);
+        table.addCell(cellExp);
+
+        PdfPCell cellNet = new PdfPCell(new Phrase(translationService.getLabel("mo_net", lang).toUpperCase(), fonts.fontSmall));
+        cellNet.setBackgroundColor(new Color(245, 247, 250)); // Gris suave
+        cellNet.setBorder(Rectangle.NO_BORDER);
+        cellNet.setPadding(10);
+        table.addCell(cellNet);
+
+        // Valores
+        BaseFont bfBold;
+        try { bfBold = BaseFont.createFont(BaseFont.HELVETICA_BOLD, BaseFont.CP1252, BaseFont.NOT_EMBEDDED); }
+        catch (Exception e) { bfBold = fonts.fontTitle.getCalculatedBaseFont(false); }
+        
+        Font valFont = new Font(bfBold, 16, Font.NORMAL, colors.textMain);
+        
+        PdfPCell vInc = new PdfPCell(new Phrase("€ " + String.format("%.2f", report.getTotalIncomes()/100.0), valFont));
+        vInc.setBackgroundColor(new Color(232, 245, 233));
+        vInc.setBorder(Rectangle.NO_BORDER);
+        vInc.setPadding(10);
+        vInc.setPaddingTop(0);
+        table.addCell(vInc);
+
+        PdfPCell vExp = new PdfPCell(new Phrase("€ " + String.format("%.2f", report.getTotalExpenses()/100.0), valFont));
+        vExp.setBackgroundColor(new Color(255, 235, 238));
+        vExp.setBorder(Rectangle.NO_BORDER);
+        vExp.setPadding(10);
+        vExp.setPaddingTop(0);
+        table.addCell(vExp);
+
+        long balance = report.getTotalIncomes() - report.getTotalExpenses();
+        Font bFont = new Font(valFont);
+        bFont.setColor(balance >= 0 ? new Color(46, 125, 50) : new Color(198, 40, 40));
+        
+        PdfPCell vNet = new PdfPCell(new Phrase("€ " + String.format("%.2f", balance/100.0), bFont));
+        vNet.setBackgroundColor(new Color(245, 247, 250));
+        vNet.setBorder(Rectangle.NO_BORDER);
+        vNet.setPadding(10);
+        vNet.setPaddingTop(0);
+        table.addCell(vNet);
+
+        document.add(table);
     }
 
     private void addModernHeader(Document document, String title, DetailedReport report, ReportStyler.ReportFonts fonts, String lang) throws DocumentException {

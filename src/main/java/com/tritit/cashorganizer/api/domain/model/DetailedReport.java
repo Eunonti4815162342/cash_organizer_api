@@ -10,7 +10,9 @@ import java.util.Map;
 public class DetailedReport {
     private String title;
     private String period;
-    private int totalTransactions; // NUEVO
+    private int totalTransactions;
+    private long totalExpenses; // EN CÉNTIMOS
+    private long totalIncomes;  // EN CÉNTIMOS
     private Map<String, Long> categorySummary;
     private Map<String, Map<String, List<TransactionItem>>> segregatedData;
 }
