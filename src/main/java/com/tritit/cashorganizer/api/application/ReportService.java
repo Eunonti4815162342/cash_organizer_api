@@ -13,8 +13,8 @@ public class ReportService {
     private final ReportDataService reportDataService;
     private final PdfReportGenerator pdfReportGenerator;
 
-    public Map<String, Long> getCategoryGroupedData(String startDate, String endDate, List<Long> accountIds, boolean groupBySubcategory) {
-        return reportDataService.getCategoryGroupedData(startDate, endDate, accountIds, groupBySubcategory);
+    public Map<String, Long> getCategoryGroupedData(String startDate, String endDate, List<Long> accountIds, List<Long> categoryIds, List<Long> beneficiaryIds, boolean groupBySubcategory) {
+        return reportDataService.getCategoryGroupedData(startDate, endDate, accountIds, categoryIds, beneficiaryIds, groupBySubcategory);
     }
 
     public Map<String, Long> getEntityGroupedData(String startDate, String endDate, List<Long> accountIds) {

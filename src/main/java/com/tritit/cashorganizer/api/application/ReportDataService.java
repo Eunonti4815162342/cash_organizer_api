@@ -74,8 +74,30 @@ public class ReportDataService {
     }
 
     // Métodos antiguos delegados
-    public Map<String, Long> getCategoryGroupedData(String startDate, String endDate, List<Long> accountIds, boolean groupBySubcategory) {
-        return getSegregatedReport(startDate, endDate, accountIds, null, null).getCategorySummary();
+    public Map<String, Long> getCategoryGroupedData(String startDate, String endDate, List<Long> accountIds, List<Long> categoryIds, List<Long> beneficiaryIds, boolean groupBySubcategory) {
+        User user = userContextPort.getCurrentUser();
+        var transactions = transactionPersistencePort.findAllForReport(user, startDate, endDate);
+
+        return transactions.stream()
+                .filter(t -> t.getAmount().isNegative()) // Solo gastos para el gráfico por defecto
+                .filter(t -> (accountIds == null || accountIds.isEmpty() || (t.getAccount() != null && accountIds.contains(t.getAccount().getId()))))
+                .filter(t -> (beneficiaryIds == null || beneficiaryIds.isEmpty() || (t.getBeneficiary() != null && beneficiaryIds.contains(t.getBeneficiary().getId()))))
+                .filter(t -> {
+                    if (categoryIds == null || categoryIds.isEmpty()) return true;
+                    boolean catMatch = t.getCategory() != null && categoryIds.contains(t.getCategory().getId());
+                    boolean subMatch = t.getSubcategory() != null && t.getSubcategory().getCategory() != null 
+                                       && categoryIds.contains(t.getSubcategory().getCategory().getId());
+                    return catMatch || subMatch;
+                })
+                .collect(Collectors.groupingBy(
+                    t -> {
+                        if (groupBySubcategory) {
+                            return t.getSubcategory() != null ? t.getSubcategory().getName() : "Sin Subcategoría";
+                        }
+                        return t.getCategory() != null ? t.getCategory().getName() : "Otros";
+                    },
+                    Collectors.summingLong(t -> Math.abs(t.getAmount().getValue()))
+                ));
     }
     public Map<String, Long> getEntityGroupedData(String startDate, String endDate, List<Long> accountIds) {
         return new HashMap<>(); 

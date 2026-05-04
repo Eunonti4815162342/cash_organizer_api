@@ -17,6 +17,13 @@ public class ReportController {
 
     private final ReportService reportService;
 
+    private String sanitizeDate(String date) {
+        if (date == null) return null;
+        String d = date.contains("T") ? date.split("T")[0] : date;
+        d = d.contains(" ") ? d.split(" ")[0] : d;
+        return d.length() > 10 ? d.substring(0, 10) : d;
+    }
+
     @GetMapping("/download")
     public ResponseEntity<byte[]> downloadPdf(
             @RequestParam String title,
@@ -37,9 +44,16 @@ public class ReportController {
                 .body(pdfBytes);
     }
 
-    // Otros endpoints mantenidos por compatibilidad...
     @GetMapping("/category-stats")
-    public ResponseEntity<Map<String, Long>> getCategoryStats(@RequestParam(required = false) String startDate, @RequestParam(required = false) String endDate, @RequestParam(required = false) List<Long> accountIds) {
-        return ResponseEntity.ok(reportService.getCategoryGroupedData(startDate, endDate, accountIds, false));
+    public ResponseEntity<Map<String, Long>> getCategoryStats(
+            @RequestParam(required = false) String startDate,
+            @RequestParam(required = false) String endDate,
+            @RequestParam(required = false) List<Long> accountIds,
+            @RequestParam(required = false) List<Long> categoryIds,
+            @RequestParam(required = false) List<Long> beneficiaryIds,
+            @RequestParam(defaultValue = "false") boolean groupBySubcategory) {
+        String sDate = sanitizeDate(startDate);
+        String eDate = sanitizeDate(endDate);
+        return ResponseEntity.ok(reportService.getCategoryGroupedData(sDate, eDate, accountIds, categoryIds, beneficiaryIds, groupBySubcategory));
     }
 }
