@@ -25,7 +25,7 @@ public class TransactionController {
             @RequestParam(required = false) List<Long> accountIds,
             @RequestParam(required = false) Long accountId, // Añadido soporte singular
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "20") int size) {
+            @RequestParam(defaultValue = "100") int size) {
         
         Pageable pageable = PageRequest.of(page, size, Sort.by("date").descending());
 
