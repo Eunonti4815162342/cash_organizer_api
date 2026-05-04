@@ -91,8 +91,8 @@ public class ReportDataService {
                 })
                 .collect(Collectors.groupingBy(
                     t -> {
-                        if (groupBySubcategory) {
-                            return t.getSubcategory() != null ? t.getSubcategory().getName() : "Sin Subcategoría";
+                        if (groupBySubcategory && t.getSubcategory() != null) {
+                            return t.getSubcategory().getName();
                         }
                         return t.getCategory() != null ? t.getCategory().getName() : "Otros";
                     },
