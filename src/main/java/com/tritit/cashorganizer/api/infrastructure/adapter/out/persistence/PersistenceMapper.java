@@ -39,7 +39,7 @@ public class PersistenceMapper {
         if (entity == null) return null;
         return AccountItem.builder()
                 .id(entity.getId())
-                .user(toDomain(entity.getUser()))
+                .user(null) // No incluimos el usuario en objetos anidados
                 .name(entity.getName())
                 .description(entity.getDescription())
                 .accountType(entity.getAccountType())
@@ -56,7 +56,7 @@ public class PersistenceMapper {
         if (domain == null) return null;
         return AccountEntity.builder()
                 .id(sanitizeId(domain.getId()))
-                .user(toEntity(domain.getUser()))
+                .user(null) // No incluimos el usuario en objetos anidados
                 .name(domain.getName())
                 .description(domain.getDescription())
                 .accountType(domain.getAccountType() != null ? domain.getAccountType() : "CASH")
@@ -85,7 +85,7 @@ public class PersistenceMapper {
         if (entity == null) return null;
         return FinancialEntity.builder()
                 .id(entity.getId())
-                .user(toDomain(entity.getUser()))
+                .user(null) // No incluimos el usuario en objetos anidados
                 .name(entity.getName())
                 .description(entity.getDescription())
                 .country(entity.getCountry())
@@ -98,7 +98,7 @@ public class PersistenceMapper {
         if (domain == null) return null;
         return FinancialEntityEntity.builder()
                 .id(sanitizeId(domain.getId()))
-                .user(toEntity(domain.getUser()))
+                .user(null) // No incluimos el usuario en objetos anidados
                 .name(domain.getName())
                 .description(domain.getDescription())
                 .country(domain.getCountry())
@@ -112,7 +112,7 @@ public class PersistenceMapper {
         if (entity == null) return null;
         return Beneficiary.builder()
                 .id(entity.getId())
-                .user(toDomain(entity.getUser()))
+                .user(null) // No incluimos el usuario en objetos anidados
                 .name(entity.getName())
                 .description(entity.getDescription())
                 .financialEntity(toDomain(entity.getFinancialEntity()))
@@ -123,7 +123,7 @@ public class PersistenceMapper {
         if (domain == null) return null;
         return BeneficiaryEntity.builder()
                 .id(sanitizeId(domain.getId()))
-                .user(toEntity(domain.getUser()))
+                .user(null) // No incluimos el usuario en objetos anidados
                 .name(domain.getName())
                 .description(domain.getDescription())
                 .financialEntity(toEntity(domain.getFinancialEntity()))
@@ -135,7 +135,7 @@ public class PersistenceMapper {
         if (entity == null) return null;
         return Category.builder()
                 .id(entity.getId())
-                .user(toDomain(entity.getUser()))
+                .user(null) // No incluimos el usuario en objetos anidados
                 .name(entity.getName())
                 .iconName(entity.getIconName())
                 .type(entity.getType())
@@ -158,7 +158,7 @@ public class PersistenceMapper {
         if (domain == null) return null;
         return CategoryEntity.builder()
                 .id(sanitizeId(domain.getId()))
-                .user(toEntity(domain.getUser()))
+                .user(null) // No incluimos el usuario en objetos anidados
                 .name(domain.getName())
                 .iconName(domain.getIconName())
                 .type(domain.getType())
@@ -171,7 +171,7 @@ public class PersistenceMapper {
         if (entity == null) return null;
         return TransactionItem.builder()
                 .id(entity.getId())
-                .user(toDomain(entity.getUser()))
+                .user(null) // IMPORTANTE: No incluimos el usuario aquí para evitar StackOverflow y 500 errors
                 .date(entity.getDate())
                 .description(entity.getDescription())
                 .amount(toDomain(entity.getAmount()))
