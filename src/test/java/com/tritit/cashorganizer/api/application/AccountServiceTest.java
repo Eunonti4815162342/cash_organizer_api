@@ -7,6 +7,7 @@ import com.tritit.cashorganizer.api.domain.model.Amount;
 import com.tritit.cashorganizer.api.domain.model.TransactionItem;
 import com.tritit.cashorganizer.api.domain.model.User;
 import com.tritit.cashorganizer.api.domain.port.out.AccountPersistencePort;
+import com.tritit.cashorganizer.api.domain.port.out.FinancialEntityPersistencePort;
 import com.tritit.cashorganizer.api.domain.port.out.TransactionPersistencePort;
 import com.tritit.cashorganizer.api.domain.port.out.UserContextPort;
 import com.tritit.cashorganizer.api.infrastructure.adapter.out.persistence.PersistenceMapper;
@@ -36,6 +37,7 @@ class AccountServiceTest {
 
     @Mock AccountPersistencePort accountPersistencePort;
     @Mock TransactionPersistencePort transactionPersistencePort;
+    @Mock FinancialEntityPersistencePort financialEntityPersistencePort;
     @Mock UserContextPort userContextPort;
     @Mock PersistenceMapper mapper;
 
@@ -159,6 +161,18 @@ class AccountServiceTest {
             assertThatCode(() -> service.updateAccount(1L, AccountItem.builder().name("MiCuenta").build()))
                     .doesNotThrowAnyException();
         }
+
+        @Test
+        @DisplayName("IDOR: throws when account belongs to another user")
+        void throwsWhenAccountBelongsToOtherUser() {
+            User otherUser = User.builder().id(UUID.randomUUID()).email("other@test.com").build();
+            AccountItem foreign = AccountItem.builder().id(1L).name("Ajena").user(otherUser).build();
+            when(accountPersistencePort.findById(1L)).thenReturn(Optional.of(foreign));
+
+            assertThatThrownBy(() -> service.updateAccount(1L, AccountItem.builder().name("Hack").build()))
+                    .isInstanceOf(ResourceNotFoundException.class)
+                    .hasMessageContaining("Account not found");
+        }
     }
 
     @Nested
@@ -184,7 +198,7 @@ class AccountServiceTest {
 
         @Test
         void doesNothingIfAlreadyInactive() {
-            AccountItem account = AccountItem.builder().id(1L).active(false).build();
+            AccountItem account = AccountItem.builder().id(1L).active(false).user(currentUser).build();
             when(accountPersistencePort.findById(1L)).thenReturn(Optional.of(account));
 
             service.closeAccount(1L);
@@ -198,6 +212,19 @@ class AccountServiceTest {
             when(accountPersistencePort.findById(5L)).thenReturn(Optional.empty());
             assertThatThrownBy(() -> service.closeAccount(5L))
                     .isInstanceOf(ResourceNotFoundException.class);
+        }
+
+        @Test
+        @DisplayName("IDOR: throws when account belongs to another user")
+        void throwsWhenAccountBelongsToOtherUser() {
+            User otherUser = User.builder().id(UUID.randomUUID()).email("other@test.com").build();
+            AccountItem foreign = AccountItem.builder().id(1L).active(true).user(otherUser).build();
+            when(accountPersistencePort.findById(1L)).thenReturn(Optional.of(foreign));
+
+            assertThatThrownBy(() -> service.closeAccount(1L))
+                    .isInstanceOf(ResourceNotFoundException.class);
+            verify(accountPersistencePort, never()).save(any());
+            verify(transactionPersistencePort, never()).save(any());
         }
     }
 
@@ -229,6 +256,19 @@ class AccountServiceTest {
             when(accountPersistencePort.findById(42L)).thenReturn(Optional.empty());
             assertThatThrownBy(() -> service.permanentlyDeleteAccount(42L))
                     .isInstanceOf(ResourceNotFoundException.class);
+        }
+
+        @Test
+        @DisplayName("IDOR: throws when account belongs to another user")
+        void throwsWhenAccountBelongsToOtherUser() {
+            User otherUser = User.builder().id(UUID.randomUUID()).email("other@test.com").build();
+            AccountItem foreign = AccountItem.builder().id(1L).user(otherUser).build();
+            when(accountPersistencePort.findById(1L)).thenReturn(Optional.of(foreign));
+
+            assertThatThrownBy(() -> service.permanentlyDeleteAccount(1L))
+                    .isInstanceOf(ResourceNotFoundException.class);
+            verify(accountPersistencePort, never()).delete(any());
+            verify(transactionPersistencePort, never()).delete(any(TransactionItem.class));
         }
     }
 }

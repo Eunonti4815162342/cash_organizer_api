@@ -45,6 +45,10 @@ public class AccountService implements AccountUseCase {
         AccountItem account = accountPersistencePort.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Account not found"));
 
+        if (!account.getUser().getId().equals(user.getId())) {
+            throw new ResourceNotFoundException("Account not found");
+        }
+
         boolean nameExists = accountPersistencePort.findAllByUser(user).stream()
                 .anyMatch(a -> !a.getId().equals(id) && a.getName().equalsIgnoreCase(accountDetails.getName()));
 
@@ -78,6 +82,10 @@ public class AccountService implements AccountUseCase {
         AccountItem account = accountPersistencePort.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Account not found"));
 
+        if (!account.getUser().getId().equals(user.getId())) {
+            throw new ResourceNotFoundException("Account not found");
+        }
+
         if (account.getActive() != null && !account.getActive()) return;
 
         account.setActive(false);
@@ -103,6 +111,10 @@ public class AccountService implements AccountUseCase {
         User user = userContextPort.getCurrentUser();
         AccountItem account = accountPersistencePort.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Account not found"));
+
+        if (!account.getUser().getId().equals(user.getId())) {
+            throw new ResourceNotFoundException("Account not found");
+        }
 
         transactionPersistencePort.findAllByUser(user, Pageable.unpaged()).getContent().stream()
                 .filter(t -> (t.getAccount() != null && t.getAccount().getId().equals(id)) ||

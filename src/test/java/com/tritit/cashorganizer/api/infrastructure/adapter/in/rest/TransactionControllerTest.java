@@ -3,6 +3,8 @@ package com.tritit.cashorganizer.api.infrastructure.adapter.in.rest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tritit.cashorganizer.api.application.TransactionService;
 import com.tritit.cashorganizer.api.domain.exception.InvalidTransactionException;
+import com.tritit.cashorganizer.api.infrastructure.config.JwtService;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import com.tritit.cashorganizer.api.domain.exception.ResourceNotFoundException;
 import com.tritit.cashorganizer.api.domain.model.AccountItem;
 import com.tritit.cashorganizer.api.domain.model.Amount;
@@ -31,8 +33,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class TransactionControllerTest {
 
     @Autowired MockMvc mockMvc;
-    @Autowired ObjectMapper objectMapper;
+    final ObjectMapper objectMapper = new ObjectMapper();
     @MockitoBean TransactionService transactionService;
+    @MockitoBean JwtService jwtService;
+    @MockitoBean UserDetailsService userDetailsService;
 
     private TransactionItem sampleTransaction() {
         return TransactionItem.builder()
@@ -102,8 +106,46 @@ class TransactionControllerTest {
                     .andExpect(status().isOk());
 
             verify(transactionService).getAllTransactions(argThat(p ->
-                    p.getPageNumber() == 0 && p.getPageSize() == 20
+                    p.getPageNumber() == 0 && p.getPageSize() == 100
             ));
+        }
+
+        @Test
+        @DisplayName("date with ISO timestamp is sanitized to YYYY-MM-DD")
+        void isoTimestampDateIsSanitized() throws Exception {
+            Page<TransactionItem> page = new PageImpl<>(List.of());
+            when(transactionService.getTransactionsByDateRange(eq("2024-09-01"), eq("2024-09-30"), any()))
+                    .thenReturn(page);
+
+            mockMvc.perform(get("/api/transactions?startDate=2024-09-01T00:00:00.000&endDate=2024-09-30T23:59:59.999"))
+                    .andExpect(status().isOk());
+
+            verify(transactionService).getTransactionsByDateRange(eq("2024-09-01"), eq("2024-09-30"), any());
+        }
+
+        @Test
+        @DisplayName("date with space separator is sanitized to YYYY-MM-DD")
+        void spaceSeparatorDateIsSanitized() throws Exception {
+            Page<TransactionItem> page = new PageImpl<>(List.of());
+            when(transactionService.getTransactionsByDateRange(eq("2024-09-01"), eq("2024-09-30"), any()))
+                    .thenReturn(page);
+
+            mockMvc.perform(get("/api/transactions?startDate=2024-09-01 00:00:00&endDate=2024-09-30 23:59:59"))
+                    .andExpect(status().isOk());
+
+            verify(transactionService).getTransactionsByDateRange(eq("2024-09-01"), eq("2024-09-30"), any());
+        }
+
+        @Test
+        @DisplayName("null dates fall back to getAllTransactions")
+        void nullDates_fallBackToGetAll() throws Exception {
+            when(transactionService.getAllTransactions(any())).thenReturn(new PageImpl<>(List.of()));
+
+            mockMvc.perform(get("/api/transactions"))
+                    .andExpect(status().isOk());
+
+            verify(transactionService).getAllTransactions(any());
+            verify(transactionService, never()).getTransactionsByDateRange(any(), any(), any());
         }
     }
 

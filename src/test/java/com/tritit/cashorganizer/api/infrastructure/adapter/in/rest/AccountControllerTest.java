@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tritit.cashorganizer.api.application.AccountService;
 import com.tritit.cashorganizer.api.domain.exception.DuplicateResourceException;
 import com.tritit.cashorganizer.api.domain.exception.ResourceNotFoundException;
+import com.tritit.cashorganizer.api.infrastructure.config.JwtService;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import com.tritit.cashorganizer.api.domain.model.AccountItem;
 import com.tritit.cashorganizer.api.domain.model.Amount;
 import org.junit.jupiter.api.DisplayName;
@@ -29,8 +31,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class AccountControllerTest {
 
     @Autowired MockMvc mockMvc;
-    @Autowired ObjectMapper objectMapper;
+    final ObjectMapper objectMapper = new ObjectMapper();
     @MockitoBean AccountService accountService;
+    @MockitoBean JwtService jwtService;
+    @MockitoBean UserDetailsService userDetailsService;
 
     private AccountItem sampleAccount() {
         return AccountItem.builder()

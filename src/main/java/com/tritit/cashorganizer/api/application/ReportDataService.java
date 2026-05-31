@@ -100,9 +100,30 @@ public class ReportDataService {
                 ));
     }
     public Map<String, Long> getEntityGroupedData(String startDate, String endDate, List<Long> accountIds) {
-        return new HashMap<>(); 
+        User user = userContextPort.getCurrentUser();
+        var transactions = transactionPersistencePort.findAllForReport(user, startDate, endDate);
+
+        return transactions.stream()
+                .filter(t -> t.getAmount().isNegative())
+                .filter(t -> (accountIds == null || accountIds.isEmpty() || (t.getAccount() != null && accountIds.contains(t.getAccount().getId()))))
+                .collect(Collectors.groupingBy(
+                    t -> (t.getAccount() != null && t.getAccount().getEntity() != null)
+                            ? t.getAccount().getEntity().getName() : "PERSONAL / OTROS",
+                    Collectors.summingLong(t -> Math.abs(t.getAmount().getValue()))
+                ));
     }
+
     public Map<String, Long> getBeneficiaryGroupedData(String startDate, String endDate, List<Long> accountIds) {
-        return new HashMap<>();
+        User user = userContextPort.getCurrentUser();
+        var transactions = transactionPersistencePort.findAllForReport(user, startDate, endDate);
+
+        return transactions.stream()
+                .filter(t -> t.getAmount().isNegative())
+                .filter(t -> t.getBeneficiary() != null)
+                .filter(t -> (accountIds == null || accountIds.isEmpty() || (t.getAccount() != null && accountIds.contains(t.getAccount().getId()))))
+                .collect(Collectors.groupingBy(
+                    t -> t.getBeneficiary().getName(),
+                    Collectors.summingLong(t -> Math.abs(t.getAmount().getValue()))
+                ));
     }
 }

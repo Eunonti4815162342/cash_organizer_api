@@ -19,8 +19,7 @@ public class EmailService {
 
     public void sendPasswordResetEmail(String toEmail, String resetToken) {
         if (mailSender == null) {
-            log.warn("[DEV] SMTP not configured — password reset token for {}: {}", toEmail, resetToken);
-            log.warn("[DEV] Configure spring.mail.host in production to send real emails.");
+            log.warn("[DEV] SMTP not configured — password reset requested for {}. Configure spring.mail.host in production.", toEmail);
             return;
         }
 

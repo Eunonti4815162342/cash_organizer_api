@@ -2,6 +2,8 @@ package com.tritit.cashorganizer.api.infrastructure.adapter.in.rest;
 
 import com.tritit.cashorganizer.api.application.AccountService;
 import com.tritit.cashorganizer.api.domain.exception.*;
+import com.tritit.cashorganizer.api.infrastructure.config.JwtService;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,8 @@ class GlobalExceptionHandlerTest {
 
     @Autowired MockMvc mockMvc;
     @MockitoBean AccountService accountService;
+    @MockitoBean JwtService jwtService;
+    @MockitoBean UserDetailsService userDetailsService;
 
     @Test
     @DisplayName("ResourceNotFoundException → 404 NOT FOUND")

@@ -44,6 +44,26 @@ public class ReportController {
                 .body(pdfBytes);
     }
 
+    @GetMapping("/entity-stats")
+    public ResponseEntity<Map<String, Long>> getEntityStats(
+            @RequestParam(required = false) String startDate,
+            @RequestParam(required = false) String endDate,
+            @RequestParam(required = false) List<Long> accountIds) {
+        String sDate = sanitizeDate(startDate);
+        String eDate = sanitizeDate(endDate);
+        return ResponseEntity.ok(reportService.getEntityGroupedData(sDate, eDate, accountIds));
+    }
+
+    @GetMapping("/beneficiary-stats")
+    public ResponseEntity<Map<String, Long>> getBeneficiaryStats(
+            @RequestParam(required = false) String startDate,
+            @RequestParam(required = false) String endDate,
+            @RequestParam(required = false) List<Long> accountIds) {
+        String sDate = sanitizeDate(startDate);
+        String eDate = sanitizeDate(endDate);
+        return ResponseEntity.ok(reportService.getBeneficiaryGroupedData(sDate, eDate, accountIds));
+    }
+
     @GetMapping("/category-stats")
     public ResponseEntity<Map<String, Long>> getCategoryStats(
             @RequestParam(required = false) String startDate,

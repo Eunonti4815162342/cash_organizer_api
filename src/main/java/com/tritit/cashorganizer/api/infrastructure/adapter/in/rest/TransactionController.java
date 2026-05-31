@@ -3,6 +3,7 @@ package com.tritit.cashorganizer.api.infrastructure.adapter.in.rest;
 import com.tritit.cashorganizer.api.domain.model.TransactionItem;
 import com.tritit.cashorganizer.api.application.TransactionService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/transactions")
 @RequiredArgsConstructor
@@ -62,8 +64,8 @@ public class TransactionController {
             }
             return service.getAllTransactions(pageable);
         } catch (Exception e) {
-            e.printStackTrace(); // Esto saldrá en la consola del servidor
-            throw e; // Volvemos a lanzar para que siga siendo un error pero ahora sepamos qué es
+            log.error("Error fetching transactions: {}", e.getMessage(), e);
+            throw e;
         }
     }
 
