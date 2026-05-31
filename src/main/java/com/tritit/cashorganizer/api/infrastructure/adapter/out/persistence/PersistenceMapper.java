@@ -72,7 +72,7 @@ public class PersistenceMapper {
     // --- AMOUNT ---
     public Amount toDomain(AmountEmbeddable entity) {
         if (entity == null) return null;
-        return new Amount(entity.getValue(), entity.getCurrency(), entity.isNegative());
+        return new Amount(entity.getValue(), entity.getCurrency(), Boolean.TRUE.equals(entity.getIsNegative()));
     }
 
     public AmountEmbeddable toEntity(Amount domain) {

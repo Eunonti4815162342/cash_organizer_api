@@ -12,5 +12,5 @@ import lombok.NoArgsConstructor;
 public class AmountEmbeddable {
     private Long value;
     private String currency;
-    private boolean isNegative;
+    private Boolean isNegative;
 }
