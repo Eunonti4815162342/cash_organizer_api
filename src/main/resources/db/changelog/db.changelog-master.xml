@@ -39,4 +39,8 @@
         <sqlFile path="db/changelog/changes/08-add-role-to-users.sql" />
     </changeSet>
 
+    <changeSet id="13" author="claude">
+        <sqlFile path="db/changelog/changes/09-sync-entity-columns.sql" />
+    </changeSet>
+
 </databaseChangeLog>
