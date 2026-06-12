@@ -1,6 +1,6 @@
 -- liquibase formatted sql
 
--- changeset alvaro:02-sync-schema-from-datainitializer splitStatements:true endDelimiter:;
+-- changeset alvaro:02-sync-schema-from-datainitializer splitStatements:false
 -- Desc: Syncing manual changes from DataInitializer to Liquibase
 
 -- 1. Table Accounts
