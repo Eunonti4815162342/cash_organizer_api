@@ -7,7 +7,10 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: update
+      # validate (no update): el esquema lo gestionan los changelogs de Liquibase.
+      # Con update, dev driftaba en silencio de los changelogs y staging/prod
+      # (validate) reventaban al estrenar BD — visto el 2026-06-12.
+      ddl-auto: validate
     show-sql: true
     properties:
       hibernate:
@@ -15,9 +18,9 @@ spring:
         format_sql: true
 
   liquibase:
-    enabled: false
+    enabled: true
     change-log: classpath:db/changelog/db.changelog-master.xml
-    default-schema: llama_finanzas
+    default-schema: cash_organizer
 
 application:
   security:

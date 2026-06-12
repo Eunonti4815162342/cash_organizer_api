@@ -30,7 +30,7 @@ application:
       secret-key: ${JWT_SECRET_KEY:staging_secret_key_must_be_changed}
       expiration: 86400000
     cors:
-      allowed-origins: https://staging.cashorganizer.com,https://app-staging.cashorganizer.com
+      allowed-origins: ${CORS_ALLOWED_ORIGINS:http://100.86.48.34:8090}
 
 server:
   port: 8085
