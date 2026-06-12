@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tritit.cashorganizer.api.application.AuthService;
 import com.tritit.cashorganizer.api.domain.exception.AuthenticationFailedException;
 import com.tritit.cashorganizer.api.domain.exception.DuplicateResourceException;
+import com.tritit.cashorganizer.api.infrastructure.config.JwtService;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -27,8 +29,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class AuthControllerTest {
 
     @Autowired MockMvc mockMvc;
-    @Autowired ObjectMapper objectMapper;
+    final ObjectMapper objectMapper = new ObjectMapper();
     @MockitoBean AuthService authService;
+    @MockitoBean JwtService jwtService;
+    @MockitoBean UserDetailsService userDetailsService;
 
     private String loginBody(String email, String password) throws Exception {
         return objectMapper.writeValueAsString(Map.of("email", email, "password", password));
@@ -136,21 +140,6 @@ class AuthControllerTest {
                     .content(loginBody("new@test.com", "securePass")));
 
             verify(authService).register("new@test.com", "securePass");
-        }
-    }
-
-    @Nested
-    @DisplayName("POST /api/auth/test")
-    class TestEndpoint {
-
-        @Test
-        void returns200WithString() throws Exception {
-            when(authService.loginTest()).thenReturn("Test: Secret key is configured");
-
-            mockMvc.perform(post("/api/auth/test")
-                            .contentType(MediaType.APPLICATION_JSON)
-                            .content(loginBody("any@test.com", "any")))
-                    .andExpect(status().isOk());
         }
     }
 }

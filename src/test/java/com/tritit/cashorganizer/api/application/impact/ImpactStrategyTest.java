@@ -15,6 +15,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -24,6 +26,8 @@ import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
+// lenient: los stubs comunes viven en setUp() y no todos los @Nested los consumen
+@MockitoSettings(strictness = Strictness.LENIENT)
 @DisplayName("Impact strategies — balance effects")
 class ImpactStrategyTest {
 

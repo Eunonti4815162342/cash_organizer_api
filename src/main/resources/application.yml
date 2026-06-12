@@ -11,6 +11,12 @@ spring:
   profiles:
     active: ${SPRING_PROFILES_ACTIVE:dev}
 
+  jackson:
+    deserialization:
+      # Jackson 3 (Boot 4) activó este flag por defecto: un null/ausencia en un
+      # boolean primitivo pasó de ignorarse a devolver 500. Restaurar tolerancia.
+      fail-on-null-for-primitives: false
+
   datasource:
     url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/natave_dev}
     username: ${SPRING_DATASOURCE_USERNAME:postgres}

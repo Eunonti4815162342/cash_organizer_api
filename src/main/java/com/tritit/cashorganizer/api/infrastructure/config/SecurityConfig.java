@@ -38,10 +38,10 @@ public class SecurityConfig {
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers(
-                    "/api/v2/auth/**",
                     "/api/auth/**",
                     "/error",
-                    "/h2-console/**",
+                    // springdoc queda deshabilitado por configuración en staging/prod;
+                    // estos matchers solo tienen efecto en dev
                     "/v3/api-docs/**",
                     "/swagger-ui/**",
                     "/swagger-ui.html",
@@ -52,9 +52,7 @@ public class SecurityConfig {
             )
             .authenticationProvider(authenticationProvider)
             .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
-        
-        http.headers(headers -> headers.frameOptions(frame -> frame.disable()));
-        
+
         return http.build();
     }
 

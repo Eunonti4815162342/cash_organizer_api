@@ -101,8 +101,4 @@ public class AuthService {
         resetToken.setUsed(true);
         resetTokenRepository.save(resetToken);
     }
-
-    public String loginTest() {
-        return "Test: Secret key is configured";
-    }
 }

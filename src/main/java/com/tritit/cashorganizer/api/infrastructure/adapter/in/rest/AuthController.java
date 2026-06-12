@@ -45,12 +45,6 @@ public class AuthController {
         return ResponseEntity.ok("Contraseña actualizada correctamente");
     }
 
-    @PostMapping("/test")
-    public String test(@RequestBody AuthRequest request) {
-        log.info("Test endpoint received: {}", request.getEmail());
-        return authService.loginTest();
-    }
-
     @Data
     public static class AuthRequest {
         private String email;

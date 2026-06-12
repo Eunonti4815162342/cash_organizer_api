@@ -152,14 +152,4 @@ class AuthServiceTest {
             ));
         }
     }
-
-    @Nested
-    @DisplayName("loginTest()")
-    class LoginTest {
-
-        @Test
-        void returnsNonNullString() {
-            assertThat(authService.loginTest()).isNotNull();
-        }
-    }
 }

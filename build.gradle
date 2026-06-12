@@ -61,11 +61,14 @@ tasks.named('test') {
 tasks.register('unitTest', Test) {
 	description = 'Runs unit and controller-slice tests (no DB required).'
 	group = 'verification'
+	// custom Test tasks don't inherit the test source set wiring
+	testClassesDirs = sourceSets.test.output.classesDirs
+	classpath = sourceSets.test.runtimeClasspath
 	useJUnitPlatform()
 	filter {
-		includeTestsMatching 'com.tritit.natave.api.domain.**'
-		includeTestsMatching 'com.tritit.natave.api.application.**'
-		includeTestsMatching 'com.tritit.natave.api.infrastructure.adapter.in.rest.**'
+		includeTestsMatching 'com.tritit.cashorganizer.api.domain.**'
+		includeTestsMatching 'com.tritit.cashorganizer.api.application.**'
+		includeTestsMatching 'com.tritit.cashorganizer.api.infrastructure.adapter.in.rest.**'
 	}
 	testLogging {
 		events "passed", "skipped", "failed"
@@ -80,9 +83,11 @@ tasks.register('unitTest', Test) {
 tasks.register('integrationTest', Test) {
 	description = 'Runs integration tests that require a real database.'
 	group = 'verification'
+	testClassesDirs = sourceSets.test.output.classesDirs
+	classpath = sourceSets.test.runtimeClasspath
 	useJUnitPlatform()
 	filter {
-		includeTestsMatching 'com.tritit.natave.api.NataveApiApplicationTests'
+		includeTestsMatching 'com.tritit.cashorganizer.api.NataveApiApplicationTests'
 	}
 	testLogging {
 		events "passed", "skipped", "failed"
@@ -96,6 +101,6 @@ tasks.register('integrationTest', Test) {
 // (it needs a real DB and belongs to integrationTest)
 unitTest.configure {
 	filter {
-		excludeTestsMatching 'com.tritit.natave.api.NataveApiApplicationTests'
+		excludeTestsMatching 'com.tritit.cashorganizer.api.NataveApiApplicationTests'
 	}
 }

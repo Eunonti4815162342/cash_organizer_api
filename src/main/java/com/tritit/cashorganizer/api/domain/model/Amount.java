@@ -12,6 +12,9 @@ import lombok.ToString;
 public class Amount {
     private final Long value;
     private final String currency;
+    // sin la anotación, el getter de Lombok serializa como "negative" mientras
+    // el @JsonCreator espera "isNegative" — asimetría que rompe el round-trip
+    @JsonProperty("isNegative")
     private final boolean isNegative;
 
     @JsonCreator

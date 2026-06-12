@@ -32,6 +32,13 @@ application:
     cors:
       allowed-origins: ${CORS_ALLOWED_ORIGINS:http://100.86.48.34:8090}
 
+# Entorno expuesto públicamente (Tailscale Funnel): sin documentación de API
+springdoc:
+  api-docs:
+    enabled: false
+  swagger-ui:
+    enabled: false
+
 server:
   port: 8085
   error:
