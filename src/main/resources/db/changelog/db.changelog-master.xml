@@ -11,7 +11,8 @@
     </changeSet>
 
     <changeSet id="6" author="alvaro">
-        <sqlFile path="db/changelog/changes/02-sync-schema-updates.sql" />
+        <!-- splitStatements=false: el fichero contiene bloques DO $$...$$ que el splitter rompería -->
+        <sqlFile path="db/changelog/changes/02-sync-schema-updates.sql" splitStatements="false" />
     </changeSet>
 
     <changeSet id="7" author="alvaro">
