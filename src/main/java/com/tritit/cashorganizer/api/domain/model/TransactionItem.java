@@ -33,6 +33,12 @@ public class TransactionItem {
     }
 
     public void validate() {
+        // Normaliza a fecha pura YYYY-MM-DD: el campo se compara como string
+        // (BETWEEN) tanto aquí como en SQLite local, y una hora residual
+        // rompe esa comparación lexicográfica para transacciones del día en curso.
+        if (this.date != null && this.date.length() > 10) {
+            this.date = this.date.substring(0, 10);
+        }
         if (this.account == null) {
             throw new com.tritit.cashorganizer.api.domain.exception.InvalidTransactionException("Source account is mandatory");
         }
