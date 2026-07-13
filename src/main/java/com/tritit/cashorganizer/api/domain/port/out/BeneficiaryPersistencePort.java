@@ -8,6 +8,7 @@ import java.util.Optional;
 public interface BeneficiaryPersistencePort {
     List<Beneficiary> findAllByUser(User user);
     Optional<Beneficiary> findById(Long id);
+    boolean existsByIdAndUser(Long id, User user);
     Beneficiary save(Beneficiary beneficiary);
     void delete(Long id);
 }

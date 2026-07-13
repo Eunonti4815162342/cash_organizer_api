@@ -32,6 +32,12 @@ public class BeneficiaryPersistenceAdapter implements BeneficiaryPersistencePort
     }
 
     @Override
+    public boolean existsByIdAndUser(Long id, User user) {
+        UserEntity userEntity = mapper.toEntity(user);
+        return beneficiaryRepository.existsByIdAndUser(id, userEntity);
+    }
+
+    @Override
     public Beneficiary save(Beneficiary beneficiary) {
         var entity = mapper.toEntity(beneficiary);
         return mapper.toDomain(beneficiaryRepository.save(entity));

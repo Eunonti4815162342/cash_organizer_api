@@ -55,13 +55,12 @@ class TransactionServiceTest {
         @DisplayName("should return suggestion from history")
         void returnsSuggestion() {
             when(userContextPort.getCurrentUser()).thenReturn(currentUser);
-            Beneficiary beneficiary = Beneficiary.builder().id(5L).user(currentUser).build();
             TransactionSuggestion suggestion = TransactionSuggestion.builder()
                     .categoryId(1L)
                     .transactionType(TransactionItem.TransactionType.EXPENSE)
                     .build();
 
-            when(beneficiaryPersistencePort.findById(5L)).thenReturn(Optional.of(beneficiary));
+            when(beneficiaryPersistencePort.existsByIdAndUser(5L, currentUser)).thenReturn(true);
             when(transactionPersistencePort.findMostFrequentCategoryAndType(currentUser.getId(), 5L))
                     .thenReturn(Optional.of(suggestion));
 
@@ -74,8 +73,7 @@ class TransactionServiceTest {
         @DisplayName("should return empty suggestion when no history exists")
         void returnsEmptyWhenNoHistory() {
             when(userContextPort.getCurrentUser()).thenReturn(currentUser);
-            Beneficiary beneficiary = Beneficiary.builder().id(5L).user(currentUser).build();
-            when(beneficiaryPersistencePort.findById(5L)).thenReturn(Optional.of(beneficiary));
+            when(beneficiaryPersistencePort.existsByIdAndUser(5L, currentUser)).thenReturn(true);
             when(transactionPersistencePort.findMostFrequentCategoryAndType(currentUser.getId(), 5L))
                     .thenReturn(Optional.empty());
 
@@ -89,10 +87,7 @@ class TransactionServiceTest {
         @DisplayName("should throw exception when beneficiary not found or unauthorized")
         void throwsWhenUnauthorized() {
             when(userContextPort.getCurrentUser()).thenReturn(currentUser);
-            User otherUser = User.builder().id(UUID.randomUUID()).build();
-            Beneficiary beneficiary = Beneficiary.builder().id(5L).user(otherUser).build();
-            
-            when(beneficiaryPersistencePort.findById(5L)).thenReturn(Optional.of(beneficiary));
+            when(beneficiaryPersistencePort.existsByIdAndUser(5L, currentUser)).thenReturn(false);
 
             assertThatThrownBy(() -> sut.getSuggestionForBeneficiary(5L))
                     .isInstanceOf(ResourceNotFoundException.class);

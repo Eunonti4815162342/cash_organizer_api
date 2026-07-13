@@ -10,4 +10,5 @@ import java.util.List;
 @Repository
 public interface BeneficiaryRepository extends JpaRepository<BeneficiaryEntity, Long> {
     List<BeneficiaryEntity> findAllByUser(UserEntity user);
+    boolean existsByIdAndUser(Long id, UserEntity user);
 }

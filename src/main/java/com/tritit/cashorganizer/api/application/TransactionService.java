@@ -29,11 +29,13 @@ public class TransactionService implements TransactionUseCase {
     @Transactional(readOnly = true)
     public TransactionSuggestion getSuggestionForBeneficiary(Long beneficiaryId) {
         User user = userContextPort.getCurrentUser();
-        
-        // Validar que el beneficiario existe y pertenece al usuario
-        beneficiaryPersistencePort.findById(beneficiaryId)
-                .filter(b -> b.getUser().getId().equals(user.getId()))
-                .orElseThrow(() -> new ResourceNotFoundException("Beneficiary not found or unauthorized"));
+
+        // Validar que el beneficiario existe y pertenece al usuario.
+        // No usamos Beneficiary.getUser(): el mapper Entity->Domain lo deja
+        // siempre a null para evitar recursión/500s en objetos anidados.
+        if (!beneficiaryPersistencePort.existsByIdAndUser(beneficiaryId, user)) {
+            throw new ResourceNotFoundException("Beneficiary not found or unauthorized");
+        }
 
         return transactionPersistencePort.findMostFrequentCategoryAndType(user.getId(), beneficiaryId)
                 .orElse(new TransactionSuggestion());
