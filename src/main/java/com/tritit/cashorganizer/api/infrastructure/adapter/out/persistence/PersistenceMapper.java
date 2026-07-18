@@ -14,6 +14,20 @@ public class PersistenceMapper {
         return (id != null && id != 0) ? id : null;
     }
 
+    /**
+     * Lightweight owner reference (id only, never email/password). Used instead of
+     * a bare null so ownership checks (account.getUser().getId()) and the user_id
+     * foreign key survive the round trip, without embedding sensitive User fields
+     * or risking circular serialization in nested objects.
+     */
+    private User userRef(UserEntity entity) {
+        return entity != null ? User.builder().id(entity.getId()).build() : null;
+    }
+
+    private UserEntity userRef(User domain) {
+        return domain != null ? UserEntity.builder().id(domain.getId()).build() : null;
+    }
+
     public User toDomain(UserEntity entity) {
         if (entity == null) return null;
         return User.builder()
@@ -39,7 +53,7 @@ public class PersistenceMapper {
         if (entity == null) return null;
         return AccountItem.builder()
                 .id(entity.getId())
-                .user(null) // No incluimos el usuario en objetos anidados
+                .user(userRef(entity.getUser()))
                 .name(entity.getName())
                 .description(entity.getDescription())
                 .accountType(entity.getAccountType())
@@ -56,7 +70,7 @@ public class PersistenceMapper {
         if (domain == null) return null;
         return AccountEntity.builder()
                 .id(sanitizeId(domain.getId()))
-                .user(null) // No incluimos el usuario en objetos anidados
+                .user(userRef(domain.getUser()))
                 .name(domain.getName())
                 .description(domain.getDescription())
                 .accountType(domain.getAccountType() != null ? domain.getAccountType() : "CASH")
@@ -85,7 +99,7 @@ public class PersistenceMapper {
         if (entity == null) return null;
         return FinancialEntity.builder()
                 .id(entity.getId())
-                .user(null) // No incluimos el usuario en objetos anidados
+                .user(userRef(entity.getUser()))
                 .name(entity.getName())
                 .description(entity.getDescription())
                 .country(entity.getCountry())
@@ -98,7 +112,7 @@ public class PersistenceMapper {
         if (domain == null) return null;
         return FinancialEntityEntity.builder()
                 .id(sanitizeId(domain.getId()))
-                .user(null) // No incluimos el usuario en objetos anidados
+                .user(userRef(domain.getUser()))
                 .name(domain.getName())
                 .description(domain.getDescription())
                 .country(domain.getCountry())
@@ -112,7 +126,7 @@ public class PersistenceMapper {
         if (entity == null) return null;
         return Beneficiary.builder()
                 .id(entity.getId())
-                .user(null) // No incluimos el usuario en objetos anidados
+                .user(userRef(entity.getUser()))
                 .name(entity.getName())
                 .description(entity.getDescription())
                 .financialEntity(toDomain(entity.getFinancialEntity()))
@@ -123,7 +137,7 @@ public class PersistenceMapper {
         if (domain == null) return null;
         return BeneficiaryEntity.builder()
                 .id(sanitizeId(domain.getId()))
-                .user(null) // No incluimos el usuario en objetos anidados
+                .user(userRef(domain.getUser()))
                 .name(domain.getName())
                 .description(domain.getDescription())
                 .financialEntity(toEntity(domain.getFinancialEntity()))
@@ -135,7 +149,7 @@ public class PersistenceMapper {
         if (entity == null) return null;
         return Category.builder()
                 .id(entity.getId())
-                .user(null) // No incluimos el usuario en objetos anidados
+                .user(userRef(entity.getUser()))
                 .name(entity.getName())
                 .iconName(entity.getIconName())
                 .type(entity.getType())
@@ -158,7 +172,7 @@ public class PersistenceMapper {
         if (domain == null) return null;
         return CategoryEntity.builder()
                 .id(sanitizeId(domain.getId()))
-                .user(null) // No incluimos el usuario en objetos anidados
+                .user(userRef(domain.getUser()))
                 .name(domain.getName())
                 .iconName(domain.getIconName())
                 .type(domain.getType())
@@ -171,7 +185,7 @@ public class PersistenceMapper {
         if (entity == null) return null;
         return TransactionItem.builder()
                 .id(entity.getId())
-                .user(null) // IMPORTANTE: No incluimos el usuario aquí para evitar StackOverflow y 500 errors
+                .user(userRef(entity.getUser()))
                 .date(entity.getDate())
                 .description(entity.getDescription())
                 .amount(toDomain(entity.getAmount()))
