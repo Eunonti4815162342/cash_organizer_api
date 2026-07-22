@@ -3,6 +3,12 @@ package com.tritit.cashorganizer.api.application;
 import com.tritit.cashorganizer.api.domain.exception.AuthenticationFailedException;
 import com.tritit.cashorganizer.api.domain.exception.DuplicateResourceException;
 import com.tritit.cashorganizer.api.domain.model.User;
+import com.tritit.cashorganizer.api.domain.port.out.AccountPersistencePort;
+import com.tritit.cashorganizer.api.domain.port.out.BeneficiaryPersistencePort;
+import com.tritit.cashorganizer.api.domain.port.out.CategoryPersistencePort;
+import com.tritit.cashorganizer.api.domain.port.out.FinancialEntityPersistencePort;
+import com.tritit.cashorganizer.api.domain.port.out.TransactionPersistencePort;
+import com.tritit.cashorganizer.api.domain.port.out.UserContextPort;
 import com.tritit.cashorganizer.api.infrastructure.adapter.out.persistence.PasswordResetTokenRepository;
 import com.tritit.cashorganizer.api.infrastructure.adapter.out.persistence.PersistenceMapper;
 import com.tritit.cashorganizer.api.infrastructure.adapter.out.persistence.UserRepository;
@@ -12,6 +18,7 @@ import com.tritit.cashorganizer.api.infrastructure.config.CustomUserDetails;
 import com.tritit.cashorganizer.api.infrastructure.config.EmailService;
 import com.tritit.cashorganizer.api.infrastructure.config.JwtService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,6 +38,12 @@ public class AuthService {
     private final PersistenceMapper mapper;
     private final PasswordResetTokenRepository resetTokenRepository;
     private final EmailService emailService;
+    private final UserContextPort userContextPort;
+    private final TransactionPersistencePort transactionPersistencePort;
+    private final BeneficiaryPersistencePort beneficiaryPersistencePort;
+    private final AccountPersistencePort accountPersistencePort;
+    private final CategoryPersistencePort categoryPersistencePort;
+    private final FinancialEntityPersistencePort financialEntityPersistencePort;
 
     public void register(String email, String password) {
         if (userRepository.findByEmail(email).isPresent()) {
@@ -100,5 +113,34 @@ public class AuthService {
 
         resetToken.setUsed(true);
         resetTokenRepository.save(resetToken);
+    }
+
+    @Transactional
+    public void deleteCurrentAccount() {
+        User user = userContextPort.getCurrentUser();
+        UserEntity userEntity = userRepository.findByEmail(user.getEmail())
+                .orElseThrow(() -> new AuthenticationFailedException("Usuario no encontrado"));
+
+        // Orden de borrado según las FKs del esquema (ver changelogs 01, 04 y 07):
+        // transacciones -> beneficiarios y cuentas -> categorías (cascada a subcategorías) -> entidades financieras -> usuario
+        transactionPersistencePort.findAllByUser(user, Pageable.unpaged())
+                .getContent()
+                .forEach(transactionPersistencePort::delete);
+
+        beneficiaryPersistencePort.findAllByUser(user)
+                .forEach(b -> beneficiaryPersistencePort.delete(b.getId()));
+
+        accountPersistencePort.findAllByUser(user)
+                .forEach(a -> accountPersistencePort.delete(a.getId()));
+
+        categoryPersistencePort.findAllByUser(user)
+                .forEach(c -> categoryPersistencePort.delete(c.getId()));
+
+        financialEntityPersistencePort.findAllByUser(user)
+                .forEach(e -> financialEntityPersistencePort.delete(e.getId()));
+
+        resetTokenRepository.deleteByEmail(user.getEmail());
+
+        userRepository.delete(userEntity);
     }
 }
